@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cms.Idseefeld.Core", "Cms.Idseefeld.Core\Cms.Idseefeld.Core.csproj", "{D14C4D48-96A0-43DB-BB40-9AF512887677}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cms.Idseefeld.Core", "Cms.Idseefeld.Core\Cms.Idseefeld.Core.csproj", "{D14C4D48-96A0-43DB-BB40-9AF512887677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cms.Idseefeld.Web", "Cms.Idseefeld.Web\Cms.Idseefeld.Web.csproj", "{727562EF-AAC1-4F28-A0C5-DA0ADCB5A0C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cms.Idseefeld.Web", "Cms.Idseefeld.Web\Cms.Idseefeld.Web.csproj", "{727562EF-AAC1-4F28-A0C5-DA0ADCB5A0C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{CAAB3A88-DA4E-425F-9169-C7A22296E8A8}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
