@@ -10,7 +10,7 @@
     "Umbraco.Web.UI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "umbraco",
+      "-launchUrl": "umbraco",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
