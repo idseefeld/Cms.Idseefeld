@@ -1,0 +1,41 @@
+@inherits UmbracoViewPage<BlockListItem>
+@{
+    if (Model == null || Model.Content == null) { return; }
+    var content = (ArticleRow)Model.Content;
+}
+
+@functions {
+    void RenderImage(ArticleRow content)
+    {
+        var altText = string.IsNullOrEmpty(content.ImageCaption) ? content.Image?.Name : content.ImageCaption;
+
+        <div class="col-4">
+            <img src="@content.Image?.GetCropUrl("square")" alt="@altText">
+            <small>@altText</small>
+        </div>
+    }
+}
+<article class="row">
+    @if (content.Image != null)
+    {
+        @if (!content.ImagePositionRight)
+        {
+            RenderImage(content);
+        }
+
+        <div class="col-8">
+            @content.Text
+        </div>
+
+        @if (content.ImagePositionRight)
+        {
+            RenderImage(content);
+        }
+    }
+    else
+    {
+        <div class="col">
+            @content.Text
+        </div>
+    }
+</article>

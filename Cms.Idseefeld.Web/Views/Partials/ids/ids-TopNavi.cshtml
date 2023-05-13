@@ -1,0 +1,129 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+
+@{
+    var content = Model;
+    var root = content?.AncestorOrSelf<IdsRootPage>();
+    var selection = root?.Children?.Where(x => x.IsVisible(PublishedValueFallback)).ToArray();
+
+    var toggleLabel = Umbraco.GetDictionaryValue("toggleNavigation", "Toggle navigation");
+    var useDropdowns = false;//true;// 
+}
+@functions {
+    void Brand()
+    {
+        var isLocalhost = UmbracoContext?.CleanedUmbracoUrl.DnsSafeHost.InvariantEquals("localhost") ?? false;
+
+        var root = Model?.AncestorOrSelf<IdsRootPage>();
+        var brandLogoUrl = root?.BrandLogo?.Url();
+        var brandName = root?.BrandName;
+        var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToLower();
+        var brandLink = !isLocalhost || lang.InvariantEquals("de") ? "/" : $"/{lang}";
+
+        <a href="@brandLink">
+            @if (!string.IsNullOrEmpty(brandLogoUrl))
+            {
+                <img src="@brandLogoUrl" alt="iDSeefeld Logo" />
+            }
+            else
+            {
+                @brandName
+            }
+        </a>
+    }
+}
+
+@if (content != null && selection?.Length > 0)
+{
+    <header class="container-fluid top-navi px-0">
+        <div class="container px-lg-0">
+            <nav class="navbar navbar-expand-lg pl-5">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTopContent" aria-controls="navbarTopContent" aria-expanded="false" aria-label="@toggleLabel">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-brand d-block d-lg-none mr-0">
+                    @{
+                        Brand();
+                    }
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarTopContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        @foreach (var item in selection)
+                        {
+                            var name = item.Name;
+                            if (useDropdowns && item.Children != null && item.Children.Any(c => c.IsVisible()))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @name
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @foreach (var child in item.Children)
+                                        {
+                                            var url = item.Url(PublishedUrlProvider);
+                                            var isActive = item.IsAncestorOrSelf(content);
+                                            var childName = child.Name;
+                                            <li>
+                                                @if (isActive)
+                                                {
+                                                    <a class="nav-link active" aria-current="page" href="@url">
+                                                        @childName
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@url">
+                                                        @childName
+                                                    </a>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                var url = item.Url(PublishedUrlProvider);
+                                var isActive = item.IsAncestorOrSelf(content);
+                                <li class="nav-item">
+                                    @if (isActive)
+                                    {
+                                        <a class="nav-link active" aria-current="page" href="@url">
+                                            @name
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="nav-link" href="@url">
+                                            @name
+                                        </a>
+                                    }
+                                </li>
+                            }
+                        }
+                    </ul>
+
+                    @*<span class="navbar-text">
+                <strong>DE</strong> | EN
+                </span>*@
+                </div>
+
+                <div class="navbar-brand d-none d-lg-block mr-0 right">
+                    @{
+                        Brand();
+                    }
+                </div>
+            </nav>
+        </div>
+
+    </header>
+}

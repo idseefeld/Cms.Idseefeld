@@ -1,0 +1,18 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.IdsBlogGridPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "IdsMaster.cshtml";
+
+    var cssFile = new Smidge.Models.CssFile("~/css/ids/blockgrid-default.css");
+    cssFile.Order = 10;
+    SmidgeHelper.RequiresCss(cssFile);
+}
+<div class="container">
+
+    <div class="standard">
+
+        @await Html.GetBlockGridHtmlAsync(Model.Grid)
+
+    </div>
+</div>

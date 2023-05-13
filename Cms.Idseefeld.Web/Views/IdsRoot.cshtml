@@ -1,0 +1,27 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.IdsRootPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject IPublishedSnapshotAccessor _snapshotAccessor;
+@{
+    Layout = "IdsMaster.cshtml";
+    ViewData["pageCssClass"] = "root";
+    var mainGridAlias = ContentModels.IdsRootPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
+    var cssClass = "container-fluid";
+}
+
+<div class="@cssClass">
+    @if (mainGridAlias != null)
+    {
+
+        <div class="standard">
+
+            @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
+
+        </div>
+    }
+
+    
+</div>
+
+@section TopNavi{
+    <!-- kein Menü auf Startseite -->
+}
