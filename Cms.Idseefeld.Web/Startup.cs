@@ -1,4 +1,5 @@
 using Cms.Idseefeld.Core.Models;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Cms.Idseefeld.Web
 {
@@ -31,6 +32,11 @@ namespace Cms.Idseefeld.Web
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            var contentRoot = _env.ContentRootPath;
+
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo($"{contentRoot}\\umbraco\\data\\TEMP"));
+
             services.Configure<ContactMailOptions>(_config.GetSection(ContactMailOptions.ContactMail));
 
             services.AddUmbraco(_env, _config)
