@@ -18,12 +18,9 @@
     var siteName = root?.SiteName;
     var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
     var url = Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute);
-    var canonicalUrl = lang != "en" && url.Contains("/en/") ? url.Replace("/en/", "/") : "";
+    var canonicalUrl = url?.Replace("://www.", "://");
     var host = UmbracoContext?.CleanedUmbracoUrl.DnsSafeHost ?? "";
-    if (string.IsNullOrEmpty(canonicalUrl) && host.InvariantStartsWith("www."))
-    {
-        canonicalUrl = url?.Replace("://www.", "://");
-    }
+    
     var pageCssClass = ViewData["pageCssClass"];
 
     var isLocalhost = host?.InvariantEquals("localhost") ?? false;
