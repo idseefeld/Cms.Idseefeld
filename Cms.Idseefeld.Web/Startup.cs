@@ -47,6 +47,10 @@ namespace Cms.Idseefeld.Web
         /// <param name="env">The web hosting environment.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseXfo(options => options.SameOrigin());
+            app.UseXContentTypeOptions();
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -54,6 +58,7 @@ namespace Cms.Idseefeld.Web
             }
             else
             {
+                app.UseHsts();
                 app.UseExceptionHandler("/error");
             }
 
