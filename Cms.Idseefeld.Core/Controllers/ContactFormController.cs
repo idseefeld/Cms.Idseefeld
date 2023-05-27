@@ -1,5 +1,6 @@
 ﻿//using Cms.Idseefeld.Core.Localization;
 using Cms.Idseefeld.Core.Models;
+using Cms.Idseefeld.Core.Services;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -22,10 +23,12 @@ namespace Cms.Idseefeld.Core.Controllers
     {
         private readonly IOptionsMonitor<GlobalSettings> _globalSettings;
         private readonly ContactMailOptions _mailOptions;
-        public ContactFormController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider, IOptionsMonitor<GlobalSettings> globalSettings, IOptions<ContactMailOptions> mailOptions) : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
+        private readonly IMailService _mailService;
+        public ContactFormController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider, IOptionsMonitor<GlobalSettings> globalSettings, IOptions<ContactMailOptions> mailOptions, IMailService mailService) : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
         {
             _globalSettings= globalSettings;
             _mailOptions = mailOptions.Value;
+            _mailService = mailService;
         }
         /// <summary>
         /// route: /umbraco/surface/{controllername}/{action}/{id}
@@ -49,7 +52,8 @@ namespace Cms.Idseefeld.Core.Controllers
                 return CurrentUmbracoPage();
             }
 
-            HandleContactData(formData);
+            formData.Subject = $"Contact from {Request.Host}";
+            _mailService.HandleContactData(formData);
 
             if (CurrentPage?.Children != null && CurrentPage.Children.Any())
             {
@@ -59,48 +63,6 @@ namespace Cms.Idseefeld.Core.Controllers
             return RedirectToCurrentUmbracoPage();
         }
 
-        private void HandleContactData(ContactFormModel formData)
-        {
-            if (string.IsNullOrWhiteSpace(_mailOptions.To))
-            {
-                throw new Exception("No recipient configured. Check appSettings ContactMail:To");
-            }
-            var smtpSettings = _globalSettings.CurrentValue.Smtp;
-            if (smtpSettings == null || string.IsNullOrEmpty(smtpSettings.Host) )
-            {
-                throw new Exception("No smtp configured. Check appSettings Umbraco:CMS:Global:Smtp");
-            }
-
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(smtpSettings.From, smtpSettings.From));
-            message.To.Add(new MailboxAddress(_mailOptions.ToName ?? _mailOptions.To, _mailOptions.To));
-            message.Subject = $"Contact from {Request.Host}";
-
-            message.Body = new TextPart("plain")
-            {
-                Text = $"Contact\n\nName:\n{formData.FirstAndLastName}\n\nEmail:\n{formData.Email}\n\nSubject:\n{formData.Subject}\n\nMessage:\n{formData.Message}\n\nConsent:\n{formData.DataConsent}"
-            };
-
-            using (var client = new SmtpClient())
-            {
-                if (smtpSettings.Port > 0)
-                {
-                    var useSsl = smtpSettings.SecureSocketOptions.ToString() == SecureSocketOptions.SslOnConnect.ToString();
-                    client.Connect(smtpSettings.Host, smtpSettings.Port, useSsl);
-                }
-                else
-                {
-                    client.Connect(smtpSettings.Host);
-                }
-
-                if (!string.IsNullOrWhiteSpace(smtpSettings.Username))
-                {
-                    client.Authenticate(smtpSettings.Username, smtpSettings.Password);
-                }
-
-                client.Send(message);
-                client.Disconnect(true);
-            }
-        }
+        
     }
 }

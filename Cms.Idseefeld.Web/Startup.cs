@@ -1,5 +1,7 @@
 using Cms.Idseefeld.Core.Models;
+using Cms.Idseefeld.Core.Services;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Configuration;
 
 namespace Cms.Idseefeld.Web
 {
@@ -38,6 +40,16 @@ namespace Cms.Idseefeld.Web
                 .PersistKeysToFileSystem(new DirectoryInfo($"{contentRoot}\\umbraco\\data\\TEMP"));
 
             services.Configure<ContactMailOptions>(_config.GetSection(ContactMailOptions.ContactMail));
+
+            var contactMailConfig = _config.GetSection(ContactMailOptions.ContactMail).Get<ContactMailOptions>();
+            if (contactMailConfig.UseMailKit.GetValueOrDefault())
+            {
+                services.AddTransient<IMailService, MailKitService>();
+            }
+            else
+            {
+                services.AddTransient<IMailService, SystemNetMailService>();
+            }
 
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
