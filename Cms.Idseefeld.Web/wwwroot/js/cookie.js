@@ -47,7 +47,7 @@
                 const addDays = 365;
                 const expires = new Date(today.getTime() + addDays * 24 * 60 * 60 * 1000).toGMTString();
                 document.cookie =
-                    this.cookieConsentName + "=true; expires=" + expires + "; Secure";
+                    this.cookieConsentName + "=true; path=/; SameSite=Lax; expires=" + expires + "; Secure";
 
                 this.hideCookieHint();
             }
