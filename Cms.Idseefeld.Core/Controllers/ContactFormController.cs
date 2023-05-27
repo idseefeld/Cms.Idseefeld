@@ -45,9 +45,8 @@ namespace Cms.Idseefeld.Core.Controllers
         [ValidateUmbracoFormRouteString]
         public IActionResult HandleSubmit(ContactFormModel formData)
         {
-            _ = long.TryParse((HttpContext.Session.GetString(Constances.Common.EditStart) ?? string.Empty).ToString(), out long startTicks);
-            var duration = (DateTime.Now - new DateTime(startTicks)).TotalSeconds;
-            HttpContext.Session.Remove(Constances.Common.EditStart);
+            // this is neccessary to prevent timer reset during invalid data round trips. See: IdsStandardPageController
+            HttpContext.Session.SetString(Constances.Common.FormPosted, DateTime.Now.Ticks.ToString());
 
             if (formData.DataConsent && formData.DataConsentText == null)
             {
@@ -57,6 +56,12 @@ namespace Cms.Idseefeld.Core.Controllers
             {
                 return CurrentUmbracoPage();
             }
+
+            _ = long.TryParse((HttpContext.Session.GetString(Constances.Common.EditStart) ?? string.Empty).ToString(), out long startTicks);
+            var duration = (DateTime.Now - new DateTime(startTicks)).TotalSeconds;
+            HttpContext.Session.Remove(Constances.Common.EditStart);
+            HttpContext.Session.Remove(Constances.Common.FormPosted);
+
 
             var minEditing = _mailOptions.MinFormEditingInSeconds ?? _minEditingSconds;
             if (startTicks > 0 && duration > minEditing)

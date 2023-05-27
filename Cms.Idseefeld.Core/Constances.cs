@@ -9,5 +9,7 @@ public class Constances
         public static string FormEditTimeInSeconds => "FormEditTimeInSeconds";
 
         public static string EditStart = "editStart";
+
+        public static string FormPosted = "formPosted";
     }
 }

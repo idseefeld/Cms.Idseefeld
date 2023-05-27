@@ -22,7 +22,10 @@ namespace Cms.Idseefeld.Core.Controllers
         /// <returns></returns>
         public override IActionResult Index()
         {
-            HttpContext.Session.SetString(Constances.Common.EditStart, DateTime.Now.Ticks.ToString());
+            if (HttpContext.Session.GetString(Constances.Common.FormPosted) == null)
+            {
+                HttpContext.Session.SetString(Constances.Common.EditStart, DateTime.Now.Ticks.ToString());
+            }
 
             return CurrentTemplate(CurrentPage);
         }
