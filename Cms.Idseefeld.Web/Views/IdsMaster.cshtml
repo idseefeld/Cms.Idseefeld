@@ -12,6 +12,9 @@
     var metaKeywords = string.Join(", ", (seoData?.MetaKeywords ?? new string[0]));
 
     var root = Model.AncestorOrSelf<ContentModels.IdsRootPage>();
+    var cookieHint = root?.CookieHint;
+    var cookieOkButtonLabel = Umbraco.GetDictionaryValue("cookieOkButtonLabel", "Ok");
+    var noScriptHint = Umbraco.GetDictionaryValue("noScriptHint", "Diese Seite verwendet Javascript. Wenn Sie Javascript deaktiviert haben, funktioniert sie nur eingeschränkt.");
     var pageSettings = Model as IPageSettings;
     var backgroundImageSrc = pageSettings?.BackgroundImage?.Url();
     var backgroundImageStyle = backgroundImageSrc != null ? $"background-image:url({backgroundImageSrc})" : "";
@@ -20,7 +23,7 @@
     var url = Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute);
     var canonicalUrl = url?.Replace("://www.", "://");
     var host = UmbracoContext?.CleanedUmbracoUrl.DnsSafeHost ?? "";
-    
+
     var pageCssClass = ViewData["pageCssClass"];
 
     var isLocalhost = host?.InvariantEquals("localhost") ?? false;
@@ -66,12 +69,14 @@
     }
 
     @* read more: https://manage.cookiebot.com/de/manage *@
+    @*
     @if (!isLocalhost || true)
     {
-        var cookiebotGuid = "274dc0df-3f4e-49a8-95f6-0814f0217941";
+    var cookiebotGuid = "274dc0df-3f4e-49a8-95f6-0814f0217941";
 
-        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="@cookiebotGuid" data-blockingmode="auto" type="text/javascript"></script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="@cookiebotGuid" data-blockingmode="auto" type="text/javascript"></script>
     }
+    *@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -98,6 +103,24 @@
     </style>
 </head>
 <body class="@pageCssClass">
+
+    <div id="cookie-hint">
+        @cookieHint
+        <a href="#" class="btn btn-primary">
+            @cookieOkButtonLabel
+        </a>
+    </div>
+    <noscript>
+        <div id="no-script">
+            @noScriptHint
+        </div>
+        <div id="cookie-hint" style="display:block">
+            @cookieHint
+            <a href="#" class="btn btn-primary">
+                @cookieOkButtonLabel
+            </a>
+        </div>
+    </noscript>
 
     @if (IsSectionDefined("TopNavi"))
     {
@@ -127,11 +150,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-    
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+
+    
+    <script src="~/js/cookie.js"></script>
 
     <script src="~/highlightjs/highlight.min.js"></script>
     <script>

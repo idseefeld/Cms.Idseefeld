@@ -36,5 +36,8 @@
         <div class="row">
             <small>@lastUpdated @date.ToShortDateString()</small>
         </div>
+        <noscript>
+            <a href="@Model.Url()">@readMore</a>
+        </noscript>
     </div>
 </div>

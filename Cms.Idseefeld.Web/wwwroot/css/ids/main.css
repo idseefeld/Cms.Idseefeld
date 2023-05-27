@@ -77,12 +77,34 @@ main {
   padding-bottom: 90px;
 }
 
-#CookiebotWidget :focus-visible,
-#CookiebotWidget:not(.CookiebotWidget-open) .Cookiebotwidget-logo {
-  outline: none;
-  outline-offset: 0;
+#no-script {
+  background-color: #fcc;
+  padding: 1em;
+  text-align: center;
+  color: darkred;
 }
 
+#cookie-hint {
+  display: none;
+  background-color: #eee;
+  padding: 1em;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+#cookie-hint p {
+  display: inline-block;
+  margin: 0;
+}
+#cookie-hint a.btn {
+  display: inline-block;
+}
+
+/*#CookiebotWidget :focus-visible,
+#CookiebotWidget:not(.CookiebotWidget-open) .Cookiebotwidget-logo {
+    outline: none;
+    outline-offset: 0;
+}*/
 .CookieDeclaration {
   background-color: #f6f6f6;
   padding: 1em;

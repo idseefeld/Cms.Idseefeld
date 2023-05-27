@@ -88,12 +88,35 @@ main {
     padding-top: 20px;
     padding-bottom: 90px;
 }
+#no-script {
+    background-color: #fcc;
+    padding: 1em;
+    text-align: center;
+    color:darkred;
+}
+#cookie-hint {
+    display: none;
+    background-color: #eee;
+    padding: 1em;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
-#CookiebotWidget :focus-visible,
+    p {
+        display: inline-block;
+        margin: 0;
+    }
+
+    a.btn {
+        display: inline-block;
+    }
+}
+
+/*#CookiebotWidget :focus-visible,
 #CookiebotWidget:not(.CookiebotWidget-open) .Cookiebotwidget-logo {
     outline: none;
     outline-offset: 0;
-}
+}*/
 
 .CookieDeclaration {
     background-color: #f6f6f6;

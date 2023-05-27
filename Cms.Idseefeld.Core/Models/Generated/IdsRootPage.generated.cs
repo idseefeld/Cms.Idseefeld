@@ -66,6 +66,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string BrandName => this.Value<string>(_publishedValueFallback, "brandName");
 
 		///<summary>
+		/// Cookie Hint
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.5.1+6afa6d2")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("cookieHint")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString CookieHint => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "cookieHint");
+
+		///<summary>
 		/// Footer Links
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.5.1+6afa6d2")]
