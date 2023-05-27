@@ -13,6 +13,11 @@ namespace Cms.Idseefeld.Core.Services
         {
             var body = new StringBuilder("Contact");
             body.AppendLine("");
+            body.AppendLine(formData.HostInfo);
+            body.AppendLine("");
+            body.AppendLine("Subject:");
+            body.AppendLine(formData.Subject);
+            body.AppendLine("");
             body.AppendLine("Name:");
             body.AppendLine(formData.FirstAndLastName);
             body.AppendLine("");

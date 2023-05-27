@@ -27,7 +27,7 @@ namespace Cms.Idseefeld.Core.Models
         [Required(ErrorMessage = "#RequiredErrorMessage.message")]
         public string? Message { get; set; }
 
-
+        public string? HostInfo { get; set; }
         public bool DataConsent { get; set; }
         [Required(ErrorMessage = "#RequiredErrorMessage.dataConsent")]
         public string? DataConsentText { get; set; }

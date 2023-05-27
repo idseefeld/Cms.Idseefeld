@@ -52,7 +52,7 @@ namespace Cms.Idseefeld.Core.Controllers
                 return CurrentUmbracoPage();
             }
 
-            formData.Subject = $"Contact from {Request.Host}";
+            formData.HostInfo = $"Send from {Request.Host}";
             _mailService.HandleContactData(formData);
 
             if (CurrentPage?.Children != null && CurrentPage.Children.Any())

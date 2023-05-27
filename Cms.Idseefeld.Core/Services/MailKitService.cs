@@ -35,7 +35,7 @@ namespace Cms.Idseefeld.Core.Services
             message.Subject = formData.Subject;
             message.Body = new TextPart("plain")
             {
-                Text = BuildContactBody(formData)
+                Text = $"{BuildContactBody(formData)}\n\nMailKit"
             };
 
             using var client = new SmtpClient();
