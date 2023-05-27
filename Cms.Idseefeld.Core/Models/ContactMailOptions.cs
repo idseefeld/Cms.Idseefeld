@@ -13,5 +13,7 @@ namespace Cms.Idseefeld.Core.Models
         public string? To { get; set; }
         public string? ToName { get; set; }
         public bool? UseMailKit { get; set; }
+
+        public int? MinFormEditingInSeconds { get; set; }
     }
 }

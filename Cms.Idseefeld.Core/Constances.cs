@@ -7,5 +7,7 @@ public class Constances
         public static string Owner => "iDSeefeld";
         public static string FormRenderTimeStamp => "FormRenderTimeStamp";
         public static string FormEditTimeInSeconds => "FormEditTimeInSeconds";
+
+        public static string EditStart = "editStart";
     }
 }
