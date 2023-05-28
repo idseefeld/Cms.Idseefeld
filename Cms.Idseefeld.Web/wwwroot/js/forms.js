@@ -9,3 +9,18 @@
         $(form).validate().element("#DataConsentText");
     }
 }
+(function () {
+    const submitBtn = document.getElementById('form-submit');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+            const form = submitBtn.closest('form');
+            if (!form) return;
+
+            const form$ = $(form);
+            if (form$.valid()) {
+                submitBtn.setAttribute('disabled', true);
+                form$.submit();
+            }
+        });
+    }
+})()

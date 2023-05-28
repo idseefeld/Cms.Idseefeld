@@ -43,6 +43,7 @@ namespace Cms.Idseefeld.Core.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateUmbracoFormRouteString]
+        [ValidateAntiForgeryToken]
         public IActionResult HandleSubmit(ContactFormModel formData)
         {
             // this is neccessary to prevent timer reset during invalid data round trips. See: IdsStandardPageController

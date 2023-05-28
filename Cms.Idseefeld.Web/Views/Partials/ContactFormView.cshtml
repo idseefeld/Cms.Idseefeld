@@ -22,7 +22,6 @@
         session.SetString(Constances.Common.EditStart, DateTime.Now.Ticks.ToString());
     }
 }
-<script src="~/js/forms.js"></script>
 @using (Html.BeginUmbracoForm<ContactFormController>(nameof(ContactFormController.HandleSubmit)))
 {
     <div class="form-floating mb-3">
@@ -61,5 +60,7 @@
 
     @*<div class="mb-3" asp-validation-summary="All"></div>*@
 
-    <button type="submit" class="btn btn-primary" name="Submit">@submitLabel</button>
+    <button type="submit" id="form-submit" class="btn btn-primary" name="Submit">@submitLabel</button>
 }
+
+<script src="~/js/forms.js"></script>
