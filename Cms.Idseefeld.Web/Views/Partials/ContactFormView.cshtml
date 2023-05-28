@@ -1,6 +1,6 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactFormModel>
 @using System.ComponentModel.DataAnnotations;
-
+@using Microsoft.AspNetCore.Http;
 @{
     var submitLabel = Umbraco.GetDictionaryValue("submitLabel", "Senden");
     var nameLabel = Umbraco.GetDictionaryValue("nameLabel", "Name");
@@ -15,6 +15,12 @@
     //displayName = Model.GetPropertyDisplayName("email");
 
     //var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var session = this.Context.Session;
+    if (session.GetString(Constances.Common.FormPosted) == null)
+    {
+        session.SetString(Constances.Common.EditStart, DateTime.Now.Ticks.ToString());
+    }
 }
 <script src="~/js/forms.js"></script>
 @using (Html.BeginUmbracoForm<ContactFormController>(nameof(ContactFormController.HandleSubmit)))

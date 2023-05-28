@@ -30,16 +30,10 @@ footer {
     font-size: 80%;
     background-color: #cde;
     color: var(--footer-color);
-    height: 70px;
-    /* opacity: 0.5;
 
-    &:hover {
-        opacity: 1;
-    }*/
-
-    .container {
+    /*.container {
         padding: 0;
-    }
+    }*/
 
     .navbar-brand {
         font-size: 90%;
@@ -88,12 +82,14 @@ main {
     padding-top: 20px;
     padding-bottom: 90px;
 }
+
 #no-script {
     background-color: #fcc;
     padding: 1em;
     text-align: center;
-    color:darkred;
+    color: darkred;
 }
+
 #cookie-hint {
     display: none;
     background-color: #eee;
@@ -108,7 +104,7 @@ main {
     }
 
     a.btn {
-        display: inline-block;
+        display: none;
     }
 }
 
@@ -392,9 +388,9 @@ main {
         }
     }
 
-    footer {
+   /* footer {
         height: 35px;
-    }
+    }*/
 }
 
 @media (min-width: 820px) and (min-height: 600px) {

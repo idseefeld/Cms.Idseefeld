@@ -15,6 +15,7 @@
                 this.cookieHint.style.display = 'block';
                 const okButton = this.cookieHint.querySelector('.btn');
                 if (okButton) {
+                    okButton.style.display = 'inline-block';
                     okButton.addEventListener('click', e => this.setCookieConsent(e));
                 }
             }

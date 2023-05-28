@@ -27,6 +27,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.cookieHint.style.display = 'block';
                     var okButton = this.cookieHint.querySelector('.btn');
                     if (okButton) {
+                        okButton.style.display = 'inline-block';
                         okButton.addEventListener('click', function (e) {
                             return _this.setCookieConsent(e);
                         });

@@ -30,15 +30,9 @@ footer {
   font-size: 80%;
   background-color: #cde;
   color: var(--footer-color);
-  height: 70px;
-  /* opacity: 0.5;
-
-  &:hover {
-      opacity: 1;
+  /*.container {
+      padding: 0;
   }*/
-}
-footer .container {
-  padding: 0;
 }
 footer .navbar-brand {
   font-size: 90%;
@@ -97,7 +91,7 @@ main {
   margin: 0;
 }
 #cookie-hint a.btn {
-  display: inline-block;
+  display: none;
 }
 
 /*#CookiebotWidget :focus-visible,
@@ -304,9 +298,9 @@ main {
   .root .root-head {
     font-size: 125%;
   }
-  footer {
-    height: 35px;
-  }
+  /* footer {
+       height: 35px;
+   }*/
 }
 @media (min-width: 820px) and (min-height: 600px) {
   .root .root-head {

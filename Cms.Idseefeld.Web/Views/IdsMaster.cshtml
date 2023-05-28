@@ -104,23 +104,7 @@
 </head>
 <body class="@pageCssClass">
 
-    <div id="cookie-hint">
-        @cookieHint
-        <a href="#" class="btn btn-primary">
-            @cookieOkButtonLabel
-        </a>
-    </div>
-    <noscript>
-        <div id="no-script">
-            @noScriptHint
-        </div>
-        <div id="cookie-hint" style="display:block">
-            @cookieHint
-            <a href="#" class="btn btn-primary">
-                @cookieOkButtonLabel
-            </a>
-        </div>
-    </noscript>
+    @*@await Html.PartialAsync("CookieHint")*@
 
     @if (IsSectionDefined("TopNavi"))
     {
@@ -143,8 +127,9 @@
     }
     else
     {
-        <footer class="container-fluid fixed-bottom">
+        <footer class="container-fluid fixed-bottom p-0">
             @await Html.PartialAsync("ids/ids-FooterNavi")
+            @await Html.PartialAsync("CookieHint")
         </footer>
     }
 
