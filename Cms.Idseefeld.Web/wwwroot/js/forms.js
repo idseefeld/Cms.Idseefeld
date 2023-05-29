@@ -19,6 +19,9 @@
             const form$ = $(form);
             if (form$.valid()) {
                 submitBtn.setAttribute('disabled', true);
+                let label = submitBtn.innerText;
+                label += '...';
+                submitBtn.innerText = label;
                 form$.submit();
             }
         });

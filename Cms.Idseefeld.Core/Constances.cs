@@ -11,5 +11,6 @@ public class Constances
         public static string EditStart = "editStart";
 
         public static string FormPosted = "formPosted";
+        public static string DublicatedSubmitError = "DublicatedSubmitError";
     }
 }
