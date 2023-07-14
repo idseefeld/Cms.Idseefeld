@@ -32,7 +32,7 @@
   <ItemGroup>
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.3" />
-    <PackageReference Include="Umbraco.Cms" Version="10.5.1" />
+    <PackageReference Include="Umbraco.Cms" Version="10.6.1" />
   </ItemGroup>
 
   <ItemGroup>

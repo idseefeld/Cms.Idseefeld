@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.3" />
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.5.1" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.6.1" />
   </ItemGroup>
 
   <ItemGroup>
