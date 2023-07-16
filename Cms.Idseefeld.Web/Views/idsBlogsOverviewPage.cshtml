@@ -1,4 +1,5 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogsOverviewPage>
+@using Cms.Idseefeld.Core.Services;
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
@@ -6,7 +7,7 @@
     var noBlogs = Umbraco.GetDictionaryValue("noBlogs", "Es gibt noch keine Blogbeiträge.");
     var readMore = Umbraco.GetDictionaryValue("readMoreLabel", "mehr lesen...");
     var lastUpdated = Umbraco.GetDictionaryValue("lastUpdated", "zuletzt aktualisiert am");
-    var blogs = (Model.Children<IdsBlogPage>()?.Where(c => c.IsVisible()) ?? new IdsBlogPage[0]).OrderByDescending(b => b.DisplayDate).ThenByDescending(b => b.UpdateDate);
+    var blogs = BlogService.GetBlogs(Umbraco, Model);
 
     var useCardStyle = Model.UseCardStyle;
     var extraCssClass = useCardStyle ? "" : "col-lg-9";

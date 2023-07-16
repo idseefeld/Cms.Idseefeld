@@ -162,6 +162,10 @@ main {
             font-style: italic;
             opacity: 0.3;
         }
+
+        &.sidebar {
+            color: var(--link-hover);
+        }
     }
 
     .teaser {
