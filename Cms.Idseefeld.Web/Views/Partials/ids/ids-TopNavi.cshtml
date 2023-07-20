@@ -13,18 +13,18 @@
     var selection = root?.Children?.Where(x => x.IsVisible(PublishedValueFallback)).ToArray();
 
     var toggleLabel = Umbraco.GetDictionaryValue("toggleNavigation", "Toggle navigation");
-    var useDropdowns = false;//true;// 
+    var useDropdowns =  false;//true;//
 }
 @functions {
     void Brand()
     {
-        var isLocalhost = UmbracoContext?.CleanedUmbracoUrl.DnsSafeHost.InvariantEquals("localhost") ?? false;
+        var isDotCom = UmbracoContext?.CleanedUmbracoUrl.DnsSafeHost.InvariantEndsWith(".com") ?? false;
 
         var root = Model?.AncestorOrSelf<IdsRootPage>();
         var brandLogoUrl = root?.BrandLogo?.Url();
         var brandName = root?.BrandName;
         var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToLower();
-        var brandLink = !isLocalhost || lang.InvariantEquals("de") ? "/" : $"/{lang}";
+        var brandLink = lang.InvariantEquals("de") || isDotCom ? "/" : $"/{lang}";
 
         <a href="@brandLink">
             @if (!string.IsNullOrEmpty(brandLogoUrl))
