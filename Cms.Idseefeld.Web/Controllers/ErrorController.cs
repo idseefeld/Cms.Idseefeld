@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Cms.Idseefeld.Web.Controllers
 {
@@ -21,6 +22,7 @@ namespace Cms.Idseefeld.Web.Controllers
 
                 if (Response.StatusCode == StatusCodes.Status500InternalServerError)
                 {
+                    return View("Error/index");
                     return Redirect("/statuscodes/500");
                 }
 

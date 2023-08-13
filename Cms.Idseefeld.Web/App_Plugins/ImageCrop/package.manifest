@@ -1,0 +1,15 @@
+﻿{
+  "gridEditors": [
+    {
+      "name": "Image Crop",
+      "alias": "imageCrop",
+      "view": "/App_Plugins/ImageCrop/editor.html",
+      "icon": "icon-crop"
+    }
+  ],
+  "javascript": [
+    "/App_Plugins/ImageCrop/editor.controller.js",
+    "/App_Plugins/ImageCrop/mediapicker.controller.js",
+    "/App_Plugins/ImageCrop/overlays/mediacropdetails.controller.js"
+  ]
+}

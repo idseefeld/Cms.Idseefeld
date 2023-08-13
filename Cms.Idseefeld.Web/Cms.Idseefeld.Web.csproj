@@ -13,11 +13,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+    <Content Remove="Views\Partials\grid\editors-bs5\imagecrop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ErrorController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\ImageCrop\mediapicker.html" />
+    <Content Include="App_Plugins\ImageCrop\overlays\mediacropdetails.html" />
+    <Content Include="App_Plugins\ImageCrop\editor.html" />
+    <Content Include="App_Plugins\ImageCrop\Lang\en-US.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Plugins\ImageCrop\editor.controller.js" />
+    <None Include="App_Plugins\ImageCrop\editor.cshtml" />
+    <None Include="App_Plugins\ImageCrop\mediapicker.controller.js" />
+    <None Include="App_Plugins\ImageCrop\overlays\mediacropdetails.controller.js" />
+    <None Include="App_Plugins\ImageCrop\package.manifest" />
     <None Include="compilerconfig.json" />
     <None Include="Views\Partials\blocklist\Components\articleRow.cshtml" />
     <None Include="Views\Partials\blocklist\Components\richTextRow.cshtml" />
