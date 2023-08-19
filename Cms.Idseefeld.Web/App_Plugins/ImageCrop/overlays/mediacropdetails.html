@@ -40,10 +40,18 @@
                     <img ng-src="{{model.target.thumbnail}}" alt="{{model.target.name}}" />
                 </div>
 
-                <div ng-if="vm.hasCrops === false && vm.disableFocalPoint == false">
+                <div ng-if="vm.hasCrops === false">
                     <h5>
                         <localize key="@general_focalPoint">Focal point</localize>
                     </h5>
+                    
+                    <div>
+                        <umb-checkbox model="vm.disableFocalPoint"
+                                      on-change="vm.toggleFocalPoint()"
+                                      text="Disable"
+                                      label-key="imageCrop_disableFocalPoint">
+                        </umb-checkbox>
+                    </div>
 
                     <div ng-if="model.target.image">
                         <umb-image-gravity src="model.target.image"
@@ -80,12 +88,30 @@
                 <h5>
                     <localize key="@general_cropSection">Crop section</localize>
                 </h5>
-                <div ng-repeat="crop in vm.Crops">
-                    <label><input name="crop" type="radio" class="umb-property-editor umb-radio" ng-model="model.target.crop" /> {{crop.alias}}</label>
+
+                <div class="umb-property-editor umb-radiobuttons">
+                    <ng-form name="radioButtonsFieldForm">
+
+                        <ul class="unstyled">
+                            <li ng-repeat="crop in vm.Crops">
+                                <umb-radiobutton name="selectedCrop_{{vm.uniqueId}}"
+                                                 value="{{crop.alias}}"
+                                                 model="model.target.selectedCrop"
+                                                 text="{{crop.alias}}">
+                                </umb-radiobutton>
+                            </li>
+                        </ul>
+
+                    </ng-form>
                 </div>
+
+                <!--<div ng-repeat="crop in vm.Crops">
+                    <label><input name="crop" type="radio" class="umb-property-editor umb-radio" ng-model="model.target.crop" /> {{crop.alias}}</label>
+                </div>-->
+
             </div>
 
-        </umb-editor-container>
+</umb-editor-container>
 
         <umb-editor-footer>
             <umb-editor-footer-content-right>

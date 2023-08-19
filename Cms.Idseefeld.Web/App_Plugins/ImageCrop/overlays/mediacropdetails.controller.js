@@ -4,6 +4,8 @@
 
             var vm = this;
 
+            vm.uniqueId = String.CreateGuid();
+
             vm.submit = submit;
             vm.close = close;
             vm.hasCrops = cropSet() === true;
@@ -46,6 +48,12 @@
                 };
             }
 
+            function selectCrop(value){
+                
+            }
+            function toggleFocalPoint() {
+            }
+
             function submit() {
                 if ($scope.model && $scope.model.submit) {
                     $scope.model.submit($scope.model);
@@ -65,7 +73,7 @@
 
                 //debugger
 
-                return vm.Crops.length;
+                return false;// vm.Crops.length > 0;
 
                 //return (model.cropSize || {}).width !== undefined && (model.cropSize || {}).height !== undefined;
             }

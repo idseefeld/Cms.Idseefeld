@@ -71,9 +71,6 @@
             console.error(err);
         }
 
-        /**
-         *
-         */
         function getThumbnailUrl() {
 
             if ($scope.control.value && $scope.control.value.image) {
@@ -109,10 +106,6 @@
             return null;
         }
 
-        /**
-         *
-         * @param {object} selectedImage
-         */
         function updateControlValue(selectedImage) {
             // we could apply selectedImage directly to $scope.control.value,
             // but this allows excluding fields in future if needed
@@ -123,7 +116,8 @@
                 udi: selectedImage.udi,
                 image: selectedImage.image,
                 caption: selectedImage.caption,
-                altText: selectedImage.altText
+                altText: selectedImage.altText,
+                selectedCrop: selectedImage.selectedCrop
             };
             $scope.thumbnailUrl = getThumbnailUrl();
         }
