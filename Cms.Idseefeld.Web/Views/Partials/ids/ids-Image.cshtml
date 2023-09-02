@@ -3,9 +3,15 @@
 @{
     var alt = Model?.Name;
     var cropAlias = Model?.LocalCrops.Crops?.FirstOrDefault()?.Alias ?? string.Empty;
-    var src = Model?.GetCropUrl(cropAlias);
+    var src = Model?.GetCropUrl(width: 1200, cropAlias: cropAlias);
+    var src465 = Model?.GetCropUrl(width: 465, cropAlias: cropAlias);
+    var src650 = Model?.GetCropUrl(width: 650, cropAlias: cropAlias);
 }
 @if (!string.IsNullOrEmpty(src))
 {
-    <img src="@src" alt="@alt" />
+    <picture>
+        <source media="(min-width:650px)" srcset="@src650">
+        <source media="(min-width:465px)" srcset="@src465">
+        <img src="@src" alt="@alt" />
+    </picture>
 }

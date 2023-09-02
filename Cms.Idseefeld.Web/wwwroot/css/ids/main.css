@@ -71,6 +71,10 @@ main {
   padding-bottom: 90px;
 }
 
+picture img {
+  width: 100%;
+}
+
 #no-script {
   background-color: #fcc;
   padding: 1em;
