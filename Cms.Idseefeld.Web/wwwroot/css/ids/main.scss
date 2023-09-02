@@ -30,7 +30,6 @@ footer {
     font-size: 80%;
     background-color: #cde;
     color: var(--footer-color);
-
     /*.container {
         padding: 0;
     }*/
@@ -208,6 +207,16 @@ main {
     font-size: smaller;
     font-style: italic;
     opacity: 0.5;
+}
+
+.half {
+    width: 50%;
+    float: left;
+}
+
+.image {
+    /*max-width: 400px;*/
+    /*margin: 10px auto;*/
 }
 
 .root {
@@ -392,7 +401,7 @@ main {
         }
     }
 
-   /* footer {
+    /* footer {
         height: 35px;
     }*/
 }

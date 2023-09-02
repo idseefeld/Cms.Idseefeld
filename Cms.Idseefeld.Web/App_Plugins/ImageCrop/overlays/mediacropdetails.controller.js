@@ -11,6 +11,8 @@
             vm.hasCrops = cropSet() === true;
             vm.focalPointChanged = focalPointChanged;
             vm.disableFocalPoint = false;
+            vm.selectCrop = selectCrop;
+            selectCrop($scope.model.target.selectedCrop);
 
             if (typeof $scope.model.disableFocalPoint === "boolean") {
                 vm.disableFocalPoint = $scope.model.disableFocalPoint
@@ -48,8 +50,10 @@
                 };
             }
 
-            function selectCrop(value){
-                
+            function selectCrop(value) {
+                const model = $scope.model;
+                const crop = vm.Crops.find(c => c.alias === value);
+                model.target.thumbnail = model.target.image + '?width=' + crop.width + '&height=' + crop.height;
             }
             function toggleFocalPoint() {
             }

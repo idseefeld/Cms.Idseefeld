@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ImageCropViewModel>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var alt = Model?.Alt;
+    var src = Model?.CropperValue?.Src;
+}
+@if (!string.IsNullOrEmpty(src))
+{
+    <img src="@src" alt="@alt" /><br />
+    @if (!string.IsNullOrEmpty(Model?.Caption))
+    {
+        <small class="image caption">@Model.Caption</small>
+    }
+}

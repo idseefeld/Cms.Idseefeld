@@ -50,7 +50,13 @@
     {
         "name": "Image Crop",
         "alias": "imageCrop",
-        "view": "/App_Plugins/ImageCrop/editor.html",
-        "icon": "icon-crop"
+        "view": "/App_Plugins/ImageCrop/imageCropGridEditor.html",
+        "icon": "icon-crop",
+        "config": {
+            "size": {
+                "width": 800,
+                "height": 1200
+                }
+        }
     }
 ]

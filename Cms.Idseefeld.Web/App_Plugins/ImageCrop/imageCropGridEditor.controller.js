@@ -75,6 +75,7 @@
 
             if ($scope.control.value && $scope.control.value.image) {
                 var url = $scope.control.value.image;
+                var selectedCrop = $scope.control.value.selectedCrop;
 
                 if ($scope.control.editor.config && $scope.control.editor.config.size) {
                     if ($scope.control.value.coordinates) {
@@ -90,9 +91,21 @@
                             url += '?rxy=0.5,0.5';
                         }
                     }
+                    var w = $scope.control.editor.config.size.width;
+                    var h = $scope.control.editor.config.size.height;
+                    switch (selectedCrop) {
+                        case "Landscape":
+                            w = $scope.control.editor.config.size.height;
+                            h = $scope.control.editor.config.size.width;
+                            break;
+                        case "Square":
+                            h = w = $scope.control.editor.config.size.height;
+                            break;
+                        default:
+                    }
+                    url += '&width=' + w;
+                    url += '&height=' + h;
 
-                    url += '&width=' + $scope.control.editor.config.size.width;
-                    url += '&height=' + $scope.control.editor.config.size.height;
                 }
 
                 // set default size if no crop present (moved from the view)

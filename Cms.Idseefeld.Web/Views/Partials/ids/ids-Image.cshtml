@@ -1,0 +1,11 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<MediaWithCrops>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var alt = Model?.Name;
+    var cropAlias = Model?.LocalCrops.Crops?.FirstOrDefault()?.Alias ?? string.Empty;
+    var src = Model?.GetCropUrl(cropAlias);
+}
+@if (!string.IsNullOrEmpty(src))
+{
+    <img src="@src" alt="@alt" />
+}

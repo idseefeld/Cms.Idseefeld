@@ -21,12 +21,12 @@
   <ItemGroup>
     <Content Include="App_Plugins\ImageCrop\mediapicker.html" />
     <Content Include="App_Plugins\ImageCrop\overlays\mediacropdetails.html" />
-    <Content Include="App_Plugins\ImageCrop\editor.html" />
+    <Content Include="App_Plugins\ImageCrop\imageCropGridEditor.html" />
     <Content Include="App_Plugins\ImageCrop\Lang\en-US.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Plugins\ImageCrop\editor.controller.js" />
-    <None Include="App_Plugins\ImageCrop\editor.cshtml" />
+    <None Include="App_Plugins\ImageCrop\imageCropGridEditor.controller.js" />
+    <None Include="App_Plugins\ImageCrop\imageCropGridEditor.cshtml" />
     <None Include="App_Plugins\ImageCrop\mediapicker.controller.js" />
     <None Include="App_Plugins\ImageCrop\overlays\mediacropdetails.controller.js" />
     <None Include="App_Plugins\ImageCrop\package.manifest" />
@@ -68,6 +68,10 @@
     <None Update="app_offline.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <PropertyGroup>
