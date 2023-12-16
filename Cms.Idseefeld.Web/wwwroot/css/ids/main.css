@@ -166,7 +166,8 @@ picture img {
   background-color: #fff;
 }
 .navbar .navbar-brand img {
-  height: 2.5em;
+  width: 50px;
+  height: 50px;
 }
 .navbar .nav-link.active {
   font-weight: bold;
