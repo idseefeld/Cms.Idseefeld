@@ -19,19 +19,35 @@
     <Compile Include="Controllers\ErrorController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Plugins\ImageCrop\mediapicker.html" />
-    <Content Include="App_Plugins\ImageCrop\overlays\mediacropdetails.html" />
-    <Content Include="App_Plugins\ImageCrop\imageCropGridEditor.html" />
-    <Content Include="App_Plugins\ImageCrop\Lang\en-US.xml" />
+    <Content Include="App_Plugins\ImageCrop\mediapicker.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Plugins\ImageCrop\overlays\mediacropdetails.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Plugins\ImageCrop\imageCropGridEditor.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Plugins\ImageCrop\Lang\en-US.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Plugins\ImageCrop\imageCropGridEditor.controller.js" />
+    <None Include="App_Plugins\ImageCrop\imageCropGridEditor.controller.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App_Plugins\ImageCrop\imageCropGridEditor.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="App_Plugins\ImageCrop\mediapicker.controller.js" />
-    <None Include="App_Plugins\ImageCrop\overlays\mediacropdetails.controller.js" />
-    <None Include="App_Plugins\ImageCrop\package.manifest" />
+    <None Include="App_Plugins\ImageCrop\mediapicker.controller.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="App_Plugins\ImageCrop\overlays\mediacropdetails.controller.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="App_Plugins\ImageCrop\package.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="compilerconfig.json" />
     <None Include="Views\Partials\blocklist\Components\articleRow.cshtml" />
     <None Include="Views\Partials\blocklist\Components\richTextRow.cshtml" />
