@@ -26,7 +26,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Plugins\ImageCrop\imageCropGridEditor.controller.js" />
-    <None Include="App_Plugins\ImageCrop\imageCropGridEditor.cshtml" />
+    <None Include="App_Plugins\ImageCrop\imageCropGridEditor.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App_Plugins\ImageCrop\mediapicker.controller.js" />
     <None Include="App_Plugins\ImageCrop\overlays\mediacropdetails.controller.js" />
     <None Include="App_Plugins\ImageCrop\package.manifest" />

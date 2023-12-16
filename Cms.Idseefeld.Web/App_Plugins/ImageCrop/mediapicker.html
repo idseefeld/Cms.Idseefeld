@@ -144,6 +144,7 @@
             </form>
 
         </umb-editor-container>
+
         <umb-editor-container ng-if="vm.activeTab.alias === 'clipboard'">
 
             <div style="margin-bottom:20px; text-align: right;">
@@ -154,7 +155,7 @@
                             action="vm.clickClearClipboard()">
                 </umb-button>
             </div>
-
+            <!-- Media Card Grid -->
             <div class="umb-media-card-grid">
                 <umb-media-card ng-repeat="media in model.clipboardItems"
                                 media-key="!media.data.length ? media.data.mediaKey : null"

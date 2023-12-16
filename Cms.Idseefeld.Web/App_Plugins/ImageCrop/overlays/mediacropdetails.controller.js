@@ -52,8 +52,12 @@
 
             function selectCrop(value) {
                 const model = $scope.model;
-                const crop = vm.Crops.find(c => c.alias === value);
-                model.target.thumbnail = model.target.image + '?width=' + crop.width + '&height=' + crop.height;
+                if (!value || !vm.Crops) {
+                    model.target.thumbnail = model.target.image + '?width=' + model.target.image.width + '&height=' + model.target.image.height;
+                } else {
+                    const crop = vm.Crops.find(c => c.alias === value);
+                    model.target.thumbnail = model.target.image + '?width=' + crop.width + '&height=' + crop.height;
+                }
             }
             function toggleFocalPoint() {
             }
@@ -72,6 +76,9 @@
 
             function cropSet() {
                 var model = $scope.model;
+                if (!model.mediaItem || !model.mediaItem.properties) {
+                    return false;
+                }
                 var image = model.mediaItem.properties.find(p => p.editor === "Umbraco.ImageCropper");
                 vm.Crops = image.config.crops;
 

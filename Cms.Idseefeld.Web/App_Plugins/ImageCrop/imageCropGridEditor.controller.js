@@ -68,7 +68,7 @@
                     $scope.mediaItem = data;
                 });
         } catch (err) {
-            console.error(err);
+            console.log(err);
         }
 
         function getThumbnailUrl() {
