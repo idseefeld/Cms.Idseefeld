@@ -1,6 +1,6 @@
 ﻿angular.module("umbraco")
     .controller("ImageCrop.MediaCropDetailsController",
-        function ($scope, mediaResource) {
+        function ($scope, mediaResource, mediaTypeResource) {
 
             var vm = this;
 
@@ -12,7 +12,11 @@
             vm.focalPointChanged = focalPointChanged;
             vm.disableFocalPoint = false;
             vm.selectCrop = selectCrop;
-            selectCrop($scope.model.target.selectedCrop);
+            vm.model = $scope.model;
+            if (!vm.model.target.selectedCrop && vm.Crops?.length) {
+                vm.model.target.selectedCrop = vm.Crops[0].alias;
+            }
+            selectCrop(vm.model.target.selectedCrop);
 
             if (typeof $scope.model.disableFocalPoint === "boolean") {
                 vm.disableFocalPoint = $scope.model.disableFocalPoint
@@ -76,16 +80,28 @@
 
             function cropSet() {
                 var model = $scope.model;
-                if (!model.mediaItem || !model.mediaItem.properties) {
+                if (!model.target) {
                     return false;
                 }
-                var image = model.mediaItem.properties.find(p => p.editor === "Umbraco.ImageCropper");
-                vm.Crops = image.config.crops;
-
+                var mediaItem = model.mediaItem;
+                if (!mediaItem?.properties) {
+                    mediaResource.getById(model.target.id)
+                        .then(function (data) {
+                            setCropsFromMediaItem(data);
+                        });
+                } else {
+                    setCropsFromMediaItem(mediaItem);
+                }
                 //debugger
 
                 return false;// vm.Crops.length > 0;
 
                 //return (model.cropSize || {}).width !== undefined && (model.cropSize || {}).height !== undefined;
+            }
+            function setCropsFromMediaItem(mediaItem) {
+                var image = mediaItem?.properties?.find(p => p.editor === "Umbraco.ImageCropper");
+                if (image?.config?.crops) {
+                    vm.Crops = image.config.crops;
+                }
             }
         });

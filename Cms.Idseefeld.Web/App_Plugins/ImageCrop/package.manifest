@@ -11,5 +11,8 @@
     "/App_Plugins/ImageCrop/imageCropGridEditor.controller.js",
     "/App_Plugins/ImageCrop/mediapicker.controller.js",
     "/App_Plugins/ImageCrop/overlays/mediacropdetails.controller.js"
+  ],
+  "css": [
+    "/App_Plugins/ImageCrop/imageCrop.css",
   ]
 }

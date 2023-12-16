@@ -5,6 +5,7 @@
         $scope.control.icon = $scope.control.icon || 'icon-picture';
 
         $scope.thumbnailUrl = getThumbnailUrl();
+        $scope.caption = $scope.control?.value?.caption;
 
         if (!$scope.model.config.startNodeId) {
             if ($scope.model.config.ignoreUserStartNodes === true) {
@@ -63,12 +64,18 @@
         }
 
         try {
-            return mediaResource.getById($scope.control.value.id)
-                .then(function (data) {
-                    $scope.mediaItem = data;
-                });
+            if ($scope.control.value?.id) {
+                return mediaResource.getById($scope.control.value.id)
+                    .then(function (data) {
+                        $scope.mediaItem = data;
+                    }, function (err) {
+                        console.log(err);
+                    });
+            }
         } catch (err) {
-            console.log(err);
+            if (err) {
+                console.error(err);
+            }
         }
 
         function getThumbnailUrl() {
@@ -122,7 +129,7 @@
         function updateControlValue(selectedImage) {
             // we could apply selectedImage directly to $scope.control.value,
             // but this allows excluding fields in future if needed
-            $scope.control.value = {
+            $scope.mediaItem = {
                 focalPoint: selectedImage.focalPoint,
                 coordinates: selectedImage.coordinates,
                 id: selectedImage.id,
@@ -132,7 +139,9 @@
                 altText: selectedImage.altText,
                 selectedCrop: selectedImage.selectedCrop
             };
+            $scope.control.value = $scope.mediaItem;
             $scope.thumbnailUrl = getThumbnailUrl();
+            $scope.caption = selectedImage.caption;
         }
     }
 
