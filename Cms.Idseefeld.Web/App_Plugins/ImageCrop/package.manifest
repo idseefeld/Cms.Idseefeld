@@ -13,6 +13,6 @@
     "/App_Plugins/ImageCrop/overlays/mediacropdetails.controller.js"
   ],
   "css": [
-    "/App_Plugins/ImageCrop/imageCrop.css",
+    "/App_Plugins/ImageCrop/imageCrop.css"
   ]
 }
