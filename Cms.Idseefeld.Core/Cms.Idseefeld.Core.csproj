@@ -16,6 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Compositions\PrecompiledViewComposer.cs" />
+    <Compile Remove="Helpers\ImageCropViewLocationExpander.cs" />
     <Compile Remove="Models\ContactFormViewModel.cs" />
     <Compile Remove="Models\DictionaryDataAnnotationBaseModel.cs" />
     <Compile Remove="TagHelpers\ForPlaceholderTagHelper.cs" />
@@ -23,7 +25,8 @@
 
   <ItemGroup>
     <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.3" />
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.8.2" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.8.3" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.8.3" />
   </ItemGroup>
 
   <ItemGroup>

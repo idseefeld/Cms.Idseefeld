@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Cms.Idseefeld.Web/uSync/v9
+/Cms.Idseefeld.Web/Smidge/Cache/DIRKS-DELL

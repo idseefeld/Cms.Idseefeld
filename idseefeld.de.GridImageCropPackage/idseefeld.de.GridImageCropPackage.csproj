@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
+		<ContentTargetFolders>.</ContentTargetFolders>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>GridImageCropPackage</Title>
+		<Authors>dseefeld</Authors>
+		<Description>A grid editor that allows you to chose a named crop of an image.</Description>
+		<Copyright>$([System.DateTime]::UtcNow.ToString(`yyyy`)) © AuthorName</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="GridImageCropPackageComposer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="wwwroot\GridImageCrop\imageCropGridEditor.controller.js" />
+	  <Content Remove="wwwroot\GridImageCrop\imageCropGridEditor.cshtml" />
+	  <Content Remove="wwwroot\GridImageCrop\imageCropGridEditor.html" />
+	  <Content Remove="wwwroot\GridImageCrop\mediapicker.controller.js" />
+	  <Content Remove="wwwroot\GridImageCrop\overlays\mediacropdetails.controller.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="GridImageCropPackageComposer.cs" />
+	  <None Include="wwwroot\GridImageCrop\imageCropGridEditor.controller.js">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\GridImageCrop\imageCropGridEditor.cshtml">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\GridImageCrop\imageCropGridEditor.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\GridImageCrop\mediapicker.controller.js">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="wwwroot\GridImageCrop\overlays\mediacropdetails.controller.js">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.8.3" />
+	  <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.8.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\GridImageCrop\mediapicker.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\GridImageCrop\overlays\mediacropdetails.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+
+
+</Project>
