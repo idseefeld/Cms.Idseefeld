@@ -15,38 +15,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="GridImageCropPackageComposer.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Remove="wwwroot\GridImageCrop\imageCropGridEditor.controller.js" />
-	  <Content Remove="wwwroot\GridImageCrop\imageCropGridEditor.cshtml" />
-	  <Content Remove="wwwroot\GridImageCrop\imageCropGridEditor.html" />
-	  <Content Remove="wwwroot\GridImageCrop\mediapicker.controller.js" />
-	  <Content Remove="wwwroot\GridImageCrop\overlays\mediacropdetails.controller.js" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="GridImageCropPackageComposer.cs" />
-	  <None Include="wwwroot\GridImageCrop\imageCropGridEditor.controller.js">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Include="wwwroot\GridImageCrop\imageCropGridEditor.cshtml">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Include="wwwroot\GridImageCrop\imageCropGridEditor.html">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Include="wwwroot\GridImageCrop\mediapicker.controller.js">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Include="wwwroot\GridImageCrop\overlays\mediacropdetails.controller.js">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -55,11 +24,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Update="wwwroot\GridImageCrop\imageCrop.css">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\GridImageCrop\imageCropGridEditor.controller.js">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\GridImageCrop\imageCropGridEditor.cshtml">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\GridImageCrop\imageCropGridEditor.html">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\GridImageCrop\mediapicker.controller.js">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="wwwroot\GridImageCrop\mediapicker.html">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\GridImageCrop\overlays\mediacropdetails.controller.js">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="wwwroot\GridImageCrop\overlays\mediacropdetails.html">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
 
