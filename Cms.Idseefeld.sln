@@ -13,7 +13,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{CA
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "idseefeld.de.GridImageCropPackage", "idseefeld.de.GridImageCropPackage\idseefeld.de.GridImageCropPackage.csproj", "{B7E7D436-87DB-4C2B-8700-A14780E22A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "idseefeld.de.GridImageCropPackage", "idseefeld.de.GridImageCropPackage\idseefeld.de.GridImageCropPackage.csproj", "{B7E7D436-87DB-4C2B-8700-A14780E22A3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GridImageCrop", "GridImageCrop", "{56F568DE-B6E9-44FC-8279-D1817043730E}"
+	ProjectSection(SolutionItems) = preProject
+		idseefeld.de.GridImageCropPackage\LICENSE = idseefeld.de.GridImageCropPackage\LICENSE
+		idseefeld.de.GridImageCropPackage\readme.md = idseefeld.de.GridImageCropPackage\readme.md
+		idseefeld.de.GridImageCropPackage\umbraco-marketplace.json = idseefeld.de.GridImageCropPackage\umbraco-marketplace.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +43,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56F568DE-B6E9-44FC-8279-D1817043730E} = {CAAB3A88-DA4E-425F-9169-C7A22296E8A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {67D1732F-C8BA-4EE4-B6A3-63584D131B3E}

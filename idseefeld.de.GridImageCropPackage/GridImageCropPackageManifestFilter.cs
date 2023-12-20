@@ -15,10 +15,11 @@ namespace idseefeld.de.GridImageCropPackage
         public void Filter(List<PackageManifest> manifests)
         {
             var assembly = typeof(GridImageCropPackageManifestFilter).Assembly;
+            var version = assembly.GetName().Version?.ToString(3) ?? "1.0.0";
             manifests.Add(new PackageManifest
             {
                 PackageName = Constants.PackageName,
-                Version = assembly.GetName()?.Version?.ToString(3) ?? "1.0.0",
+                Version = version,
                 AllowPackageTelemetry = true,
                 GridEditors = new GridEditor[] {
                     new(){
@@ -26,7 +27,7 @@ namespace idseefeld.de.GridImageCropPackage
                         Alias = "gridImageCrop",
                         View = "/App_Plugins/GridImageCrop/imageCropGridEditor.html",
                         Render = "ImageCrop",
-                        Icon = "icon-crop",
+                        Icon = "icon-crop",                        
                         Config = new Dictionary<string, object>
                         {
                             { "selectedCrop", "Portrait" },
