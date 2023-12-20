@@ -32,7 +32,7 @@
                 onlyImages: true,
                 dataTypeKey: $scope.model.dataTypeKey,
                 size: "medium",
-                view: "/App_Plugins/ImageCrop/mediapicker.html",
+                view: "/App_Plugins/GridImageCrop/mediapicker.html",
                 submit: model => {
                     updateControlValue(model.selection[0]);
                     editorService.close();
@@ -49,7 +49,7 @@
                 size: 'small',
                 target: $scope.control.value,
                 mediaItem: $scope.mediaItem,
-                view: "/App_Plugins/ImageCrop/overlays/mediacropdetails.html",
+                view: "/App_Plugins/GridImageCrop/overlays/mediacropdetails.html",
                 submit: model => {
                     updateControlValue(model.target);
                     editorService.close();

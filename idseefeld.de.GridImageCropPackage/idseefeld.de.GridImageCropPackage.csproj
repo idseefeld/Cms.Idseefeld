@@ -11,8 +11,20 @@
 		<Title>GridImageCropPackage</Title>
 		<Authors>dseefeld</Authors>
 		<Description>A grid editor that allows you to chose a named crop of an image.</Description>
-		<Copyright>$([System.DateTime]::UtcNow.ToString(`yyyy`)) © AuthorName</Copyright>
+		<Copyright>$([System.DateTime]::UtcNow.ToString(`yyyy`)) © $(authors)</Copyright>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="wwwroot\GridImageCrop\ImageCrop.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Migrations\package.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Migrations\package.xml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -28,9 +40,6 @@
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="wwwroot\GridImageCrop\imageCropGridEditor.controller.js">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="wwwroot\GridImageCrop\imageCropGridEditor.cshtml">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="wwwroot\GridImageCrop\imageCropGridEditor.html">

@@ -10,7 +10,7 @@
 @if (Model?.value is not null)
 {
     var selectedCrop = Model.value.selectedCrop?.Value ?? "Square";
-    var url = string.IsNullOrEmpty(selectedCrop) ? Model.value.image : Model.value.image;// Url.GetCropUrl(imageCropper, (string)selectedCrop, true);
+    var url = string.IsNullOrEmpty(selectedCrop) ? Model.value.image : Model.value.image;
 
     if (Model.editor.config != null && Model.editor.config.size != null)
     {
@@ -25,7 +25,7 @@
                 cropDataSet: new ImageCropperValue
                             {
                                 Crops = new[]
-                                            {
+                                                        {
                                                 new ImageCropperValue.ImageCropperCrop
                                                 {
                                                     Alias = "default",
@@ -37,7 +37,7 @@
                                                         Y2 = (decimal)Model.value.coordinates.y2
                                                     }
                                                 }
-                                            }
+                                                        }
                             });
         }
         else

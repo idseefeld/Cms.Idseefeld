@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<language alias="en_us" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
-	<area alias="imageCrop">
-		<key alias="open">open</key>
-		<key alias="close">close</key>
-		<key alias="pickerLabel">Choose an Image</key>
-		<key alias="disableFocalPoint">Disable focal point </key>
-	</area>
-</language>

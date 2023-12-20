@@ -46,17 +46,5 @@
             "style": "border-left: 3px solid #ccc; padding: 10px; color: #ccc; font-family: serif; font-style: italic; font-size: 18px",
             "markup": "<blockquote>#value#</blockquote>"
         }
-    },
-    {
-        "name": "Image Crop",
-        "alias": "imageCrop",
-        "view": "/App_Plugins/ImageCrop/imageCropGridEditor.html",
-        "icon": "icon-crop",
-        "config": {
-            "size": {
-                "width": 800,
-                "height": 1200
-                }
-        }
     }
 ]

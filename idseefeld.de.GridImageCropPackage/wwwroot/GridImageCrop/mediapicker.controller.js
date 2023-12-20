@@ -423,7 +423,7 @@ angular.module("umbraco")
 
                 localizationService.localize("defaultdialogs_editSelectedMedia").then(value => {
                     dialog.title = value;
-                    dialog.view = "/App_Plugins/ImageCrop/overlays/mediacropdetails.html";
+                    dialog.view = "/App_Plugins/GridImageCrop/overlays/mediacropdetails.html";
                     editorService.open(dialog);
                 });
             };

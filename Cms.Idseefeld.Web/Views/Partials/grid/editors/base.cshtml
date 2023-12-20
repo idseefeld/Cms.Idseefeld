@@ -15,17 +15,11 @@ catch (Exception ex)
     public static string EditorView(dynamic contentItem)
     {
         string view = contentItem.editor.render != null ? contentItem.editor.render.ToString() : contentItem.editor.view.ToString();
-        if (view.InvariantStartsWith("/App_Plugins/ImageCrop"))
+
+        view = view.Replace(".html", ".cshtml");
+        if (!view.Contains("/"))
         {
-            view = view.Replace(".html", "").Substring(view.LastIndexOf('/') + 1);
-        }
-        else
-        {
-            view = view.Replace(".html", ".cshtml");
-            if (!view.Contains("/"))
-            {
-                view = "grid/editors/" + view;
-            }
+            view = "grid/editors/" + view;
         }
 
         return view;
