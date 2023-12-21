@@ -19,6 +19,11 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<AssemblyVersion>1.0.1</AssemblyVersion>
+		<FileVersion>1.0.1</FileVersion>
+		<IncludeSymbols>True</IncludeSymbols>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -80,6 +85,10 @@
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Extensions\" />
 	</ItemGroup>
 
 

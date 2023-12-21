@@ -14,85 +14,123 @@
 		<View path="grid\editors\ImageCrop.cshtml">
 			<![CDATA[@model dynamic
 @using Newtonsoft.Json;
+@using System.Dynamic
 @using Umbraco.Cms.Core.Media
 @using Umbraco.Cms.Core.Models.PublishedContent;
 @using Umbraco.Cms.Core.PropertyEditors.ValueConverters
 @using Umbraco.Extensions
+@using idseefeld.de.GridImageCropPackage.Helpers
+@using Microsoft.Extensions.Logging;
 
 @inject IImageUrlGenerator ImageUrlGenerator
+@inject ILogger<DynamicsHelpers> DynamicsHelpersLogger
 
+@{
+    string? GetSourceByBreakPoint(ImageCropperValue cropper, double ratio, int breakPointWidth, ImageCropperValue dataSet, string selectedCrop)
+    {
+        string src = cropper?.Src ?? string.Empty;
+
+        return ImageCropperTemplateCoreExtensions.GetCropUrl(
+                            src,
+                            ImageUrlGenerator,
+                            width: breakPointWidth,
+                            height: (int)(breakPointWidth / ratio),
+                            cropAlias: selectedCrop,
+                            cropDataSet: dataSet
+                    );
+    }
+}
 @if (Model?.value is not null)
 {
-    var selectedCrop = Model.value.selectedCrop?.Value ?? "Square";
-    var url = string.IsNullOrEmpty(selectedCrop) ? Model.value.image : Model.value.image;
+    string? src = null;
+    string? srcBreakPoint1 = null;
+    int breakPointWidth1 = 600;
+    string? srcBreakPoint2 = null;
+    int breakPointWidth2 = 768;
+    string? srcBreakPoint3 = null;
+    int breakPointWidth3 = 992;
+    string? srcBreakPoint4 = null;
+    int breakPointWidth4 = 1200;
+    var caption = Model.value.caption;
+    var altText = Model.value.altText ?? caption;
 
-    if (Model.editor.config != null && Model.editor.config.size != null)
+#if DEBUG
+    var json = JsonConvert.SerializeObject(Model.value);
+#endif
+
+    var helper = new DynamicsHelpers(DynamicsHelpersLogger);
+    if (helper.HasProperty(Model.value, "selectedCrop") && helper.HasProperty(Model.value.image, "value"))
     {
-        if (Model.value.coordinates != null)
+        var selectedCrop = Model.value.selectedCrop.Value != null ? Model.value.selectedCrop.Value : "Square";
+        var imageJson = JsonConvert.SerializeObject(Model.value.image.value);
+        var cropper = JsonConvert.DeserializeObject<ImageCropperValue>(imageJson) as ImageCropperValue;
+        if (cropper != null)
         {
-            url = ImageCropperTemplateCoreExtensions.GetCropUrl(
-                (string)url,
-                ImageUrlGenerator,
-                width: (int)Model.editor.config.size.width,
-                height: (int)Model.editor.config.size.height,
-                cropAlias: "default",
-                cropDataSet: new ImageCropperValue
-                            {
-                                Crops = new[]
-                                            {
-                                                new ImageCropperValue.ImageCropperCrop
-                                                {
-                                                    Alias = "default",
-                                                    Coordinates = new ImageCropperValue.ImageCropperCropCoordinates
-                                                    {
-                                                        X1 = (decimal)Model.value.coordinates.x1,
-                                                        Y1 = (decimal)Model.value.coordinates.y1,
-                                                        X2 = (decimal)Model.value.coordinates.x2,
-                                                        Y2 = (decimal)Model.value.coordinates.y2
-                                                    }
-                                                }
-                                            }
-                            });
-        }
-        else
-        {
-            var w = (int)Model.editor.config.size.width;
-            var h = (int)Model.editor.config.size.height;
-            switch (selectedCrop)
+            src = cropper.Src;
+            if (cropper.Crops != null)
             {
-                case "Landscape":
-                    h = w;
-                    w = (int)Model.editor.config.size.height;
-                    break;
-                case "Square":
-                    w = h = (int)Model.editor.config.size.height;
-                    break;
-                default:
-                    break;
-            }
-            url = ImageCropperTemplateCoreExtensions.GetCropUrl(
-                (string)url,
-                ImageUrlGenerator,
-                width: w,
-                height: h,
-                cropDataSet: new ImageCropperValue
-                            {
-                                FocalPoint = new ImageCropperValue.ImageCropperFocalPoint
+                var crop = cropper.Crops.FirstOrDefault(c => c.Alias?.Equals(selectedCrop));
+                if (crop != null)
+                {
+                    var w = crop.Width;
+                    var h = crop.Height;
+                    var ratio = (double)w / h;
+
+                    var crops = new ImageCropperValue.ImageCropperCrop
                                 {
-                                    Top = Model.value.focalPoint == null ? 0.5m : Model.value.focalPoint.top,
-                                    Left = Model.value.focalPoint == null ? 0.5m : Model.value.focalPoint.left
-                                }
-                            });
+                                    Alias = selectedCrop,
+                                    Coordinates = crop.Coordinates
+                                };
+                    var dataSet = new ImageCropperValue
+                                {
+                                    FocalPoint = new ImageCropperValue.ImageCropperFocalPoint
+                                    {
+                                        Top = cropper.FocalPoint?.Top ?? 0.5m,
+                                        Left = cropper.FocalPoint?.Left ?? 0.5m
+                                    },
+
+                                    Crops = new ImageCropperValue.ImageCropperCrop[] { crops }
+                                };
+
+                    src = ImageCropperTemplateCoreExtensions.GetCropUrl(
+                            cropper.Src,
+                            ImageUrlGenerator,
+                            width: w,
+                            height: h,
+                            cropAlias: selectedCrop,
+                            cropDataSet: dataSet
+                    );
+
+                    srcBreakPoint1 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth1, dataSet, selectedCrop);
+
+                    srcBreakPoint2 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth2, dataSet, selectedCrop);
+
+                    srcBreakPoint3 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth3, dataSet, selectedCrop);
+
+                    srcBreakPoint4 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth4, dataSet, selectedCrop);
+                }
+            }
         }
     }
-
-    var altText = Model.value.altText ?? Model.value.caption ?? string.Empty;
-
-    <img src="@url" alt="@altText">
-
-    if (Model.value.caption != null)
+    else
     {
-        <p class="caption">@Model.value.caption</p>
+
+    }
+
+    if (!string.IsNullOrEmpty(src))
+    {
+        <picture>
+            <source srcset="@srcBreakPoint1" media="(max-width: @(breakPointWidth1)px)" />
+            <source srcset="@srcBreakPoint4" media="(min-width: @(breakPointWidth4)px)" />
+            <source srcset="@srcBreakPoint3" media="(min-width: @(breakPointWidth3)px)" />
+            <source srcset="@srcBreakPoint2" media="(min-width: @(breakPointWidth2)px)" />
+            <source srcset="@srcBreakPoint1" media="(min-width: @(breakPointWidth1)px)" />
+            <img src="@src" alt="@altText">
+        </picture>
+        if (caption != null)
+        {
+            <p class="caption">@caption</p>
+        }
     }
 }
 ]]>
