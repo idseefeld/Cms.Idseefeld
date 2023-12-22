@@ -27,9 +27,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Extensions\**" />
 	  <Compile Remove="Views\**" />
+	  <Content Remove="Extensions\**" />
 	  <Content Remove="Views\**" />
+	  <EmbeddedResource Remove="Extensions\**" />
 	  <EmbeddedResource Remove="Views\**" />
+	  <None Remove="Extensions\**" />
 	  <None Remove="Views\**" />
 	</ItemGroup>
 
@@ -85,10 +89,6 @@
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Extensions\" />
 	</ItemGroup>
 
 

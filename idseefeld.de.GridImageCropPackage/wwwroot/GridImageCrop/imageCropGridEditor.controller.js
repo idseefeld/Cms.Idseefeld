@@ -4,9 +4,6 @@
 
         $scope.control.icon = $scope.control.icon || 'icon-picture';
 
-        $scope.thumbnailUrl = getThumbnailUrl();
-        $scope.caption = $scope.control?.value?.caption;
-
         if (!$scope.model.config.startNodeId) {
             if ($scope.model.config.ignoreUserStartNodes === true) {
                 $scope.model.config.startNodeId = -1;
@@ -20,13 +17,13 @@
             }
         }
 
-        $scope.setImage = function () {
+        $scope.setMediaItem = function () {
             var startNodeId = $scope.model.config && $scope.model.config.startNodeId ? $scope.model.config.startNodeId : null;
 
             var mediaPicker = {
                 startNodeId: startNodeId,
                 startNodeIsVirtual: startNodeId ? $scope.model.config.startNodeIsVirtual : null,
-                cropSize: $scope.control.editor.config && $scope.control.editor.config.size ? $scope.control.editor.config.size : null,
+                //cropSize: $scope.control.editor.config && $scope.control.editor.config.size ? $scope.control.editor.config.size : null,
                 showDetails: true,
                 disableFolderSelect: true,
                 onlyImages: true,
@@ -34,7 +31,7 @@
                 size: "medium",
                 view: "/App_Plugins/GridImageCrop/mediapicker.html",
                 submit: model => {
-                    updateControlValue(model.selection[0]);
+                    setControlValue(model.selection[0]);
                     editorService.close();
                 },
                 close: () => editorService.close()
@@ -43,7 +40,7 @@
             editorService.open(mediaPicker);
         };
 
-        $scope.editImage = function () {
+        $scope.editProperties = function () {
 
             const mediaCropDetailsConfig = {
                 size: 'small',
@@ -63,85 +60,121 @@
             });
         }
 
-        try {
-            if ($scope.control.value?.id) {
-                return mediaResource.getById($scope.control.value.id)
-                    .then(function (data) {
-                        $scope.mediaItem = data;
-                    }, function (err) {
-                        console.log(err);
-                    });
-            }
-        } catch (err) {
-            if (err) {
-                console.error(err);
+        if ($scope.control?.value) {
+            getMediaById();
+        }
+
+        function getMediaById() {
+            try {
+                if ($scope.control.value?.id) {
+                    return mediaResource.getById($scope.control.value.id)
+                        .then(function (data) {
+                            $scope.mediaItem = data;
+                            updateControlValue();
+                        }, function (err) {
+                            console.log(err);
+                        });
+                }
+            } catch (err) {
+                if (err) {
+                    console.error(err);
+                }
             }
         }
 
-        function getThumbnailUrl() {
+        function setControlValue(data) {
+            const newValue = {
+                focalPoint: data.focalPoint,
+                id: data.id,
+                caption: data.caption,
+                altText: data.altText,
+                selectedCrop: data.selectedCrop,
+                disableFocalPoint: data.disableFocalPoint ?? false,
+                coordinates: data.coordinates
+            }
+            $scope.control.value = newValue;
+            getMediaById();
+        }
 
-            if ($scope.control.value && $scope.control.value.image) {
-                var url = $scope.control.value.image;
-                var selectedCrop = $scope.control.value.selectedCrop;
+        function updateControlValue(data) {
+            var media = $scope.mediaItem;
+            var w = parseInt(media.properties?.find(p => p.alias === "umbracoWidth")?.value);
+            var h = parseInt(media.properties?.find(p => p.alias === "umbracoHeight")?.value);
+            var image = media.properties?.find(p => p.editor === "Umbraco.ImageCropper");
+            if (!image || !image.value) {
+                console.error("no Umbraco.ImageCropper")
+                return;
+            }
 
-                if ($scope.control.editor.config && $scope.control.editor.config.size) {
-                    if ($scope.control.value.coordinates) {
-                        // New way, crop by percent must come before width/height.
-                        var coords = $scope.control.value.coordinates;
+            if(!data){
+                data = $scope.control.value;
+            }
+            var updatedValue = {
+                focalPoint: data.focalPoint,
+                id: data.id,
+                caption: data.caption,
+                altText: data.altText,
+                selectedCrop: data.selectedCrop,
+                disableFocalPoint: data.disableFocalPoint ?? false,
+                coordinates: data.coordinates
+            }
+            updatedValue.coordinates = data.coordinates
+            updatedValue.selectedCrop = data.selectedCrop,
+            updatedValue.udi = media.udi;
+            updatedValue.width = w;
+            updatedValue.height = h;
+            updatedValue.src = image.value.src;
+            if (image.value.crops) {
+                $scope.Crops = image.value.crops;
+            }
+            $scope.control.value = updatedValue;
+
+            $scope.thumbnailUrl = getThumbnailUrl(updatedValue);
+            $scope.caption = updatedValue.caption;
+            $scope.altText = updatedValue.altText ?? media.name;
+        }
+
+        function getThumbnailUrl(updatedValue) {
+            if (updatedValue && updatedValue.selectedCrop) {
+                var url = updatedValue.src;
+                var crop = updatedValue.selectedCrop;
+                if (crop) {
+                    var maxSize = 1200;
+                    var w = crop.width;
+                    var h = crop.height;
+
+                    if (crop.coordinates) {
+                        var coords = crop.coordinates;
                         url += `?cc=${coords.x1},${coords.y1},${coords.x2},${coords.y2}`;
+                    } else if (updatedValue.focalPoint) {
+                        url += `?rxy=${updatedValue.focalPoint.left},${updatedValue.focalPoint.top}`;
                     } else {
-                        // Here in order not to break existing content where focalPoint were used.
-                        if ($scope.control.value.focalPoint) {
-                            url += `?rxy=${$scope.control.value.focalPoint.left},${$scope.control.value.focalPoint.top}`;
-                        } else {
-                            // Prevent black padding and no crop when focal point not set / changed from default
-                            url += '?rxy=0.5,0.5';
-                        }
+                        url += '?rxy=0.5,0.5';
                     }
-                    var w = $scope.control.editor.config.size.width;
-                    var h = $scope.control.editor.config.size.height;
-                    switch (selectedCrop) {
-                        case "Landscape":
-                            w = $scope.control.editor.config.size.height;
-                            h = $scope.control.editor.config.size.width;
-                            break;
-                        case "Square":
-                            h = w = $scope.control.editor.config.size.height;
-                            break;
-                        default:
+
+                    var ratio = w / h;
+                    if (w > maxSize) {
+                        w = maxSize;
+                        h = w / ratio;
                     }
+                    if (h > maxSize) {
+                        h = maxSize;
+                        w = h * ratio;
+                    }
+
                     url += '&width=' + w;
                     url += '&height=' + h;
-
                 }
 
                 // set default size if no crop present (moved from the view)
                 if (url.includes('?') === false) {
-                    url += '?width=800'
+                    url += '?width=' + maxSize;
                 }
 
                 return url;
             }
 
             return null;
-        }
-
-        function updateControlValue(selectedImage) {
-            // we could apply selectedImage directly to $scope.control.value,
-            // but this allows excluding fields in future if needed
-            $scope.mediaItem = {
-                focalPoint: selectedImage.focalPoint,
-                coordinates: selectedImage.coordinates,
-                id: selectedImage.id,
-                udi: selectedImage.udi,
-                image: selectedImage.image,
-                caption: selectedImage.caption,
-                altText: selectedImage.altText,
-                selectedCrop: selectedImage.selectedCrop
-            };
-            $scope.control.value = $scope.mediaItem;
-            $scope.thumbnailUrl = getThumbnailUrl();
-            $scope.caption = selectedImage.caption;
         }
     }
 

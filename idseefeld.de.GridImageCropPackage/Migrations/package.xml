@@ -19,30 +19,26 @@
 @using Umbraco.Cms.Core.Models.PublishedContent;
 @using Umbraco.Cms.Core.PropertyEditors.ValueConverters
 @using Umbraco.Extensions
-@using idseefeld.de.GridImageCropPackage.Helpers
 @using Microsoft.Extensions.Logging;
+@using idseefeld.de.GridImageCropPackage.Models
 
 @inject IImageUrlGenerator ImageUrlGenerator
-@inject ILogger<DynamicsHelpers> DynamicsHelpersLogger
 
 @{
-    string? GetSourceByBreakPoint(ImageCropperValue cropper, double ratio, int breakPointWidth, ImageCropperValue dataSet, string selectedCrop)
+    string? GetSourceByBreakPoint(string src, ImageCropperValue.ImageCropperCrop crop, double ratio, int breakPointWidth, ImageCropperValue dataSet)
     {
-        string src = cropper?.Src ?? string.Empty;
-
         return ImageCropperTemplateCoreExtensions.GetCropUrl(
                             src,
                             ImageUrlGenerator,
                             width: breakPointWidth,
                             height: (int)(breakPointWidth / ratio),
-                            cropAlias: selectedCrop,
+                            cropAlias: crop?.Alias,
                             cropDataSet: dataSet
                     );
     }
 }
 @if (Model?.value is not null)
 {
-    string? src = null;
     string? srcBreakPoint1 = null;
     int breakPointWidth1 = 600;
     string? srcBreakPoint2 = null;
@@ -54,68 +50,54 @@
     var caption = Model.value.caption;
     var altText = Model.value.altText ?? caption;
 
-#if DEBUG
     var json = JsonConvert.SerializeObject(Model.value);
-#endif
+    var gridImageCrop = JsonConvert.DeserializeObject<GridImageCropperValue>(json) as GridImageCropperValue;
+    if (gridImageCrop == null) { return; }
 
-    var helper = new DynamicsHelpers(DynamicsHelpersLogger);
-    if (helper.HasProperty(Model.value, "selectedCrop") && helper.HasProperty(Model.value.image, "value"))
+    string src = gridImageCrop.Src ?? string.Empty;
+    var w = gridImageCrop.Width;
+    var h = gridImageCrop.Height;
+    var ratio = (double)w / h;
+
+    var crop = gridImageCrop.SelectedCrop;
+    if(crop != null){
+         w = crop.Width;
+         h = crop.Height;
+        ratio = (double)w / h;
+    }
+    var dataSet = new ImageCropperValue
     {
-        var selectedCrop = Model.value.selectedCrop.Value != null ? Model.value.selectedCrop.Value : "Square";
-        var imageJson = JsonConvert.SerializeObject(Model.value.image.value);
-        var cropper = JsonConvert.DeserializeObject<ImageCropperValue>(imageJson) as ImageCropperValue;
-        if (cropper != null)
+        FocalPoint = new ImageCropperValue.ImageCropperFocalPoint
         {
-            src = cropper.Src;
-            if (cropper.Crops != null)
-            {
-                var crop = cropper.Crops.FirstOrDefault(c => c.Alias?.Equals(selectedCrop));
-                if (crop != null)
-                {
-                    var w = crop.Width;
-                    var h = crop.Height;
-                    var ratio = (double)w / h;
+            Top = gridImageCrop.FocalPoint?.Top ?? 0.5m,
+            Left = gridImageCrop.FocalPoint?.Left ?? 0.5m
+        },
 
-                    var crops = new ImageCropperValue.ImageCropperCrop
-                                {
-                                    Alias = selectedCrop,
-                                    Coordinates = crop.Coordinates
-                                };
-                    var dataSet = new ImageCropperValue
-                                {
-                                    FocalPoint = new ImageCropperValue.ImageCropperFocalPoint
-                                    {
-                                        Top = cropper.FocalPoint?.Top ?? 0.5m,
-                                        Left = cropper.FocalPoint?.Left ?? 0.5m
-                                    },
+        Crops = crop != null
+            ? new ImageCropperValue.ImageCropperCrop[] { crop }
+            : Array.Empty<ImageCropperValue.ImageCropperCrop>()
+    };
 
-                                    Crops = new ImageCropperValue.ImageCropperCrop[] { crops }
-                                };
+    src = ImageCropperTemplateCoreExtensions.GetCropUrl(
+            src,
+            ImageUrlGenerator,
+            width: w,
+            height: h,
+            cropAlias: crop?.Alias,
+            cropDataSet: dataSet
+    ) ?? string.Empty;
 
-                    src = ImageCropperTemplateCoreExtensions.GetCropUrl(
-                            cropper.Src,
-                            ImageUrlGenerator,
-                            width: w,
-                            height: h,
-                            cropAlias: selectedCrop,
-                            cropDataSet: dataSet
-                    );
-
-                    srcBreakPoint1 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth1, dataSet, selectedCrop);
-
-                    srcBreakPoint2 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth2, dataSet, selectedCrop);
-
-                    srcBreakPoint3 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth3, dataSet, selectedCrop);
-
-                    srcBreakPoint4 = GetSourceByBreakPoint(cropper, ratio, breakPointWidth4, dataSet, selectedCrop);
-                }
-            }
-        }
-    }
-    else
+    if (!string.IsNullOrEmpty(src))
     {
+        srcBreakPoint1 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth1, dataSet);
 
+        srcBreakPoint2 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth2, dataSet);
+
+        srcBreakPoint3 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth3, dataSet);
+
+        srcBreakPoint4 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth4, dataSet);
     }
+
 
     if (!string.IsNullOrEmpty(src))
     {

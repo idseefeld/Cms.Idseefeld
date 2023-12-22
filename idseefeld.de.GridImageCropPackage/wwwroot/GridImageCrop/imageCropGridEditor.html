@@ -1,13 +1,13 @@
 ﻿<div ng-controller="imageCropGridEditor.Controller">
 
-    <button type="button" class="btn-reset umb-editor-placeholder" ng-click="setImage()" ng-if="control.value === null">
+    <button type="button" class="btn-reset umb-editor-placeholder" ng-click="setMediaItem()" ng-if="control.value === null">
         <umb-icon icon="{{control.icon}}" class="icon"></umb-icon>
         <span ng-id="!control.$inserted" class="help-text">
             <localize key="grid_clickToInsertImage">Click to insert image</localize>
         </span>
     </button>
 
-    <div ng-if="thumbnailUrl !== null" class="relative">
+    <div ng-if="thumbnailUrl" class="relative">
 
         <img ng-src="{{thumbnailUrl}}" class="fullSizeImage" alt="" />
         <p class="caption">{{caption}}</p>
@@ -15,12 +15,12 @@
 
         <div class="umb-grid-media--controls">
 
-            <umb-button action="setImage()"
+            <umb-button action="setMediaItem()"
                         type="button"
                         button-style="info"
                         label-key="defaultdialogs_selectMedia">
             </umb-button>
-            <umb-button ng-if="mediaItem" action="editImage()"
+            <umb-button ng-if="mediaItem" action="editProperties()"
                         type="button"
                         button-style="info"
                         label-key="general_edit">

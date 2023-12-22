@@ -10,13 +10,11 @@
             vm.close = close;
             vm.hasCrops = cropSet() === true;
             vm.focalPointChanged = focalPointChanged;
+            vm.toggleFocalPoint = toggleFocalPoint;
             vm.disableFocalPoint = false;
             vm.selectCrop = selectCrop;
-            vm.model = $scope.model;
-            if (!vm.model.target.selectedCrop && vm.Crops?.length) {
-                vm.model.target.selectedCrop = vm.Crops[0].alias;
-            }
-            selectCrop(vm.model.target.selectedCrop);
+            vm.model = $scope.model;            
+            vm.imageSrc = $scope.model.target.image ?? $scope.model.target.src;
 
             if (typeof $scope.model.disableFocalPoint === "boolean") {
                 vm.disableFocalPoint = $scope.model.disableFocalPoint
@@ -29,13 +27,9 @@
                 $scope.model.target.focalPoint = { left: .5, top: .5 };
             }
 
-            if (!$scope.model.target.image) {
-                $scope.model.target.image = $scope.model.target.url;
-            }
-
             if (!$scope.model.target
                 || $scope.model.target.id
-                || ($scope.model.target.url && $scope.model.target.url.toLowerCase().startsWith("blob:"))) {
+                || ($scope.model.target.src && $scope.model.target.src.toLowerCase().startsWith("blob:"))) {
                 vm.shouldShowUrl = false;
             } else {
                 vm.shouldShowUrl = true;
@@ -54,16 +48,19 @@
                 };
             }
 
-            function selectCrop(value) {
+            function selectCrop(cropAlias) {
                 const model = $scope.model;
-                if (!value || !vm.Crops) {
-                    model.target.thumbnail = model.target.image + '?width=' + model.target.image.width + '&height=' + model.target.image.height;
+                const crop = vm.Crops.find(c => c.alias === cropAlias)
+                UpdateCropSettings(crop);
+                if (!crop) {
+                    model.target.thumbnail = getImageSrc();
                 } else {
-                    const crop = vm.Crops.find(c => c.alias === value);
-                    model.target.thumbnail = model.target.image + '?width=' + crop.width + '&height=' + crop.height;
+                    model.target.thumbnail = getImageSrc(crop);
                 }
             }
+
             function toggleFocalPoint() {
+                $scope.model.target.disableFocalPoint = vm.disableFocalPoint;
             }
 
             function submit() {
@@ -78,11 +75,23 @@
                 }
             }
 
+            function getImageSrc(crop) {
+                var target = $scope.model.target;
+                var src = target.src;
+                if (crop) {
+                    src += '?width=' + crop.width + '&height=' + crop.height;
+                } else {
+                    src += '?width=' + target.width + '&height=' + target.height;
+                }
+                return src;
+            }
+
             function cropSet() {
                 var model = $scope.model;
                 if (!model.target) {
                     return false;
                 }
+
                 var mediaItem = model.mediaItem;
                 if (!mediaItem?.properties) {
                     mediaResource.getById(model.target.id)
@@ -91,17 +100,35 @@
                         });
                 } else {
                     setCropsFromMediaItem(mediaItem);
+                    return vm.hasCrops;
                 }
-                //debugger
 
-                return false;// vm.Crops.length > 0;
-
-                //return (model.cropSize || {}).width !== undefined && (model.cropSize || {}).height !== undefined;
+                return false;
             }
+
             function setCropsFromMediaItem(mediaItem) {
                 var image = mediaItem?.properties?.find(p => p.editor === "Umbraco.ImageCropper");
-                if (image?.config?.crops) {
-                    vm.Crops = image.config.crops;
+                var crops = image?.value?.crops;
+                var defaultCrops = image?.config?.crops.map(c => c.alias);
+                if (crops && defaultCrops) {
+                    vm.CropAliasSelection = defaultCrops;
+                    vm.Crops = crops;
+                    var crop = $scope.model.target.selectedCrop;
+                    if (!crop && crops?.length) {
+                        crop = crops[0];
+                    }
+                    selectCrop(crop.alias);
                 }
+            }
+
+            function UpdateCropSettings(crop) {
+                $scope.model.target.selectedCrop = crop;
+                vm.selectedCropAlias = crop.alias;
+                vm.hasCrops = !!crop;
+                $scope.model.target.coordinates = crop.coordinates;
+                $scope.model.cropSize = {
+                    width: crop.width,
+                    height: crop.height
+                };
             }
         });

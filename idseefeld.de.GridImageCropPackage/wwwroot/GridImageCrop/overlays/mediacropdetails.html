@@ -53,8 +53,8 @@
                         </umb-checkbox>
                     </div>
 
-                    <div ng-if="model.target.image && vm.disableFocalPoint === false">
-                        <umb-image-gravity src="model.target.image"
+                    <div ng-if="vm.imageSrc && vm.disableFocalPoint === false">
+                        <umb-image-gravity src="vm.imageSrc"
                                            center="model.target.focalPoint"
                                            on-value-changed="vm.focalPointChanged(left, top)">
                         </umb-image-gravity>
@@ -77,7 +77,7 @@
                                         crop="model.target.coordinates"
                                         center="model.target.focalPoint"
                                         max-size="400"
-                                        src="model.target.image">
+                                        src="vm.imageSrc">
                         </umb-image-crop>
                     </div>
                 </div>
@@ -93,12 +93,12 @@
                     <ng-form name="radioButtonsFieldForm">
 
                         <ul class="unstyled">
-                            <li ng-repeat="crop in vm.Crops">
+                            <li ng-repeat="alias in vm.CropAliasSelection">
                                 <umb-radiobutton name="selectedCrop_{{vm.uniqueId}}"
-                                                 on-change="vm.selectCrop(crop.alias)"
-                                                 value="{{crop.alias}}"
-                                                 model="model.target.selectedCrop"
-                                                 text="{{crop.alias}}">
+                                                 on-change="vm.selectCrop(alias)"
+                                                 value="{{alias}}"
+                                                 model="vm.selectedCropAlias"
+                                                 text="{{alias}}">
                                 </umb-radiobutton>
                             </li>
                         </ul>
