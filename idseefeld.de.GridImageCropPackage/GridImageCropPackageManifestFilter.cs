@@ -15,7 +15,7 @@ namespace idseefeld.de.GridImageCropPackage
         public void Filter(List<PackageManifest> manifests)
         {
             var assembly = typeof(GridImageCropPackageManifestFilter).Assembly;
-            var version = assembly.GetName().Version?.ToString(3) ?? "1.0.1";
+            var version = assembly.GetName().Version?.ToString(3) ?? "2.0.0";
 
             manifests.Add(new PackageManifest
             {
