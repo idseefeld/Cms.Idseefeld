@@ -44,6 +44,11 @@
 
 	<ItemGroup>
 	  <None Remove="LICENSE" />
+	  <None Remove="Migrations\package.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Migrations\package.xml" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -16,6 +16,16 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:44327;http://localhost:2340"
+    },
+    "DevProd": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "umbraco",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DevProd"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:44327;http://localhost:2340"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

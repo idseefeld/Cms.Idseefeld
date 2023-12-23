@@ -25,6 +25,8 @@
 @inject IImageUrlGenerator ImageUrlGenerator
 
 @{
+    //version 2.0.0
+	
     string? GetSourceByBreakPoint(string src, ImageCropperValue.ImageCropperCrop crop, double ratio, int breakPointWidth, ImageCropperValue dataSet)
     {
         return ImageCropperTemplateCoreExtensions.GetCropUrl(
