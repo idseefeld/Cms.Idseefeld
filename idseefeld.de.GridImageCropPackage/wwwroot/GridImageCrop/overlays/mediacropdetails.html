@@ -1,134 +1,71 @@
 ﻿<div ng-controller="ImageCrop.MediaCropDetailsController as vm">
     <umb-editor-view>
 
-        <umb-editor-header name="model.title"
-                           name-locked="true"
-                           hide-alias="true"
-                           hide-icon="true"
-                           hide-description="true">
+        <umb-editor-header name="model.title" name-locked="true" hide-alias="true" hide-icon="true" hide-description="true">
         </umb-editor-header>
 
         <umb-editor-container>
 
-            <div class="umb-control-group" ng-if="vm.shouldShowUrl">
-                <h5>
-                    <localize key="@general_url">URL</localize>
-                </h5>
-                <input type="text" localize="placeholder" placeholder="@general_url" class="umb-property-editor umb-textstring" ng-model="model.target.url" />
+            <div class="umb-control-group" ng-if="model.target">
+                <div ng-if="vm.hasCrops">
+                    <h5>
+                        <localize key="@general_cropSection">Crop section</localize>
+                    </h5>
+
+                    <div class="umb-property-editor umb-radiobuttons">
+                        <ng-form name="radioButtonsFieldForm">
+
+                            <ul class="inline">
+                                <li ng-repeat="alias in vm.CropAliasSelection">
+                                    <umb-radiobutton name="selectedCrop_{{vm.uniqueId}}" on-change="vm.selectCrop(alias)" value="{{alias}}" model="vm.selectedCropAlias" text="{{alias}}">
+                                    </umb-radiobutton>
+                                </li>
+                            </ul>
+
+                        </ng-form>
+                    </div>
+
+                    <div>
+                        <umb-image-crop 
+                            height="{{vm.cropSize.height}}" 
+                            width="{{vm.cropSize.width}}" 
+                            crop="vm.selectedCrop.coordinates" 
+                            center="vm.focalPoint" 
+                            src="vm.imageSrc">
+                        </umb-image-crop>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-link" ng-click="vm.reset()">
+                            <localize key="imagecropper_reset" class="ng-isolate-scope">Reset crop</localize>
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
             <div class="umb-control-group" ng-if="model.target">
                 <h5>
                     <localize key="@content_altTextOptional">Alternative text (optional)</localize>
                 </h5>
-                <input type="text" class="umb-property-editor umb-textstring" ng-model="model.target.altText" umb-auto-focus />
+                <input type="text" class="umb-property-editor umb-textstring" ng-model="vm.altText" umb-auto-focus />
             </div>
 
             <div class="umb-control-group" ng-if="model.target">
                 <h5>
                     <localize key="@content_captionTextOptional">Caption (optional)</localize>
                 </h5>
-                <input type="text" class="umb-property-editor umb-textstring" ng-model="model.target.caption" />
+                <input type="text" class="umb-property-editor umb-textstring" ng-model="vm.caption" />
             </div>
 
-            <div class="umb-control-group" ng-if="model.target">
-                <div ng-if="vm.hasCrops === false && vm.disableFocalPoint">
-                    <h5>
-                        <localize key="general_preview">Preview</localize>
-                    </h5>
-
-                    <img ng-src="{{model.target.thumbnail}}" alt="{{model.target.name}}" />
-                </div>
-
-                <div ng-if="vm.hasCrops === false">
-                    <h5>
-                        <localize key="@general_focalPoint">Focal point</localize>
-                    </h5>
-                    
-                    <div>
-                        <umb-checkbox model="vm.disableFocalPoint"
-                                      on-change="vm.toggleFocalPoint()"
-                                      text="Disable"
-                                      label-key="imageCrop_disableFocalPoint">
-                        </umb-checkbox>
-                    </div>
-
-                    <div ng-if="vm.imageSrc && vm.disableFocalPoint === false">
-                        <umb-image-gravity src="vm.imageSrc"
-                                           center="model.target.focalPoint"
-                                           on-value-changed="vm.focalPointChanged(left, top)">
-                        </umb-image-gravity>
-                        <div class="media-crop-details-buttons">
-                            <button type="button" ng-show="(model.target.focalPoint.left !== 0.5 && model.target.focalPoint.top !== 0.5)" class="btn btn-link btn-gravity-reset" ng-click="vm.focalPointChanged(0.5,0.5)">
-                                <umb-icon icon="icon-axis-rotation"></umb-icon> <localize key="content_resetFocalPoint">Reset focal point</localize>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div ng-if="vm.hasCrops">
-                    <h5>
-                        <localize key="@general_cropSection">Crop section</localize>
-                    </h5>
-
-                    <div>
-                        <umb-image-crop height="{{model.cropSize.height}}"
-                                        width="{{model.cropSize.width}}"
-                                        crop="model.target.coordinates"
-                                        center="model.target.focalPoint"
-                                        max-size="400"
-                                        src="vm.imageSrc">
-                        </umb-image-crop>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="umb-control-group" ng-if="model.target && vm.Crops.length">
-                <h5>
-                    <localize key="@general_cropSection">Crop section</localize>
-                </h5>
-
-                <div class="umb-property-editor umb-radiobuttons">
-                    <ng-form name="radioButtonsFieldForm">
-
-                        <ul class="unstyled">
-                            <li ng-repeat="alias in vm.CropAliasSelection">
-                                <umb-radiobutton name="selectedCrop_{{vm.uniqueId}}"
-                                                 on-change="vm.selectCrop(alias)"
-                                                 value="{{alias}}"
-                                                 model="vm.selectedCropAlias"
-                                                 text="{{alias}}">
-                                </umb-radiobutton>
-                            </li>
-                        </ul>
-
-                    </ng-form>
-                </div>
-
-                <!--<div ng-repeat="crop in vm.Crops">
-                    <label><input name="crop" type="radio" class="umb-property-editor umb-radio" ng-model="model.target.crop" /> {{crop.alias}}</label>
-                </div>-->
-
-            </div>
-
-</umb-editor-container>
+        </umb-editor-container>
 
         <umb-editor-footer>
             <umb-editor-footer-content-right>
 
-                <umb-button action="vm.close()"
-                            button-style="link"
-                            shortcut="esc"
-                            label-key="general_close"
-                            type="button">
+                <umb-button action="vm.close()" button-style="link" shortcut="esc" label-key="general_close" type="button">
                 </umb-button>
 
-                <umb-button button-style="success"
-                            label-key="buttons_select"
-                            type="button"
-                            disabled="model.selection.length === 0"
-                            action="vm.submit(model)">
+                <umb-button button-style="success" label-key="buttons_select" type="button" disabled="model.selection.length === 0" action="vm.submit(model)">
                 </umb-button>
 
             </umb-editor-footer-content-right>

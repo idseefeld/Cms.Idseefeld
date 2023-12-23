@@ -1,70 +1,46 @@
 ﻿angular.module("umbraco")
     .controller("ImageCrop.MediaCropDetailsController",
-        function ($scope, mediaResource, mediaTypeResource) {
+        function ($scope, mediaResource) {
 
             var vm = this;
+            init();
 
-            vm.uniqueId = String.CreateGuid();
+            function init() {
+                vm.uniqueId = String.CreateGuid();
+                vm.cnt = 1;
 
-            vm.submit = submit;
-            vm.close = close;
-            vm.hasCrops = cropSet() === true;
-            vm.focalPointChanged = focalPointChanged;
-            vm.toggleFocalPoint = toggleFocalPoint;
-            vm.disableFocalPoint = false;
-            vm.selectCrop = selectCrop;
-            vm.model = $scope.model;            
-            vm.imageSrc = $scope.model.target.image ?? $scope.model.target.src;
+                vm.submit = submit;
+                vm.close = close;
+                vm.selectCrop = selectCrop;
+                vm.reset = reset;
 
-            if (typeof $scope.model.disableFocalPoint === "boolean") {
-                vm.disableFocalPoint = $scope.model.disableFocalPoint
-            }
-            else {
-                vm.disableFocalPoint = ($scope.model.disableFocalPoint !== undefined && $scope.model.disableFocalPoint !== "0") ? true : false;
-            }
+                vm.model = $scope.model;
+                vm.caption = vm.model.target.caption;
+                vm.altText = vm.model.target.altText;
+                vm.imageSrc = $scope.model.target.image ?? $scope.model.target.src;
+                if (!vm.imageSrc) { return; }
+                vm.imageSrcOrig = vm.imageSrc;
+                vm.delimiter = vm.imageSrc.indexOf("?") < 0 ? "?" : "&";
 
-            if (!$scope.model.target.coordinates && !$scope.model.target.focalPoint) {
-                $scope.model.target.focalPoint = { left: .5, top: .5 };
-            }
-
-            if (!$scope.model.target
-                || $scope.model.target.id
-                || ($scope.model.target.src && $scope.model.target.src.toLowerCase().startsWith("blob:"))) {
-                vm.shouldShowUrl = false;
-            } else {
-                vm.shouldShowUrl = true;
+                vm.focalPoint = { left: .5, top: .5 };
+                vm.hasCrops = cropSet() === true;
             }
 
-            /**
-             * Called when the umbImageGravity component updates the focal point value
-             * @param {any} left
-             * @param {any} top
-             */
-            function focalPointChanged(left, top) {
-                // update the model focalpoint value
-                $scope.model.target.focalPoint = {
-                    left: left,
-                    top: top
-                };
-            }
-
-            function selectCrop(cropAlias) {
-                const model = $scope.model;
-                const crop = vm.Crops.find(c => c.alias === cropAlias)
-                UpdateCropSettings(crop);
-                if (!crop) {
-                    model.target.thumbnail = getImageSrc();
-                } else {
-                    model.target.thumbnail = getImageSrc(crop);
+            function reset() {
+                var cropOrigin = vm.Crops.find(c => c.alias === vm.selectedCrop.alias)
+                if (cropOrigin) {
+                    vm.selectedCrop = deepCopy(cropOrigin);
+                    vm.cnt++;
+                    vm.imageSrc = vm.imageSrcOrig + vm.delimiter + "cnt=" + vm.cnt;
+                    UpdateCropSettings();
                 }
-            }
-
-            function toggleFocalPoint() {
-                $scope.model.target.disableFocalPoint = vm.disableFocalPoint;
             }
 
             function submit() {
                 if ($scope.model && $scope.model.submit) {
+                    $scope.model.target.selectedCrop = vm.selectedCrop;
+                    vm.model.target.caption = vm.caption;
+                    vm.model.target.altText = vm.altText;
                     $scope.model.submit($scope.model);
                 }
             }
@@ -73,17 +49,6 @@
                 if ($scope.model && $scope.model.close) {
                     $scope.model.close($scope.model);
                 }
-            }
-
-            function getImageSrc(crop) {
-                var target = $scope.model.target;
-                var src = target.src;
-                if (crop) {
-                    src += '?width=' + crop.width + '&height=' + crop.height;
-                } else {
-                    src += '?width=' + target.width + '&height=' + target.height;
-                }
-                return src;
             }
 
             function cropSet() {
@@ -107,9 +72,13 @@
             }
 
             function setCropsFromMediaItem(mediaItem) {
+                if (!vm.altText && !vm.model.target.altText && vm.model.target.altText !== '') {
+                    vm.altText = mediaItem.name;
+                }
                 var image = mediaItem?.properties?.find(p => p.editor === "Umbraco.ImageCropper");
                 var crops = image?.value?.crops;
                 var defaultCrops = image?.config?.crops.map(c => c.alias);
+
                 if (crops && defaultCrops) {
                     vm.CropAliasSelection = defaultCrops;
                     vm.Crops = crops;
@@ -121,14 +90,28 @@
                 }
             }
 
-            function UpdateCropSettings(crop) {
-                $scope.model.target.selectedCrop = crop;
+            function selectCrop(cropAlias) {
+                var crop = $scope.model.target.selectedCrop;
+                if (!crop || crop.alias !== cropAlias) {
+                    crop = vm.Crops.find(c => c.alias === cropAlias);
+                }
+                vm.selectedCrop = deepCopy(crop);
+                UpdateCropSettings();
+            }
+
+            function UpdateCropSettings() {
+                var crop = vm.selectedCrop;
                 vm.selectedCropAlias = crop.alias;
                 vm.hasCrops = !!crop;
-                $scope.model.target.coordinates = crop.coordinates;
-                $scope.model.cropSize = {
+                vm.cropSize = {
                     width: crop.width,
                     height: crop.height
                 };
+            }
+
+            function deepCopy(obj) {
+                if (!obj) { return null }
+
+                return JSON.parse(JSON.stringify(obj));
             }
         });

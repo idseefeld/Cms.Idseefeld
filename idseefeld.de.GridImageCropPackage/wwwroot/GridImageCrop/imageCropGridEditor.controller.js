@@ -23,7 +23,6 @@
             var mediaPicker = {
                 startNodeId: startNodeId,
                 startNodeIsVirtual: startNodeId ? $scope.model.config.startNodeIsVirtual : null,
-                //cropSize: $scope.control.editor.config && $scope.control.editor.config.size ? $scope.control.editor.config.size : null,
                 showDetails: true,
                 disableFolderSelect: true,
                 onlyImages: true,
@@ -43,7 +42,7 @@
         $scope.editProperties = function () {
 
             const mediaCropDetailsConfig = {
-                size: 'small',
+                size: 'medium',
                 target: $scope.control.value,
                 mediaItem: $scope.mediaItem,
                 view: "/App_Plugins/GridImageCrop/overlays/mediacropdetails.html",
@@ -84,13 +83,10 @@
 
         function setControlValue(data) {
             const newValue = {
-                focalPoint: data.focalPoint,
                 id: data.id,
                 caption: data.caption,
                 altText: data.altText,
-                selectedCrop: data.selectedCrop,
-                disableFocalPoint: data.disableFocalPoint ?? false,
-                coordinates: data.coordinates
+                selectedCrop: data.selectedCrop
             }
             $scope.control.value = newValue;
             getMediaById();
@@ -106,20 +102,16 @@
                 return;
             }
 
-            if(!data){
+            if (!data) {
                 data = $scope.control.value;
             }
+
             var updatedValue = {
-                focalPoint: data.focalPoint,
                 id: data.id,
                 caption: data.caption,
                 altText: data.altText,
                 selectedCrop: data.selectedCrop,
-                disableFocalPoint: data.disableFocalPoint ?? false,
-                coordinates: data.coordinates
             }
-            updatedValue.coordinates = data.coordinates
-            updatedValue.selectedCrop = data.selectedCrop,
             updatedValue.udi = media.udi;
             updatedValue.width = w;
             updatedValue.height = h;

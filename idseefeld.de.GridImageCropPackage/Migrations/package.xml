@@ -47,13 +47,13 @@
     int breakPointWidth3 = 992;
     string? srcBreakPoint4 = null;
     int breakPointWidth4 = 1200;
-    var caption = Model.value.caption;
-    var altText = Model.value.altText ?? caption;
 
     var json = JsonConvert.SerializeObject(Model.value);
     var gridImageCrop = JsonConvert.DeserializeObject<GridImageCropperValue>(json) as GridImageCropperValue;
     if (gridImageCrop == null) { return; }
 
+    var caption = gridImageCrop.Caption;
+    var altText = string.IsNullOrEmpty(gridImageCrop.AltText) ? caption : gridImageCrop.AltText;
     string src = gridImageCrop.Src ?? string.Empty;
     var w = gridImageCrop.Width;
     var h = gridImageCrop.Height;

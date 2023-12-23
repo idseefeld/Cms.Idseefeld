@@ -405,7 +405,7 @@ angular.module("umbraco")
             function openDetailsDialog() {
 
                 const dialog = {
-                    size: "small",
+                    size: "medium",
                     cropSize: $scope.cropSize,
                     target: $scope.target,
                     disableFocalPoint: $scope.disableFocalPoint,
