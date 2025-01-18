@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+@using System.Net.Mail;
+@{
+    var result = "ok";
+    try
+    {
+        var msg = new MailMessage("noreply@idseefeld.de", "dirk.seefeld@idseefeld.de");
+        msg.Subject = "Test System.NetMail.SmtpClient";
+        msg.Body = "Test";
+        var smtpClient = new SmtpClient("smtp.ionos.de");
+        //smtpClient.Port = 465;
+        smtpClient.EnableSsl = true;
+        smtpClient.Credentials = new System.Net.NetworkCredential("noreply@idseefeld.de", "*dfud2Vkfp3bCG4Woqir");
+        smtpClient.Send(msg);
+
+    }
+    catch (Exception ex)
+    {
+        result = $"Fehler: {ex.Message}";
+        throw ex;
+    }
+}
+<h2 style="color: red;">
+    @result
+</h2>

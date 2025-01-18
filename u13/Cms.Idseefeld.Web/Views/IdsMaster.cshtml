@@ -1,0 +1,159 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject IRuntimeMinifier runtimeMinifier
+@{
+    Layout = null;
+    var seoData = Model as ContentModels.ISEO;
+    var title = seoData?.MetaTitle ?? String.Empty;
+    if (string.IsNullOrEmpty(title))
+    {
+        title = Model.Name;
+    }
+    var metaKeywords = string.Join(", ", (seoData?.MetaKeywords ?? new string[0]));
+
+    var root = Model.AncestorOrSelf<ContentModels.IdsRootPage>();
+    var cookieHint = root?.CookieHint;
+    var cookieOkButtonLabel = Umbraco.GetDictionaryValue("cookieOkButtonLabel", "Ok");
+    var noScriptHint = Umbraco.GetDictionaryValue("noScriptHint", "Diese Seite verwendet Javascript. Wenn Sie Javascript deaktiviert haben, funktioniert sie nur eingeschränkt.");
+    var pageSettings = Model as IPageSettings;
+    var backgroundImageSrc = pageSettings?.BackgroundImage?.Url();
+    var backgroundImageStyle = backgroundImageSrc != null ? $"background-image:url({backgroundImageSrc})" : "";
+    var siteName = root?.SiteName;
+    var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+    var url = Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute);
+    var canonicalUrl = url?.Replace("://www.", "://");
+    var host = UmbracoContext?.CleanedUmbracoUrl.DnsSafeHost ?? "";
+
+    var pageCssClass = ViewData["pageCssClass"];
+
+    var isLocalhost = host?.InvariantEquals("localhost") ?? false;
+
+    if (siteName == "iDSeefeld")
+    {
+        SmidgeHelper.RequiresCss("~/css/alfa-slab-font/main.css");
+    }
+
+    SmidgeHelper.RequiresCss("~/css/ids/main.css");
+
+    SmidgeHelper.RequiresCss("~/highlightjs/styles/vs2015.min.css");
+}
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @*<link rel="icon" type="image/x-icon" href="~/css/ids/favicon.ico">*@
+    <link rel="shortcut icon" type="image/png" href="~/css/ids/product-logo.png" />
+
+    @if (siteName == "iDSeefeld")
+    {
+        <link rel="preload" href="/css/alfa-slab-font/6NUQ8FmMKwSEKjnm5-4v-4Jh2dJhew.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/css/alfa-slab-font/6NUQ8FmMKwSEKjnm5-4v-4Jh2dxhe-Wv.woff2" as="font" type="font/woff2" crossorigin />
+    }
+
+    <title>@title | @siteName</title>
+
+    @if (!string.IsNullOrEmpty(canonicalUrl))
+    {
+        <link rel="canonical" href="@canonicalUrl" />
+    }
+
+    @if (!string.IsNullOrEmpty(seoData?.MetaDescription))
+    {
+        <meta name="description" content="@seoData?.MetaDescription" />
+    }
+
+    @if (!string.IsNullOrEmpty(metaKeywords))
+    {
+        <meta name="keywords" content="@metaKeywords" />
+    }
+
+    @* read more: https://manage.cookiebot.com/de/manage *@
+    @*
+    @if (!isLocalhost || true)
+    {
+    var cookiebotGuid = "274dc0df-3f4e-49a8-95f6-0814f0217941";
+
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="@cookiebotGuid" data-blockingmode="auto" type="text/javascript"></script>
+    }
+    *@
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <environment names="Development">
+        @await SmidgeHelper.CssHereAsync(debug: true)
+    </environment>
+    <environment exclude="Development">
+        @await SmidgeHelper.CssHereAsync()
+    </environment>
+
+    <style>
+        @@media (min-width: 576px) and (orientation: portrait) {
+            body.root {
+        @backgroundImageStyle
+            }
+        }
+
+        @@media (min-height: 575px) and (orientation: landscape) {
+            body.root {
+        @backgroundImageStyle
+            }
+        }
+
+    </style>
+</head>
+<body class="@pageCssClass">
+
+    @*@await Html.PartialAsync("CookieHint")*@
+
+    @if (IsSectionDefined("TopNavi"))
+    {
+        @RenderSection("TopNavi")
+    }
+    else
+    {
+        @await Html.PartialAsync("ids/ids-TopNavi")
+    }
+
+    <main id="main">
+
+        @RenderBody()
+
+    </main>
+
+    @if (IsSectionDefined("Footer"))
+    {
+        @RenderSection("Footer")
+    }
+    else
+    {
+        <footer class="container-fluid fixed-bottom p-0">
+            @await Html.PartialAsync("ids/ids-FooterNavi")
+            @await Html.PartialAsync("CookieHint")
+        </footer>
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+
+    <environment names="Development">
+        <script src="~/js/cookie.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/cookie.es5.min.js"></script>
+    </environment>
+   
+
+    <script src="~/highlightjs/highlight.min.js"></script>
+    <script>
+        document.querySelectorAll('pre.code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    </script>
+</body>
+</html>
