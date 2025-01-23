@@ -13,6 +13,9 @@
   <ItemGroup>
     <Content Remove="Views\Partials\grid\editors\ImageCrop.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="umbraco\Data\Umbraco.sqlite.db" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Lucene.Net.Replicator" Version="4.8.0-beta00017" />
