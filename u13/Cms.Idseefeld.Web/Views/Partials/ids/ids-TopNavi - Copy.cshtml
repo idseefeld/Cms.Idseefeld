@@ -14,7 +14,7 @@
     var brandLogoUrl = root?.BrandLogo?.Url();
     var brandName = root?.BrandName;
 
-    var toggleLabel = Umbraco.GetDictionaryValue("toggleNavigation", "Toggle navigation");
+    var toggleLabel = Umbraco.GetDictionaryValueOrDefault("toggleNavigation", "Toggle navigation");
 }
 
 @if (content != null && selection?.Length > 0)

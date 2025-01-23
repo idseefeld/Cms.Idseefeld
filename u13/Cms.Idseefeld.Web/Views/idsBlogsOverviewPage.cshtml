@@ -4,9 +4,9 @@
 @inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
     Layout = "IdsMaster.cshtml";
-    var noBlogs = Umbraco.GetDictionaryValue("noBlogs", "Es gibt noch keine Blogbeiträge.");
-    var readMore = Umbraco.GetDictionaryValue("readMoreLabel", "mehr lesen...");
-    var lastUpdated = Umbraco.GetDictionaryValue("lastUpdated", "zuletzt aktualisiert am");
+    var noBlogs = Umbraco.GetDictionaryValueOrDefault("noBlogs", "Es gibt noch keine Blogbeiträge.");
+    var readMore = Umbraco.GetDictionaryValueOrDefault("readMoreLabel", "mehr lesen...");
+    var lastUpdated = Umbraco.GetDictionaryValueOrDefault("lastUpdated", "zuletzt aktualisiert am");
     var blogs = BlogService.GetBlogs(Umbraco, Model);
 
     var useCardStyle = Model.UseCardStyle;

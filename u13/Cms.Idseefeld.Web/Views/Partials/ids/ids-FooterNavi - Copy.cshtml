@@ -18,7 +18,7 @@
     var selection = root?.FooterLinks?.ToArray();
     //ToDo: How do I get the localized page names?
 
-    var toggleLabel = Umbraco.GetDictionaryValue("toggleNavigation", "Toggle navigation");
+    var toggleLabel = Umbraco.GetDictionaryValueOrDefault("toggleNavigation", "Toggle navigation");
     var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
 }
 

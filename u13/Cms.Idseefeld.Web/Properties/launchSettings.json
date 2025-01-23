@@ -25,16 +25,6 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "Stage": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "umbraco",
-      "applicationUrl": "https://localhost:44317;http://localhost:57015",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "stage"
-      }
     }
   }
 }

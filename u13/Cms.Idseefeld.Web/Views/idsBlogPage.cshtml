@@ -4,7 +4,7 @@
 @{
     Layout = "IdsMaster.cshtml";
     var mainGridAlias = IdsBlogPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
-    var goToOverview = Umbraco.GetDictionaryValue("goToOverview", "zur Übersicht");
+    var goToOverview = Umbraco.GetDictionaryValueOrDefault("goToOverview", "zur Übersicht");
     var cssClass = "container blogs";
     var overviewUrl = Model.Parent?.Url();
 }

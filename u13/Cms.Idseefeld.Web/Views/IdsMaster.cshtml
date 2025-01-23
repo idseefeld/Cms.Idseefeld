@@ -13,8 +13,8 @@
 
     var root = Model.AncestorOrSelf<ContentModels.IdsRootPage>();
     var cookieHint = root?.CookieHint;
-    var cookieOkButtonLabel = Umbraco.GetDictionaryValue("cookieOkButtonLabel", "Ok");
-    var noScriptHint = Umbraco.GetDictionaryValue("noScriptHint", "Diese Seite verwendet Javascript. Wenn Sie Javascript deaktiviert haben, funktioniert sie nur eingeschränkt.");
+    var cookieOkButtonLabel = Umbraco.GetDictionaryValueOrDefault("cookieOkButtonLabel", "Ok");
+    var noScriptHint = Umbraco.GetDictionaryValueOrDefault("noScriptHint", "Diese Seite verwendet Javascript. Wenn Sie Javascript deaktiviert haben, funktioniert sie nur eingeschränkt.");
     var pageSettings = Model as IPageSettings;
     var backgroundImageSrc = pageSettings?.BackgroundImage?.Url();
     var backgroundImageStyle = backgroundImageSrc != null ? $"background-image:url({backgroundImageSrc})" : "";

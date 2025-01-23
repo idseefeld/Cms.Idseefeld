@@ -5,32 +5,6 @@
      Layout = "IdsMaster.cshtml";
     var mainGridAlias = ContentModels.IdsStandardPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
     var cssClass = "container-fluid";
-    var imageCrop = Model.ImageCrop != null
-        ? new ImageCropViewModel()
-            {
-                CropperValue = Model.ImageCrop,
-                Caption = Model.ImageCropCaption,
-                Alt = Model.ImageCropCaption ?? "crop"
-            }
-        : null;
-    var showImageRow = imageCrop != null || Model.Image != null;
-}
-@if (showImageRow)
-{
-    <div class="@cssClass grid-section mb-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 image">
-                    <h4>Image</h4>
-                    @await Html.PartialAsync("ids/ids-Image", Model.Image)
-                </div>
-                <div class="col-sm-6 image crop">
-                    <h4>ImageCrop</h4>
-                    @await Html.PartialAsync("ids/ids-ImageCrop", imageCrop)
-                </div>
-            </div>
-        </div>
-    </div>
 }
 
 <div class="@cssClass">

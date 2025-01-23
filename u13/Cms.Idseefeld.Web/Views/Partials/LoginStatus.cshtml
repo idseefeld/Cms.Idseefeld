@@ -11,7 +11,7 @@
     // You can modify this to redirect to a different URL instead of the current one
     logoutModel.RedirectUrl = null;
 
-    var submitLabel = Umbraco.GetDictionaryValue("submitLabel", "Senden");
+    var submitLabel = Umbraco.GetDictionaryValueOrDefault("submitLabel", "Senden");
 }
 
 @if (isLoggedIn)

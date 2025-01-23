@@ -2,13 +2,13 @@
 @using System.ComponentModel.DataAnnotations;
 @using Microsoft.AspNetCore.Http;
 @{
-    var submitLabel = Umbraco.GetDictionaryValue("submitLabel", "Senden");
-    var nameLabel = Umbraco.GetDictionaryValue("nameLabel", "Name");
-    var emailLabel = Umbraco.GetDictionaryValue("emailLabel", "E-Mail");
-    var subjectLabel = Umbraco.GetDictionaryValue("subjectLabel", "Betreff");
-    var messageLabel = Umbraco.GetDictionaryValue("messageLabel", "Nachricht");
-    var dataConsentLabel = Umbraco.GetDictionaryValue("dataConsentLabel", "Consent for storing submitted data *");
-    var dataConsentCheckboxLabel = Umbraco.GetDictionaryValue("dataConsentCheckboxLabel", "Yes, I give permission to store and process my data.");
+    var submitLabel = Umbraco.GetDictionaryValueOrDefault("submitLabel", "Senden");
+    var nameLabel = Umbraco.GetDictionaryValueOrDefault("nameLabel", "Name");
+    var emailLabel = Umbraco.GetDictionaryValueOrDefault("emailLabel", "E-Mail");
+    var subjectLabel = Umbraco.GetDictionaryValueOrDefault("subjectLabel", "Betreff");
+    var messageLabel = Umbraco.GetDictionaryValueOrDefault("messageLabel", "Nachricht");
+    var dataConsentLabel = Umbraco.GetDictionaryValueOrDefault("dataConsentLabel", "Consent for storing submitted data *");
+    var dataConsentCheckboxLabel = Umbraco.GetDictionaryValueOrDefault("dataConsentCheckboxLabel", "Yes, I give permission to store and process my data.");
     //nameLabel = emailLabel = subjectLabel = messageLabel = "placeholder";
 
     //var displayName = Model.GetPropertyDisplayName("name");
