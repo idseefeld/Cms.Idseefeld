@@ -5,12 +5,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="bin\**" />
     <Compile Remove="publish\**" />
     <Compile Remove="umbraco\**" />
+    <Content Remove="bin\**" />
     <Content Remove="publish\**" />
     <Content Remove="umbraco\**" />
+    <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="publish\**" />
     <EmbeddedResource Remove="umbraco\**" />
+    <None Remove="bin\**" />
     <None Remove="publish\**" />
     <None Remove="umbraco\**" />
   </ItemGroup>
@@ -46,5 +50,9 @@
     <RazorCompileOnPublish>false</RazorCompileOnPublish>-->
     <UserSecretsId>1a6bbbe1-58ee-4c4e-b00c-07503f4d0189</UserSecretsId>
   </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy $(ProjectDir)\umbraco\Data\EmptyDatabase\*.* $(ProjectDir)\umbraco\Data\ /q" />
+  </Target>
 
 </Project>
