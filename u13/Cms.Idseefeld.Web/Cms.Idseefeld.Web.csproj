@@ -52,7 +52,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy $(ProjectDir)\umbraco\Data\EmptyDatabase\*.* $(ProjectDir)\umbraco\Data\ /q" />
+    <Exec Command="xcopy $(ProjectDir)\umbraco\Data\EmptyDatabase\*.* $(ProjectDir)\umbraco\Data\ /y /c /q" />
   </Target>
 
 </Project>
