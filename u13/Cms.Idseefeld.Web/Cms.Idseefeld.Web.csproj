@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
     <PackageReference Include="Umbraco.Cms.Core" Version="13.5.3" />
     <PackageReference Include="uSync" Version="13.2.6" />
+    <PackageReference Include="uSync.Migrations" Version="4.0.0-phase.5.1" />
     <ProjectReference Include="..\Cms.Idseefeld.Core\Cms.Idseefeld.Core.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
   </ItemGroup>
