@@ -19,7 +19,11 @@
     <None Remove="umbraco\**" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
     <Content Remove="Views\Partials\grid\editors\ImageCrop.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,7 +59,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy $(ProjectDir)\umbraco\Data\EmptyDatabase\*.* $(ProjectDir)\umbraco\Data\ /y /c /q" />
+    <Exec Command="rem xcopy $(ProjectDir)\umbraco\Data\EmptyDatabase\*.* $(ProjectDir)\umbraco\Data\ /y /c /q" />
   </Target>
 
 </Project>
