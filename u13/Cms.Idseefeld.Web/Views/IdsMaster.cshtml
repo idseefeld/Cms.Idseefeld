@@ -50,7 +50,7 @@
     {
         if (blogPage.MastodonCreatorMeta)
         {
-            mastodonCreatorMeta = new HtmlString("<meta name=\"fediverse: creator\" content=\"@dseefeld@@umbracocommunity.social\">");
+            mastodonCreatorMeta = new HtmlString("<meta name=\"fediverse:creator\" content=\"@dseefeld@@umbracocommunity.social\">");
         }
         var ogImage = blogPage.OpenGraphImage != null ? blogPage.OpenGraphImage : blogPage.TeaserImage;
         if (ogImage != null)
@@ -62,7 +62,7 @@
                 );
             if (!string.IsNullOrEmpty(imageUrl))
             {
-                openGraphImageMeta = new HtmlString($"<meta property=\"og: image\" content=\"{imageUrl}\" />");
+                openGraphImageMeta = new HtmlString($"<meta property=\"og:image\" content=\"{imageUrl}\" />");
             }
         }
     }
@@ -76,16 +76,15 @@
     <link rel="shortcut icon" type="image/png" href="~/css/ids/product-logo.png" />
     @if (isLive)
     {
-        @mastodonCreatorMeta
+        <text>@mastodonCreatorMeta</text>
 
-        @openGraphImageMeta
+        <text>@openGraphImageMeta</text>        
 
-            <link rel="me" href="https://umbracocommunity.social/@@dseefeld" />
+        <link rel="me" href="https://umbracocommunity.social/@@dseefeld" />
     }
     else
     {
             <!-- not live
-
         @openGraphImageMeta
 
         @mastodonCreatorMeta 
