@@ -45,23 +45,29 @@ namespace Cms.Idseefeld.Core.Controllers
             // this is neccessary to prevent timer reset during invalid data round trips. See: IdsStandardPageController
             HttpContext.Session.SetString(Constances.Common.FormPosted, DateTime.Now.Ticks.ToString());
             var hasDublicatedSubmitError = false;
+            var notAllowedChanges = false;
 
             if (formData.DataConsent && formData.DataConsentText == null)
             {
                 ModelState.Remove("DataConsentText");
+            }else if(formData.DataConsentText != "true")
+            {
+                notAllowedChanges = true;
+                ModelState.AddModelError("DataConsentText", "Value not allowed");
             }
+
             if (!ModelState.IsValid)
             {
                 hasDublicatedSubmitError = ModelState.Values
                     .FirstOrDefault(v => v.Errors.FirstOrDefault(e => e.ErrorMessage.Equals(Constances.Common.DublicatedSubmitError)) != null) != null;
 
-                if (!hasDublicatedSubmitError)
+                if (!hasDublicatedSubmitError && !notAllowedChanges)
                 {
                     return CurrentUmbracoPage();
                 }
             }
 
-            if (!hasDublicatedSubmitError)
+            if (!hasDublicatedSubmitError && !notAllowedChanges)
             {
                 _ = long.TryParse((HttpContext.Session.GetString(Constances.Common.EditStart) ?? string.Empty).ToString(), out long startTicks);
                 var duration = (DateTime.Now - new DateTime(startTicks)).TotalSeconds;
