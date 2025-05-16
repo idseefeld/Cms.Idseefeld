@@ -25,9 +25,9 @@
 {
     @* Get the starting page *@
     var startNode = PublishedContentQuery.Content(startNodeId);
-    var selection = startNode.Children.Where(x => x.IsVisible(PublishedValueFallback)).ToArray();
+    var selection = startNode?.Children.Where(x => x.IsVisible(PublishedValueFallback)).ToArray();
 
-    if (selection.Length > 0)
+    if (selection?.Length > 0)
     {
         <ul>
             @foreach (var item in selection)
