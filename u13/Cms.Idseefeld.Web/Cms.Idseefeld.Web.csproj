@@ -31,7 +31,7 @@
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.3" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
-    <PackageReference Include="Umbraco.Cms" Version="13.8.1" />
+    <PackageReference Include="Umbraco.Cms" Version="13.9.2" />
   </ItemGroup>
 
   <ItemGroup>
