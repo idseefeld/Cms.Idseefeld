@@ -15,13 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms" Version="15.4.1" />
+    <PackageReference Include="Umbraco.Cms" Version="15.4.3" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
-    <PackageReference Include="uSync" Version="15.1.8" />
+    <PackageReference Include="uSync" Version="15.1.9" />
     <ProjectReference Include="..\cms.idseefeld.Core\cms.idseefeld.Core.csproj" />
     <ProjectReference Include="..\cms.idseefeld.Models\cms.idseefeld.Models.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
