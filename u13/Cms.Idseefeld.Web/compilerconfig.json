@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/ids/mastodon-logo.css",
     "inputFile": "wwwroot/css/ids/mastodon-logo.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/ids/main.css",
+    "inputFile": "wwwroot/css/ids/main.scss"
   }
 ]

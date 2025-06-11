@@ -88,6 +88,23 @@ picture {
     }
 }
 
+#login-macro {
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 10px;
+
+    .nav {
+        li {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+    }
+}
+
 #no-script {
     background-color: #fcc;
     padding: 1em;

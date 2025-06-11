@@ -75,6 +75,19 @@ picture img {
   width: 100%;
 }
 
+#login-macro {
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 10px;
+}
+#login-macro .nav li {
+  margin-bottom: 5px;
+}
+#login-macro .nav .nav-link {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
 #no-script {
   background-color: #fcc;
   padding: 1em;

@@ -1,0 +1,41 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+
+@using Microsoft.AspNetCore.Http.Extensions
+@using Umbraco.Cms.Web.Common.Models
+@using Umbraco.Cms.Web.Website.Controllers
+@using Umbraco.Extensions
+
+@{
+    var isLoggedIn = Context.User.GetMemberIdentity()?.IsAuthenticated ?? false;
+    var logoutModel = new PostRedirectModel();
+    // You can modify this to redirect to a different URL instead of the current one
+    logoutModel.RedirectUrl = null;
+    
+    var buttonLabel = Umbraco.GetDictionaryValueOrDefault("Logout", "Log out");
+
+    var children = Model?.Content?.Children() ?? Enumerable.Empty<IPublishedContent>();
+}
+
+@if (isLoggedIn)
+{
+    <div class="login-status">
+
+        @if(children.Any())
+        {
+            <ul class="nav nav-pills">
+                @foreach (var child in children)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@child.Url()">@child.Name</a>
+                    </li>
+                }
+            </ul>
+        }
+
+        @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout", new { RedirectUrl = logoutModel.RedirectUrl }))
+        {
+            <button type="submit" class="btn btn-primary">@buttonLabel</button>
+        }
+
+    </div>
+}
