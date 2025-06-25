@@ -1,10 +1,5 @@
 ﻿using Cms.Idseefeld.Core.Models;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Web.Common;
 using Umbraco.Cms.Web.Common.PublishedModels;
 
@@ -29,9 +24,13 @@ namespace Cms.Idseefeld.Core.Services
             return blogs;
         }
 
-        public static IEnumerable<BlogListBlogsItem> GetBlogListBlogsItems(UmbracoHelper umbraco, IdsBlogPage? page = null, bool excluedCurrent = false)
+        public static IEnumerable<BlogListBlogsItem> GetBlogListBlogsItems(UmbracoHelper umbraco, PublishedContentModel page, bool excluedCurrent = false)
         {
-            var allItems = GetBlogs(umbraco, page?.Parent as IdsBlogsOverviewPage);
+            IdsBlogsOverviewPage? overviewPage = (page is IdsBlogsOverviewPage)
+                ? page as IdsBlogsOverviewPage
+                : page.Parent as IdsBlogsOverviewPage;
+
+            var allItems = GetBlogs(umbraco, overviewPage);
             var pageUrl = page?.Url() ?? string.Empty;
             if (page != null && excluedCurrent)
             {

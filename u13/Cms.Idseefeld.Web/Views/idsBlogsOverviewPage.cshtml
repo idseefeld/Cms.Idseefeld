@@ -11,8 +11,26 @@
 
     var useCardStyle = Model.UseCardStyle;
     var extraCssClass = useCardStyle ? "" : "col-lg-9";
-    var showFilter = false;
+
+    var mainGridAlias = ContentModels.IdsStandardPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias ?? string.Empty;
+    var gridHasContent = Model.MainGrid != null && Model.MainGrid.HasGridContent();
+
+    var overviePageId = Model.Id;
+
+    var cssClass = "container-fluid";
 }
+
+@if (gridHasContent)
+{
+    <div class="container note">
+        <div class="standard">
+
+            @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
+
+        </div>
+    </div>
+}
+
 <div class="container blogs">
     <div class="row">
         @if (blogs.Any())
@@ -34,12 +52,12 @@
                     </div>
                 </div>
             </div>
-            @if (!useCardStyle && showFilter)
+            @if (!useCardStyle)
             {
                 <div class="col-lg-3">
-                    <form method="get">
-                        <input name="filter" class="form-control" placeholder="Filtern nach...">
-                    </form>
+
+                    @await Component.InvokeAsync("BlogListBlogsSidebar", new { umbracoHelper = Umbraco, page = Model })
+
                 </div>
             }
         }

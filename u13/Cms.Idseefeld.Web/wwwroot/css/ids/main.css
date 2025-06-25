@@ -6,6 +6,7 @@
   --link-hover: #0453AF;
   --link-hover-bg: #0453af0a;
   --form-error-color: #c00;
+  --side-note-background: #f6f6ef;
 }
 
 body, html {
@@ -67,7 +68,7 @@ footer li.selected a {
 }
 
 main {
-  padding-top: 20px;
+  padding-top: 0;
   padding-bottom: 90px;
 }
 
@@ -77,7 +78,7 @@ picture img {
 
 #login-macro {
   padding: 10px;
-  background-color: #eee;
+  background-color: var(--side-note-background);
   border-radius: 10px;
 }
 #login-macro .nav li {
@@ -86,6 +87,12 @@ picture img {
 #login-macro .nav .nav-link {
   background-color: #ddd;
   border-radius: 5px;
+}
+
+.note {
+  padding: 10px 10px 0;
+  background-color: var(--side-note-background);
+  margin-bottom: 1em;
 }
 
 #no-script {
@@ -146,6 +153,9 @@ picture img {
 
 .blogs .listitem {
   cursor: pointer;
+}
+.blogs .listitem h2, .blogs .listitem h3, .blogs .listitem h4 {
+  margin-top: calc(var(--bs-gutter-x) * 0.5);
 }
 .blogs .listitem:hover {
   color: var(--link-hover);
@@ -337,5 +347,10 @@ picture img {
   .root .root-head {
     font-size: 200%;
     text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.7);
+  }
+}
+@media (min-width: 992px) {
+  main {
+    padding-top: 20px;
   }
 }

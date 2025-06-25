@@ -3,6 +3,7 @@
 @inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
     Layout = "IdsMaster.cshtml";
+
     var mainGridAlias = IdsBlogPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
     var goToOverview = Umbraco.GetDictionaryValueOrDefault("goToOverview", "zur Übersicht");
     var cssClass = "container blogs";
@@ -18,9 +19,9 @@
             </div>
 
             <div class="col-lg-3">
-                @*<a href="@overviewUrl">@goToOverview</a>*@
 
                 @await Component.InvokeAsync("BlogListBlogsSidebar", new { umbracoHelper = Umbraco, page = Model })
+
             </div>
 
         </div>

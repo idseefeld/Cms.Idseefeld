@@ -1,6 +1,14 @@
 ﻿@using Cms.Idseefeld.Web.Views.Shared.Components;
 @model IEnumerable<BlogListBlogsItem>
 @{
+    var showFilter = false;
+}
+
+@if (showFilter)
+{
+    <form method="get">
+        <input name="filter" class="form-control" placeholder="Filtern nach...">
+    </form>
 }
 
 @foreach (var item in Model)
