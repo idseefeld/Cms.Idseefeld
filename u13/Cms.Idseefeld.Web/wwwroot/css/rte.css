@@ -1,2 +1,35 @@
-﻿body {
+body {
+}
+
+/**umb_name:H2*/
+h2 {
+}
+
+/**umb_name:H3*/
+h3 {
+}
+
+/**umb_name:H4*/
+h4 {
+}
+
+/**umb_name:Paragraph*/
+p {
+}
+
+/**umb_name:Quote*/
+blockquote {
+}
+
+/**umb_name:pre*/
+pre.default {
+	background-color: #eee;
+	padding: 0.5em;
+}
+
+/**umb_name:code*/
+pre.code {
+	background-color: black;
+	color: white;
+	padding: 0.5em;
 }
