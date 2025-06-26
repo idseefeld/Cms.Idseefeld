@@ -6,5 +6,9 @@
   {
     "outputFile": "wwwroot/css/ids/main.css",
     "inputFile": "wwwroot/css/ids/main.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/initCodeStyleAndCopy.es5.js",
+    "inputFile": "wwwroot/js/initCodeStyleAndCopy.js"
   }
 ]

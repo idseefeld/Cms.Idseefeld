@@ -25,6 +25,13 @@ header {
 pre {
   background-color: #eee;
   padding: 0.5em;
+  position: relative;
+}
+pre.code button.btn.btn-copy {
+  position: absolute;
+  top: 0.1em;
+  right: 0.1em;
+  z-index: 1000;
 }
 
 footer {
