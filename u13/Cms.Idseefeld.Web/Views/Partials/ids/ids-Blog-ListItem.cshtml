@@ -9,7 +9,9 @@
     var body = Model.TeaserBodytext;
     var date = Model.DisplayDate > DateTime.MinValue ? Model.DisplayDate : Model.UpdateDate;
 
-    var imgSrc = Url.GetCropUrl(Model.TeaserImage, height: 506, width: 506); // max. size for col-12
+    var imgSrc200 = Url.GetCropUrl(Model.TeaserImage, height: 200, width: 200);
+    var imgSrc506 = Url.GetCropUrl(Model.TeaserImage, height: 506, width: 506);
+    var imgSrc = Url.GetCropUrl(Model.TeaserImage);
     string imgAlt = Model.TeaserImage?.Content.Name ?? "";
     bool hasImage = Model.TeaserImage?.Content.Url() != null;
     string colCssClass = hasImage ? "col-12 col-md-8" : "col-12";
@@ -28,7 +30,11 @@
             @if (hasImage)
             {
                 <div class="col-12 col-md-4">
-                    <img class="img-fluid img-thumbnail" src="@imgSrc" alt="@imgAlt" />
+                    <picture>
+                        <source media="(min-width:769px)" srcset="@imgSrc200">
+                        <source media="(max-width:768px)" srcset="@imgSrc506">
+                        <img class="img-fluid img-thumbnail" src="@imgSrc506" alt="@imgAlt" />
+                    </picture>
                 </div>
             }
 
