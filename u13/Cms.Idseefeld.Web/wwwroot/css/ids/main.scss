@@ -166,15 +166,21 @@ picture {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.9);
+    cursor: zoom-out;
 
     #imageBoxContent {
-        position: relative;
+        position: absolute;
+        transition:
+            top 0.3s cubic-bezier(0.4,0,0.2,1),
+            left 0.3s cubic-bezier(0.4,0,0.2,1),
+            width 0.3s cubic-bezier(0.4,0,0.2,1),
+            height 0.3s cubic-bezier(0.4,0,0.2,1);
+        
         top: 0;
         left: 0;
-        width: 800px;
-        height: 800px;
+        width: 80px;
+        height: 80px;
         z-index: 1;
         background-color: white;
         text-align: center;
@@ -185,6 +191,15 @@ picture {
         }
     }
 }
+
+picture {
+    &.noscript {
+        &.hidden {
+            display: none;
+        }
+    }
+}
+
 
 .CookieDeclaration {
     background-color: #f6f6f6;
@@ -220,7 +235,7 @@ picture {
 .blogs {
     .grid-section {
         img {
-            cursor: pointer;
+            cursor: zoom-in;
 
             &:hover {
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

@@ -1,44 +1,70 @@
 ﻿const preventImageCloseClick = false;
+
+(function () {
+    const pictures = document.querySelectorAll("picture.noscript.hidden");
+    if (pictures.length) {
+        pictures.forEach((picture) => {
+            picture.classList.remove("hidden");
+        });
+    }
+})();
+
 function showImageBox(event, src, alt, captionText) {
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    if (width < 600 || height < 600) { return; }
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    if (viewportWidth < 600 || viewportHeight < 600) {
+        window.open(src, "_blank");
+        return;
+    }
 
-    var landscape = width / height > 1;
-
-    var box = document.getElementById("imageBox");
+    const box = document.getElementById("imageBox");
     if (!box) return;
 
-    var captionHeight = captionText ? 20 : 0;
-    var margin = 20;
-    var padding = 10;
-    var horizontalOffset = (margin + padding) * 2;
-    var verticalOffset = captionHeight + horizontalOffset;
+    const captionHeight = captionText ? 20 : 0;
+    const margin = 20;
+    const padding = 10;
+    const horizontalOffset = (margin + padding) * 2;
+    const verticalOffset = captionHeight + horizontalOffset;
 
-    var thumbWidth = event.target.width;
-    var thumbHeight = event.target.height;
-    var aspectRatio = thumbWidth / thumbHeight;
+    const thumbRect = event.target.getBoundingClientRect();
+    const thumbTop = thumbRect.top;
+    const thumbLeft = thumbRect.left;
+    const thumbWidth = event.target.width;
+    const thumbHeight = event.target.height;
+    const aspectRatio = thumbWidth / thumbHeight;
 
-    var imgWidth = landscape ? (height - verticalOffset) * aspectRatio : width - horizontalOffset;
-    if (imgWidth > width - horizontalOffset) {
-        imgWidth = width - horizontalOffset;
+    const imgWidth = thumbWidth;
+    const imgHeight = thumbHeight;
+
+    const landscape = viewportWidth / viewportHeight > 1;
+    let zoomedWidth = landscape ? (viewportHeight - verticalOffset) * aspectRatio : viewportWidth - horizontalOffset;
+    if (zoomedWidth > viewportWidth - horizontalOffset) {
+        zoomedWidth = viewportWidth - horizontalOffset;
     }
-    var imgHeight = imgWidth / aspectRatio;
-    if (imgHeight > height - verticalOffset) {
-        imgHeight = height - verticalOffset;
-        imgWidth = imgHeight * aspectRatio;
+    let zoomedHeight = zoomedWidth / aspectRatio;
+    if (zoomedHeight > viewportHeight - verticalOffset) {
+        zoomedHeight = viewportHeight - verticalOffset;
+        zoomedWidth = zoomedHeight * aspectRatio;
     }
 
-    var imageBoxContent = document.getElementById("imageBoxContent");
+    const zoomedBoxWidth = (zoomedWidth + (padding * 2)) + 'px';
+    const zoomedBoxHeight = (zoomedHeight + (padding * 2) + captionHeight) + 'px';
+
+    const imageBoxContent = document.getElementById("imageBoxContent");
+
     imageBoxContent.style.width = (imgWidth + (padding * 2)) + 'px';
     imageBoxContent.style.height = (imgHeight + (padding * 2) + captionHeight) + 'px';
     imageBoxContent.style.padding = padding + 'px';
-    imageBoxContent.style.margin = margin + 'px auto';
-    imageBoxContent.style.cursor = preventImageCloseClick ? "default" : "pointer";
+    imageBoxContent.style.cursor = preventImageCloseClick ? "default" : "zoom-out";
+
+    imageBoxContent.style.top = (thumbTop - padding) + "px";
+    imageBoxContent.style.left = (thumbLeft - padding) + "px";
+    imageBoxContent.style.margin = "0";
 
     box.style.display = "block";
+    document.querySelector("body").style.overflow = "hidden";
 
-    var img = document.getElementById("imageBoxImg");
+    const img = document.getElementById("imageBoxImg");
     img.setAttribute("src", src);
     img.setAttribute("alt", alt);
     if (imgWidth && imgHeight) {
@@ -46,17 +72,37 @@ function showImageBox(event, src, alt, captionText) {
         img.setAttribute("height", imgHeight);
     }
 
-    var caption = document.getElementById("imageBoxCaption");
+    const caption = document.getElementById("imageBoxCaption");
     if (caption) {
-        try {
-            caption.textContent = captionText;
-        }
-        catch (error) {
-            console.debug(error);
-        }
+        caption.textContent = captionText;
     }
+
+    setTimeout(function () {
+        zoomInImageBox(viewportWidth, viewportHeight, imageBoxContent, zoomedBoxWidth, zoomedBoxHeight, img, zoomedWidth, zoomedHeight, margin);
+    }, 0);
 }
 
+function zoomInImageBox(viewportWidth, viewportHeight, imageBoxContent, zoomedBoxWidth, zoomedBoxHeight, img, zoomedWidth, zoomedHeight, margin) {
+    // Force reflow to ensure transition triggers
+    void imageBoxContent.offsetWidth;
+
+    const boxWidth = parseFloat(zoomedBoxWidth);
+    const boxHeight = parseFloat(zoomedBoxHeight);
+
+    const top = Math.max((viewportHeight - boxHeight) / 2, margin);
+    const left = Math.max((viewportWidth - boxWidth) / 2, margin);
+
+    imageBoxContent.style.width = zoomedBoxWidth;
+    imageBoxContent.style.height = zoomedBoxHeight;
+    imageBoxContent.style.top = top + "px";
+    imageBoxContent.style.left = left + "px";
+    imageBoxContent.style.margin = "0";
+
+    if (zoomedWidth && zoomedHeight) {
+        img.setAttribute("width", zoomedWidth);
+        img.setAttribute("height", zoomedHeight);
+    }
+}
 function imageClick(event) {
     if (preventImageCloseClick) { event.stopPropagation(); }
 }
@@ -65,5 +111,6 @@ function hideImageBox() {
     var box = document.getElementById("imageBox");
     if (!box) return;
 
+    document.querySelector("body").style.overflow = "unset";
     box.style.display = "none";
 }
