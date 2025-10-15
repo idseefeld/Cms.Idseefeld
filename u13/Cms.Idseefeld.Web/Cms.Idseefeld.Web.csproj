@@ -29,15 +29,15 @@
   <ItemGroup>
     <PackageReference Include="Lucene.Net.Replicator" Version="4.8.0-beta00017" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-    <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.3" />
-    <PackageReference Include="System.Text.Json" Version="8.0.5" />
-    <PackageReference Include="Umbraco.Cms" Version="13.9.2" />
+    <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.6" />
+    <PackageReference Include="Umbraco.Cms" Version="13.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
-    <PackageReference Include="uSync" Version="13.2.7" />
+    <PackageReference Include="uSync" Version="13.3.2" />
     <PackageReference Include="uSync.Migrations" Version="4.0.0-phase.5.1" />
     <ProjectReference Include="..\Cms.Idseefeld.Core\Cms.Idseefeld.Core.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
