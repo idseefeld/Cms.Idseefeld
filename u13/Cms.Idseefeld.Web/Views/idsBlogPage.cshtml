@@ -5,17 +5,26 @@
     Layout = "IdsMaster.cshtml";
 
     var mainGridAlias = IdsBlogPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
+    var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
     var goToOverview = Umbraco.GetDictionaryValueOrDefault("goToOverview", "zur Übersicht");
     var cssClass = "container blogs";
-    var overviewUrl = Model.Parent?.Url();
+    var overviewUrl = Model.Parent?.Url();    
 }
 <div class="@cssClass">
-    @if (mainGridAlias != null)
+
+    @if (mainGridAlias != null || hasMainBlockGrid)
     {
         <div class="row">
 
             <div class="col-lg-9">
-                @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
+                @if (hasMainBlockGrid)
+                {
+                    @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
+                }
+                else
+                {
+                    @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
+                }
             </div>
 
             <div class="col-lg-3">

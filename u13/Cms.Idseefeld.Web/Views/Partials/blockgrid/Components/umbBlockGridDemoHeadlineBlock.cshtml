@@ -1,4 +1,12 @@
 ﻿@using Umbraco.Extensions
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+@{
+    var item = Model.Content as UmbBlockGridDemoHeadlineBlock;
+    if (item == null) return;
 
-<h2 style="padding: 20px">@Model.Content.Value("headline")</h2>
+    var settings = Model.Settings as UmbBlockGridDemoHeadlineSettings;
+    var size = settings?.Size ?? "h2";
+    var headline = item?.Headline;
+}
+
+<@size>@headline</@size>

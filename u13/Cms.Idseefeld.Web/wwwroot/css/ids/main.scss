@@ -233,6 +233,7 @@ picture {
 }
 
 .blogs {
+    .umb-block-grid,
     .grid-section {
         img {
             cursor: zoom-in;
@@ -293,8 +294,7 @@ picture {
 
         margin: 0;
 
-        img {
-            width: 50px;
+        img {            
             height: 50px;
         }
     }

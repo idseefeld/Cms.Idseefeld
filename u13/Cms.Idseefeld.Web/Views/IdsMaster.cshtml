@@ -40,7 +40,11 @@
     SmidgeHelper.RequiresCss("~/css/ids/blockgrid-default.css");
     SmidgeHelper.RequiresCss("~/css/ids/mastodon-logo.css");
 
-    SmidgeHelper.RequiresCss("~/highlightjs/styles/vs2015.min.css");
+    SmidgeHelper.RequiresCss("~/highlightjs/styles/vs2015.min.css"); 
+    
+    var cssFile = new Smidge.Models.CssFile("~/css/ids/blockgrid-default.css");
+    cssFile.Order = 10;
+    SmidgeHelper.RequiresCss(cssFile);
 
     var isLive = Context.Request.Host.Host.ToLower().EndsWith("idseefeld.de");
     HtmlString openGraphImageMeta = new HtmlString(string.Empty);

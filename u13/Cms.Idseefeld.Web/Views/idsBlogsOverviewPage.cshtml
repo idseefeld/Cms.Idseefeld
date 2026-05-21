@@ -8,6 +8,7 @@
     var readMore = Umbraco.GetDictionaryValueOrDefault("readMoreLabel", "mehr lesen...");
     var lastUpdated = Umbraco.GetDictionaryValueOrDefault("lastUpdated", "zuletzt aktualisiert am");
     var blogs = BlogService.GetBlogs(Umbraco, Model);
+    var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
 
     var useCardStyle = Model.UseCardStyle;
     var extraCssClass = useCardStyle ? "" : "col-lg-9";
@@ -20,13 +21,18 @@
     var cssClass = "container-fluid";
 }
 
-@if (gridHasContent)
+@if (gridHasContent || hasMainBlockGrid)
 {
     <div class="container note">
         <div class="standard">
-
-            @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
-
+            @if (hasMainBlockGrid)
+            {
+                @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
+            }
+            else
+            {
+                @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
+            }
         </div>
     </div>
 }
