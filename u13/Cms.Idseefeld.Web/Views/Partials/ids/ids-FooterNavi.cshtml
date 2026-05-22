@@ -9,7 +9,6 @@
 
 @inject IPublishedValueFallback PublishedValueFallback
 @inject IPublishedUrlProvider PublishedUrlProvider
-@inject IPublishedSnapshotAccessor _snapshotAccessor;
 @inject IAppPolicyCache _cachePolicy;
 
 @{
@@ -21,13 +20,9 @@
     var isLocalhost = !isLivehost || (authority?.InvariantEquals("localhost") ?? false);
     var authortiyStart = isLivehost ? liveAuthortiyStart : Context.Request.Host.ToString();
 
-    var footerLinksAlias = ContentModels.IdsRootPage.GetModelPropertyType(_snapshotAccessor, p => p.FooterLinks)?.Alias ?? "footerLinks";
-
-    var root = Model?.AncestorOrSelf<IdsRootPage>();
-    var hasLinks = root?.HasProperty(footerLinksAlias);
-    hasLinks = root?.HasValue(footerLinksAlias);
+    var root = Model?.AncestorOrSelf<IdsRootPage>() as IdsRootPage;
+    var hasLinks = root?.FooterLinks?.Any() ?? false;
     var selection = root?.FooterLinks?.ToArray();
-    //ToDo: How do I get the localized page names?
 
     var toggleLabel = Umbraco.GetDictionaryValueOrDefault("toggleNavigation", "Toggle navigation");
 
@@ -37,44 +32,29 @@
     var isRoot = root?.Id == Model?.Id;
     var otherUrls = PublishedUrlProvider
         .GetOtherUrls(Model?.Id ?? 0)
-        .Where(u => u.IsUrl && u.Text.InvariantContains(authortiyStart) && (isRoot || !u.Culture.InvariantEquals(currentCuture)))
+        .Where(u => u.Url != null && u.Url.DnsSafeHost.InvariantContains(authortiyStart) && (isRoot || !u.Culture.InvariantEquals(currentCuture)))
         .DistinctBy(u => u.Culture)
         .ToList();
-    //otherUrls = PublishedUrlProvider
-    //    .GetOtherUrls(Model?.Id ?? 0)
-    //    .Where(u => u.Text.InvariantContains(Context.Request.Host.ToString()) && (isRoot || !u.Culture.InvariantEquals(currentCuture)))
-    //    .DistinctBy(u => u.Culture)
-    //    .ToList();
+
     if (!isRoot)
     {
-        var newUrlInfo = new UrlInfo(Model != null ? Model.Url() : string.Empty, true, currentCuture);
-        if (!otherUrls.Contains(newUrlInfo))
-        {
-            otherUrls.Add(newUrlInfo);
-        }
+        // var newUrlInfo = new UrlInfo(new Uri(Model?.Url() ?? string.Empty), PublishedUrlProvider., currentCuture, isExternal: true);
+        // if (!otherUrls.Contains(newUrlInfo))
+        // {
+        //     otherUrls.Add(newUrlInfo);
+        // }
     }
-    var languageUrls = otherUrls.OrderBy(u => u.Culture);
-    var ui = languageUrls.FirstOrDefault();
+    // var languageUrls = otherUrls.OrderBy(u => u.Culture);
+    // var ui = languageUrls.FirstOrDefault();
 }
 
-@if (selection?.Length > 0 || languageUrls.Count() > 1)
+@if (selection?.Length > 0)
 {
     <nav class="container">
         <div class="row">
 
             <div class="col-12 col-sm-8">
                 <ul class="nav">
-                    @if (languageUrls.Count() > 1)
-                    {
-                        foreach (var url in languageUrls)
-                        {
-                            var label = url?.Culture?.Substring(0, 2).ToUpper() ?? "";
-                            <li class="lang nav-item @(currentCuture == url?.Culture ? "selected" : "")">
-                                <a href="@url?.Text" class="nav-link">@label</a>
-                            </li>
-                        }
-                    }
-
                     @if (selection != null)
                     {
                         foreach (Umbraco.Cms.Core.Models.Link item in selection)

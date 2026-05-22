@@ -1,18 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Compositions\RemoveDashboard.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Lucene.Net.Replicator" Version="4.8.0-beta00017" />
-    <PackageReference Include="Our.Umbraco.DictionaryLocalizer" Version="1.0.4" />
-    <PackageReference Include="System.Text.Json" Version="8.0.6" />
-    <PackageReference Include="Umbraco.Cms" Version="13.11.0" />
-    <PackageReference Include="Umbraco.Cms.Core" Version="13.11.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.11.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Umbraco.Cms" Version="17.4.2" />
+	</ItemGroup>
 
 </Project>

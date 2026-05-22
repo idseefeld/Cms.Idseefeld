@@ -1,30 +1,21 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogPage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
-@inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
     Layout = "IdsMaster.cshtml";
 
-    var mainGridAlias = IdsBlogPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
     var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
     var goToOverview = Umbraco.GetDictionaryValueOrDefault("goToOverview", "zur Übersicht");
     var cssClass = "container blogs";
-    var overviewUrl = Model.Parent?.Url();    
+    var overviewUrl = Model.Parent?.Url();
 }
 <div class="@cssClass">
 
-    @if (mainGridAlias != null || hasMainBlockGrid)
+    @if (hasMainBlockGrid)
     {
         <div class="row">
 
             <div class="col-lg-9">
-                @if (hasMainBlockGrid)
-                {
-                    @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
-                }
-                else
-                {
-                    @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
-                }
+                @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
             </div>
 
             <div class="col-lg-3">

@@ -1,26 +1,17 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.IdsStandardPage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
-@inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
     Layout = "IdsMaster.cshtml";
-    var mainGridAlias = ContentModels.IdsStandardPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
     var cssClass = "container";
     var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
 }
 
 <div class="@cssClass">
-    @if (mainGridAlias != null)
+    @if (hasMainBlockGrid)
     {
         <div class="standard">
 
-            @if (hasMainBlockGrid)
-            {
-                @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
-            }
-            else
-            {
-                @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
-            }
+            @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
 
         </div>
     }

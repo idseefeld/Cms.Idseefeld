@@ -1,7 +1,6 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogsOverviewPage>
 @using Cms.Idseefeld.Core.Services;
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
-@inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
     Layout = "IdsMaster.cshtml";
     var noBlogs = Umbraco.GetDictionaryValueOrDefault("noBlogs", "Es gibt noch keine Blogbeiträge.");
@@ -13,26 +12,16 @@
     var useCardStyle = Model.UseCardStyle;
     var extraCssClass = useCardStyle ? "" : "col-lg-9";
 
-    var mainGridAlias = ContentModels.IdsStandardPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias ?? string.Empty;
-    var gridHasContent = Model.MainGrid != null && Model.MainGrid.HasGridContent();
-
     var overviePageId = Model.Id;
 
     var cssClass = "container-fluid";
 }
 
-@if (gridHasContent || hasMainBlockGrid)
+@if (hasMainBlockGrid)
 {
     <div class="container note">
         <div class="standard">
-            @if (hasMainBlockGrid)
-            {
-                @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
-            }
-            else
-            {
-                @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
-            }
+            @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
         </div>
     </div>
 }

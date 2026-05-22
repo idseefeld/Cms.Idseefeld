@@ -1,20 +1,19 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.IdsRootPage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
-@inject IPublishedSnapshotAccessor _snapshotAccessor;
 @{
     Layout = "IdsMaster.cshtml";
     ViewData["pageCssClass"] = "root";
-    var mainGridAlias = ContentModels.IdsRootPage.GetModelPropertyType(_snapshotAccessor, p => p.MainGrid)?.Alias;
     var cssClass = "container-fluid";
+    var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
 }
 
 <div class="@cssClass">
-    @if (mainGridAlias != null)
+    @if (hasMainBlockGrid)
     {
 
         <div class="standard">
 
-            @Html.GetGridHtml(Model, mainGridAlias, "bootstrap3")
+            @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
 
         </div>
     }
@@ -22,6 +21,6 @@
     
 </div>
 
-@section TopNavi{
+@section TopNavi {
     <!-- kein Menü auf Startseite -->
 }

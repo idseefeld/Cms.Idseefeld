@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Logging;
 using Umbraco.Cms.Core.Routing;
@@ -70,7 +71,7 @@ public class LoginController : SurfaceController
             MemberIdentityUser? memberIdentityUser = await _memberManager.FindByNameAsync(model.Username);
             if (memberIdentityUser == null)
             {
-                return new ValidationErrorResult("No local member found for username " + model.Username);
+                return NotFound($"No local member found for username {model.Username}");
             }
 
             IEnumerable<string> providerNames = await _twoFactorLoginService.GetEnabledTwoFactorProviderNamesAsync(memberIdentityUser.Key);

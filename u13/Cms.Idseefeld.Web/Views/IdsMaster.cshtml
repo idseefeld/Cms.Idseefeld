@@ -1,6 +1,5 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
-@inject IRuntimeMinifier runtimeMinifier
 @using Umbraco.Cms.Core.Media
 @using Umbraco.Cms.Core.PropertyEditors.ValueConverters
 @inject IImageUrlGenerator ImageUrlGenerator
@@ -30,21 +29,6 @@
     var pageCssClass = ViewData["pageCssClass"];
 
     var isLocalhost = host?.InvariantEquals("localhost") ?? false;
-
-    if (siteName == "iDSeefeld")
-    {
-        SmidgeHelper.RequiresCss("~/css/alfa-slab-font/main.css");
-    }
-
-    SmidgeHelper.RequiresCss("~/css/ids/main.css");
-    SmidgeHelper.RequiresCss("~/css/ids/blockgrid-default.css");
-    SmidgeHelper.RequiresCss("~/css/ids/mastodon-logo.css");
-
-    SmidgeHelper.RequiresCss("~/highlightjs/styles/vs2015.min.css"); 
-    
-    var cssFile = new Smidge.Models.CssFile("~/css/ids/blockgrid-default.css");
-    cssFile.Order = 10;
-    SmidgeHelper.RequiresCss(cssFile);
 
     var isLive = Context.Request.Host.Host.ToLower().EndsWith("idseefeld.de");
     HtmlString openGraphImageMeta = new HtmlString(string.Empty);
@@ -118,24 +102,13 @@
         <meta name="keywords" content="@metaKeywords" />
     }
 
-    @* read more: https://manage.cookiebot.com/de/manage *@
-    @*
-    @if (!isLocalhost || true)
-    {
-    var cookiebotGuid = "274dc0df-3f4e-49a8-95f6-0814f0217941";
-
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="@cookiebotGuid" data-blockingmode="auto" type="text/javascript"></script>
-    }
-    *@
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <environment names="Development">
-        @await SmidgeHelper.CssHereAsync(debug: true)
-    </environment>
-    <environment exclude="Development">
-        @await SmidgeHelper.CssHereAsync()
-    </environment>
+    <link href="~/css/alfa-slab-font/main.min.css" rel="stylesheet" />
+    <link href="~/css/ids/main.min.css" rel="stylesheet" />
+    <link href="~/css/ids/blockgrid-default.min.css" rel="stylesheet" />
+    <link href="~/css/ids/mastodon-logo.min.css" rel="stylesheet" />
+    <link href="~/highlightjs/styles/vs2015.min.css" rel="stylesheet" />
 
     <style>
         @@media(min - width: 576px) and(orientation: portrait) {

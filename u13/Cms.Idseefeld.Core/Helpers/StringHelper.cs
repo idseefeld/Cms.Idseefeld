@@ -27,28 +27,28 @@ namespace Cms.Idseefeld.Core.Helper
 
             if (string.IsNullOrEmpty(teaserBody))
             {
-                string gridHtml = Html.GetGridHtml(blogPage, gridAlias)
-                    .ToHtmlString();
-                gridHtml = gridHtml
-                    .Replace("</", "~#</");
-                gridHtml = gridHtml
-                    .StripHtml()
-                    .Replace("\r", "")
-                    .Replace("\n", "")
-                    .Replace("  ", "");
-                gridHtml = gridHtml
-                    .Replace("~# ", " ")
-                    .Replace("~#", " ");
-                if (!string.IsNullOrEmpty(gridHtml))
-                {
-                    teaserBody = $"<p>{gridHtml.RemoveTitle(blogPage.GetTitleFromTeaserMetaOrModel())}</p>";
-                }
+                //string gridHtml = Html.GetGridHtml(blogPage, gridAlias)
+                //    .ToHtmlString();
+                //gridHtml = gridHtml
+                //    .Replace("</", "~#</");
+                //gridHtml = gridHtml
+                //    .StripHtml()
+                //    .Replace("\r", "")
+                //    .Replace("\n", "")
+                //    .Replace("  ", "");
+                //gridHtml = gridHtml
+                //    .Replace("~# ", " ")
+                //    .Replace("~#", " ");
+                //if (!string.IsNullOrEmpty(gridHtml))
+                //{
+                //    teaserBody = $"<p>{gridHtml.RemoveTitle(blogPage.GetTitleFromTeaserMetaOrModel())}</p>";
+                //}
 
-                if (teaserBody.Length > maxBodyLength)
-                {
-                    var lastSpacePos = teaserBody.Substring(0, maxBodyLength).LastIndexOf(" ");
-                    teaserBody = $"{teaserBody[..lastSpacePos]} ...";
-                }
+                //if (teaserBody.Length > maxBodyLength)
+                //{
+                //    var lastSpacePos = teaserBody.Substring(0, maxBodyLength).LastIndexOf(" ");
+                //    teaserBody = $"{teaserBody[..lastSpacePos]} ...";
+                //}
             }
 
             return new HtmlEncodedString(teaserBody);

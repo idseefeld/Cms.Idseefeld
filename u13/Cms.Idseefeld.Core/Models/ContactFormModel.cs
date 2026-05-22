@@ -1,36 +1,30 @@
-﻿using Our.Umbraco.DictionaryLocalizer.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Cms.Idseefeld.Core.Models
 {
-    public class ContactFormModel : DictionaryDataAnnotationBaseModel
+    public class ContactFormModel
     {
-        [Required(ErrorMessage = "#RequiredErrorMessage.name")]
-        [Display(Name = "#nameLabel")]
+        [Required(ErrorMessage = "Bitte geben Sie Ihren Namen ein.")]
+        [Display(Name = "Name")]
         public string? FirstAndLastName { get; set; }
 
-        [Required(ErrorMessage = "#RequiredErrorMessage.email")]
-        [EmailAddress(ErrorMessage = "#InvalidErrorMessage.email")]
-        [Display(Name = "#emailLabel")]
+        [Required(ErrorMessage = "Bitte geben Sie Ihre E-Mail-Adresse ein.")]
+        [EmailAddress(ErrorMessage = "Bitte geben Sie eine gültige E-Mail-Adresse ein.")]
+        [Display(Name = "E-Mail")]
         public string? Email { get; set; }
 
-        [Display(Name = "#subjectLabel")]
-        [Required(ErrorMessage = "#RequiredErrorMessage.subject")]
+        [Display(Name = "Betreff")]
+        [Required(ErrorMessage = "Bitte geben Sie einen Betreff ein.")]
         public string? Subject { get; set; }
 
-        [Display(Name = "#messageLabel")]
-        [Required(ErrorMessage = "#RequiredErrorMessage.message")]
+        [Display(Name = "Nachricht")]
+        [Required(ErrorMessage = "Bitte geben Sie eine Nachricht ein.")]
         public string? Message { get; set; }
 
         public int? EditingTime { get; set; }
         public string? HostInfo { get; set; }
         public bool DataConsent { get; set; }
-        [Required(ErrorMessage = "#RequiredErrorMessage.dataConsent")]
+        [Required(ErrorMessage = "Bitte stimmen Sie der Datenverarbeitung zu.")]
         public string? DataConsentText { get; set; }
     }
 }
