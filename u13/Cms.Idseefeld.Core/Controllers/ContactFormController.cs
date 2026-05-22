@@ -88,9 +88,9 @@ namespace Cms.Idseefeld.Core.Controllers
                 }
             }
 
-            if (CurrentPage?.Children != null && CurrentPage.Children.Any())
+            if (CurrentPage?.Children() != null && CurrentPage.Children().Any())
             {
-                return RedirectToUmbracoPage(CurrentPage.Children.First());
+                return RedirectToUmbracoPage(CurrentPage.Children().First());
             }
 
             return RedirectToCurrentUmbracoPage();

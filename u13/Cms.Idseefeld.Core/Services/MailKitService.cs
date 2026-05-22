@@ -30,8 +30,8 @@ namespace Cms.Idseefeld.Core.Services
             }
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(smtpSettings.From, smtpSettings.From));
-            message.To.Add(new MailboxAddress(_mailOptions.ToName ?? _mailOptions.To, _mailOptions.To));
+            message.From.Add(new MailboxAddress(null, smtpSettings.From ?? "no-reply@example.com"));
+            message.To.Add(new MailboxAddress(_mailOptions.ToName, _mailOptions.To));
             message.Subject = formData.Subject;
             message.Body = new TextPart("plain")
             {
@@ -47,14 +47,14 @@ namespace Cms.Idseefeld.Core.Services
             if (smtpSettings.Port > 0)
             {
                 var useSsl = smtpSettings.SecureSocketOptions.ToString() == SecureSocketOptions.SslOnConnect.ToString();
-                client.Connect(smtpSettings.Host, smtpSettings.Port, useSsl);
+                client.Connect(smtpSettings.Host ?? "localhost", smtpSettings.Port, useSsl);
             }
             else
             {
-                client.Connect(smtpSettings.Host);
+                client.Connect(smtpSettings.Host ?? "localhost");
             }
 
-            if (!string.IsNullOrWhiteSpace(smtpSettings.Username))
+            if (!string.IsNullOrWhiteSpace(smtpSettings.Username) && !string.IsNullOrWhiteSpace(smtpSettings.Password))
             {
                 client.Authenticate(smtpSettings.Username, smtpSettings.Password);
             }

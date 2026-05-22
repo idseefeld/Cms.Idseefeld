@@ -1,6 +1,4 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogsOverviewPage>
-@using Cms.Idseefeld.Core.Services;
-@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "IdsMaster.cshtml";
     var noBlogs = Umbraco.GetDictionaryValueOrDefault("noBlogs", "Es gibt noch keine Blogbeiträge.");
@@ -13,8 +11,6 @@
     var extraCssClass = useCardStyle ? "" : "col-lg-9";
 
     var overviePageId = Model.Id;
-
-    var cssClass = "container-fluid";
 }
 
 @if (hasMainBlockGrid)

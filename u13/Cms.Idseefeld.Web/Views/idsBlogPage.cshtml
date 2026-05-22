@@ -1,12 +1,11 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogPage>
-@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "IdsMaster.cshtml";
 
     var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
     var goToOverview = Umbraco.GetDictionaryValueOrDefault("goToOverview", "zur Übersicht");
     var cssClass = "container blogs";
-    var overviewUrl = Model.Parent?.Url();
+    var overviewUrl = Model.Parent()?.Url();
 }
 <div class="@cssClass">
 

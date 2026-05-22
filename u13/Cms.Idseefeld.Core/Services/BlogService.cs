@@ -28,7 +28,7 @@ namespace Cms.Idseefeld.Core.Services
         {
             IdsBlogsOverviewPage? overviewPage = (page is IdsBlogsOverviewPage)
                 ? page as IdsBlogsOverviewPage
-                : page.Parent as IdsBlogsOverviewPage;
+                : page.Parent() as IdsBlogsOverviewPage;
 
             var allItems = GetBlogs(umbraco, overviewPage);
             var pageUrl = page?.Url() ?? string.Empty;

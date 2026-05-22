@@ -27,16 +27,16 @@ public class LoginController : SurfaceController
 
     private readonly ITwoFactorLoginService _twoFactorLoginService;
 
-    private readonly ILocalizationService? _localizationService;
+    private readonly IDictionaryItemService? _dictionaryItemService;
 
     [ActivatorUtilitiesConstructor]
-    public LoginController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider, IMemberSignInManager signInManager, IMemberManager memberManager, ITwoFactorLoginService twoFactorLoginService)
+    public LoginController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider, IMemberSignInManager signInManager, IMemberManager memberManager, ITwoFactorLoginService twoFactorLoginService, IDictionaryItemService dictionaryItemService)
         : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
     {
         _signInManager = signInManager;
         _memberManager = memberManager;
         _twoFactorLoginService = twoFactorLoginService;
-        _localizationService = services.LocalizationService;
+        _dictionaryItemService = dictionaryItemService;
     }
 
     [HttpPost]
@@ -50,15 +50,15 @@ public class LoginController : SurfaceController
         }
 
         MergeRouteValuesToModel(model);
-        Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: true);
+        Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(model.Username ?? string.Empty, model.Password ?? string.Empty, model.RememberMe, lockoutOnFailure: true);
         if (signInResult.Succeeded)
         {
-            base.TempData["LoginSuccess"] = true;
+            TempData["LoginSuccess"] = true;
             if (!model.RedirectUrl.IsNullOrWhiteSpace())
             {
-                return Redirect(base.Url.IsLocalUrl(model.RedirectUrl) 
+                return Redirect(Url.IsLocalUrl(model.RedirectUrl) 
                     ? model.RedirectUrl 
-                    : CurrentPage.AncestorOrSelf(1).Url(base.PublishedUrlProvider));
+                    : CurrentPage!.AncestorOrSelf(1).Url(PublishedUrlProvider));
             }
 
             return RedirectToCurrentUmbracoUrl();
@@ -68,7 +68,7 @@ public class LoginController : SurfaceController
         string isoCode = Thread.CurrentThread.CurrentCulture.Name;
         if (signInResult.RequiresTwoFactor)
         {
-            MemberIdentityUser? memberIdentityUser = await _memberManager.FindByNameAsync(model.Username);
+            MemberIdentityUser? memberIdentityUser = await _memberManager.FindByNameAsync(model.Username ?? string.Empty);
             if (memberIdentityUser == null)
             {
                 return NotFound($"No local member found for username {model.Username}");
@@ -80,19 +80,19 @@ public class LoginController : SurfaceController
         else if (signInResult.IsLockedOut)
         {
 
-            var dictValue = _localizationService?.GetDictionaryItemByKey("MemberLockedOut");
+            var dictValue = _dictionaryItemService?.GetAsync("MemberLockedOut").Result;
             errorMessage = dictValue?.Translations
                 .FirstOrDefault(t => t.LanguageIsoCode == isoCode)?.Value ?? "MemberLockedOut";
         }
         else if (signInResult.IsNotAllowed)
         {
-            var dictValue = _localizationService?.GetDictionaryItemByKey("MemberNotAllowed");
+            var dictValue = _dictionaryItemService?.GetAsync("MemberNotAllowed").Result;
             errorMessage = dictValue?.Translations
                 .FirstOrDefault(t => t.LanguageIsoCode == isoCode)?.Value ?? "MemberNotAllowed";
         }
         else
         {
-            var dictValue = _localizationService?.GetDictionaryItemByKey("InvalidLogin");
+            var dictValue = _dictionaryItemService?.GetAsync("InvalidLogin").Result;
             errorMessage = dictValue?.Translations
                 .FirstOrDefault(t => t.LanguageIsoCode == isoCode)?.Value ?? "InvalidLogin";
         }
@@ -113,9 +113,9 @@ public class LoginController : SurfaceController
     //   model:
     private void MergeRouteValuesToModel(LoginModel model)
     {
-        if (base.RouteData.Values.TryGetValue("RedirectUrl", out object value) && value != null)
+        if (RouteData.Values.TryGetValue("RedirectUrl", out object? value))
         {
-            model.RedirectUrl = value.ToString();
+            model.RedirectUrl = value?.ToString();
         }
     }
 }

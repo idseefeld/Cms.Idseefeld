@@ -1,16 +1,15 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
-@using Umbraco.Cms.Core
-@using Umbraco.Cms.Core.Models.PublishedContent
-@using Umbraco.Cms.Core.Routing
-@using Umbraco.Extensions
-
 @inject IPublishedValueFallback PublishedValueFallback
 @inject IPublishedUrlProvider PublishedUrlProvider
-
 @{
     var content = Model;
-    var root = content?.AncestorOrSelf<IdsRootPage>();
-    var selection = root?.Children?.Where(x => x.IsVisible(PublishedValueFallback)).ToArray();
+    var root = content?.AncestorOrSelf<IdsRootPage>() as IdsRootPage;
+    if (root == null)
+    {
+        return;
+    }
+
+    var selection = root.Children().Where(x => x.IsVisible(PublishedValueFallback)).ToArray();
 
     var toggleLabel = Umbraco.GetDictionaryValueOrDefault("toggleNavigation", "Toggle navigation");
     var useDropdowns =  false;//true;//
@@ -60,14 +59,14 @@
                         @foreach (var item in selection)
                         {
                             var name = item.Name;
-                            if (useDropdowns && item.Children != null && item.Children.Any(c => c.IsVisible()))
+                            if (useDropdowns && item.Children() != null && item.Children().Any(c => c.IsVisible()))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         @name
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @foreach (var child in item.Children)
+                                        @foreach (var child in item.Children())
                                         {
                                             var url = item.Url(PublishedUrlProvider);
                                             var isActive = item.IsAncestorOrSelf(content);

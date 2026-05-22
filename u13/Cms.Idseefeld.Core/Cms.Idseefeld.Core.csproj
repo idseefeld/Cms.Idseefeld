@@ -6,6 +6,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Umbraco.Cms" Version="17.4.2" />
+		<PackageReference Include="Umbraco.Community.WysiwgUmbracoCommunityExtensions" Version="17.0.5" />
 	</ItemGroup>
 
 </Project>
