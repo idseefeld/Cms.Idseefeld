@@ -243,7 +243,7 @@ footer a strong {
   background-color: transparent;
 }
 
-:root {
+* {
   --footer-color: #009;
   --bg-primary: #006AB3;
   --text-primary: #FDBB06;
@@ -299,6 +299,7 @@ footer a.nav-link {
   padding: 8px;
 }
 footer .copy-right {
+  color: var(--footer-color);
   padding: 8px 0;
   text-align: right;
 }
