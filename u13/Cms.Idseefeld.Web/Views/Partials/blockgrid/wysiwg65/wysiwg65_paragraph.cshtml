@@ -1,0 +1,19 @@
+@using WysiwgUmbracoCommunityExtensions.Extensions
+@using WysiwgUmbracoCommunityExtensions.Services
+@model wysiwgVm.WysiwygBlockGridItem
+@{
+    var content = new wysiwgVm.Wysiwg65_paragraph(Model.Content);
+    if (content?.Text == null) return;
+
+    // var pageBackgroundColor = wysiwgVm.WysiwygPublishedContentService.GetColor(Model.BackgroundColor);
+
+    var settings = new wysiwgVm.Wysiwg65_paragraphSettings(Model.Settings);
+    var color = WysiwygPublishedContentService.GetColor(settings?.Color);
+    var colorStyle = string.IsNullOrEmpty(color) ? string.Empty :color.GetColorStyle();
+    var minHeightStyle = string.IsNullOrEmpty(settings?.MinHeight) ? string.Empty : $"min-height: {settings.MinHeight};";
+
+    var inlineStyles = $"{colorStyle}{minHeightStyle}";
+}
+<div class="paragraph" style="@inlineStyles">
+    @content.Text.GetHtml()
+</div>

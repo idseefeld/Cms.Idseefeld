@@ -10,5 +10,13 @@
   {
     "outputFile": "wwwroot/js/initCodeStyleAndCopy.es5.js",
     "inputFile": "wwwroot/js/initCodeStyleAndCopy.js"
+  },
+  {
+    "outputFile": "wwwroot/styles/wysiwyg-blockgrid.css",
+    "inputFile": "wwwroot/styles/wysiwyg-blockgrid.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/ids/wysiwyg-default-blockgrid.css",
+    "inputFile": "wwwroot/css/ids/wysiwyg-default-blockgrid.scss"
   }
 ]
