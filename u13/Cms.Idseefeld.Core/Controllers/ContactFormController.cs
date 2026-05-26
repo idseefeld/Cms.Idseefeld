@@ -6,16 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Umbraco.Cms.Core.Cache;
-using Umbraco.Cms.Core.Configuration.Models;
-using System.Linq;
 using Umbraco.Cms.Core.Logging;
+using Umbraco.Cms.Core.Models.Email;
 using Umbraco.Cms.Core.Routing;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Cms.Infrastructure.Mail.Interfaces;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Web.Common.Filters;
 using Umbraco.Cms.Web.Website.Controllers;
-using Cms.Idseefeld.Core.Extensions;
 
 namespace Cms.Idseefeld.Core.Controllers
 {
@@ -25,7 +24,17 @@ namespace Cms.Idseefeld.Core.Controllers
         private readonly ContactMailOptions _mailOptions;
         private readonly IMailService _mailService;
         private readonly int _minEditingSconds = 9;
-        public ContactFormController(ILogger<SurfaceController> logger, IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider, IOptions<ContactMailOptions> mailOptions, IMailService mailService) : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
+        public ContactFormController(
+            ILogger<SurfaceController> logger, 
+            IUmbracoContextAccessor umbracoContextAccessor, 
+            IUmbracoDatabaseFactory databaseFactory, 
+            ServiceContext services, 
+            AppCaches appCaches, 
+            IProfilingLogger profilingLogger, 
+            IPublishedUrlProvider publishedUrlProvider,
+            IMailService mailService, 
+            IOptions<ContactMailOptions> mailOptions) 
+            : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
         {
             _mailOptions = mailOptions.Value;
             _mailService = mailService;
@@ -80,7 +89,7 @@ namespace Cms.Idseefeld.Core.Controllers
                     // only send email when post request comes 5 seconds after inital page load
                     formData.HostInfo = $"Send from {Request.Host}";
                     formData.EditingTime = (int)Math.Floor(duration);
-                    _mailService.HandleContactData(formData);
+                    _mailService.HandleContactDataAsync(formData);                    
                 }
                 else
                 {
@@ -95,7 +104,5 @@ namespace Cms.Idseefeld.Core.Controllers
 
             return RedirectToCurrentUmbracoPage();
         }
-
-
     }
 }

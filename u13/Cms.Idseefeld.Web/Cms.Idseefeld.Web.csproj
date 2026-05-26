@@ -2,35 +2,30 @@
 
 	<ItemGroup>
 		<AdditionalFiles Remove="Views\MacroPartials\**" />
-		<AdditionalFiles Remove="Views\Partials\blockgrid\Components\**" />
 		<AdditionalFiles Remove="Views\Partials\blocklist\**" />
 		<AdditionalFiles Remove="Views\Partials\grid\**" />
 		<Compile Remove="bin\**" />
 		<Compile Remove="publish\**" />
 		<Compile Remove="umbraco\**" />
 		<Compile Remove="Views\MacroPartials\**" />
-		<Compile Remove="Views\Partials\blockgrid\Components\**" />
 		<Compile Remove="Views\Partials\blocklist\**" />
 		<Compile Remove="Views\Partials\grid\**" />
 		<Content Remove="bin\**" />
 		<Content Remove="publish\**" />
 		<Content Remove="umbraco\**" />
 		<Content Remove="Views\MacroPartials\**" />
-		<Content Remove="Views\Partials\blockgrid\Components\**" />
 		<Content Remove="Views\Partials\blocklist\**" />
 		<Content Remove="Views\Partials\grid\**" />
 		<EmbeddedResource Remove="bin\**" />
 		<EmbeddedResource Remove="publish\**" />
 		<EmbeddedResource Remove="umbraco\**" />
 		<EmbeddedResource Remove="Views\MacroPartials\**" />
-		<EmbeddedResource Remove="Views\Partials\blockgrid\Components\**" />
 		<EmbeddedResource Remove="Views\Partials\blocklist\**" />
 		<EmbeddedResource Remove="Views\Partials\grid\**" />
 		<None Remove="bin\**" />
 		<None Remove="publish\**" />
 		<None Remove="umbraco\**" />
 		<None Remove="Views\MacroPartials\**" />
-		<None Remove="Views\Partials\blockgrid\Components\**" />
 		<None Remove="Views\Partials\blocklist\**" />
 		<None Remove="Views\Partials\grid\**" />
 	</ItemGroup>
@@ -77,10 +72,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Cms.Idseefeld.Core\Cms.Idseefeld.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="wwwroot\styles\" />
 	</ItemGroup>
 
 	<PropertyGroup>

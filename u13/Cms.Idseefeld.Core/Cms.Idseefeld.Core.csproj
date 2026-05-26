@@ -2,6 +2,7 @@
 
 	<ItemGroup>
 	  <Compile Remove="Compositions\RemoveDashboard.cs" />
+	  <Compile Remove="Services\SystemNetMailService.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

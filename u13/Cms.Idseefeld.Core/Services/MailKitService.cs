@@ -17,7 +17,7 @@ namespace Cms.Idseefeld.Core.Services
             _mailOptions = mailOptions.Value;
         }
 
-        public void HandleContactData(ContactFormModel formData)
+        public async Task HandleContactDataAsync(ContactFormModel formData)
         {
             if (string.IsNullOrWhiteSpace(_mailOptions.To))
             {
@@ -35,9 +35,13 @@ namespace Cms.Idseefeld.Core.Services
             message.Subject = formData.Subject;
             message.Body = new TextPart("plain")
             {
-                Text = $"{BuildContactBody(formData)}\n\nMailKit"
+                Text = $"{BuildContactBody(formData)}"
             };
 
+            //var message = new EmailMessage(smtpSettings.From ?? "no-reply@example.com", _mailOptions.To, formData.Subject, $"{BuildContactBody(formData)}", false);
+
+            // var expires = new TimeSpan(0, 5, 0); // Set the expiration time to 5 minutes
+            // await _emailSenderClient.SendAsync(message, expires);
             using var client = new SmtpClient();
             SendMessage(smtpSettings, message, client);
         }

@@ -4,6 +4,6 @@ namespace Cms.Idseefeld.Core.Services
 {
     public interface IMailService
     {
-        void HandleContactData(ContactFormModel formData);
+        Task HandleContactDataAsync(ContactFormModel formData);
     }
 }
