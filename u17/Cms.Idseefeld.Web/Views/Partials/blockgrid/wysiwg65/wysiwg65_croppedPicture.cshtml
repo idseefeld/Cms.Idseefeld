@@ -1,0 +1,102 @@
+@using Conventions = Umbraco.Cms.Core.Constants.Conventions
+@using Microsoft.AspNetCore.Html
+@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters
+@using Umbraco.Cms.Core.PublishedCache
+@using Umbraco.Cms.Core.Services.Navigation
+@using Umbraco.Extensions
+@using WysiwgUmbracoCommunityExtensions.Extensions
+@using WysiwgUmbracoCommunityExtensions.Models
+@using WysiwgUmbracoCommunityExtensions.Services
+@using wysiwgVm = WysiwgUmbracoCommunityExtensions.ViewModels
+@inject IMediaNavigationQueryService MediaNavigationQueryService
+@inject IPublishedMediaCache PublishedMediaCache
+@model BlockGridItem
+@{
+    var content = new wysiwgVm.Wysiwg65_croppedPicture(Model.Content);
+    if (content?.MediaItem == null) return;
+
+    var width = 1200;
+
+    var figCaption = content.FigCaption ?? "";
+    var color = WysiwygPublishedContentService.GetColor(content.CaptionColor) ?? string.Empty;
+    var selectedCrop = content.MediaItem.SelectedCropAlias ?? "";
+    var alternativeText = content.AlternativeText ?? content.MediaItem.Name ?? selectedCrop;
+    var rotateStyle = new HtmlFormattableString(content.Rotation == null ? "" : $"style=\"margin: var(--wysiwg-figure-margin, 0);transform: var(--wysiwg-figure-transform, rotate({content.Rotation}deg));\"");
+    var rotateClass = content.Rotation == null ? "" : "class=\"rotate\"";
+    var colorStyle = new HtmlFormattableString(string.IsNullOrEmpty(color) ? "" : $"{rotateClass} style=\"color: var(--wysiwg-figcaption-color,{color});\"");
+    if (content.MediaItem.ContentType.Alias == Conventions.MediaTypes.Folder)
+    {
+        RenderFolder(content.MediaItem, width, selectedCrop, alternativeText, figCaption, colorStyle, rotateStyle, PublishedMediaCache, MediaNavigationQueryService);
+    }
+    else if (content.MediaItem.ContentType.Alias == Conventions.MediaTypes.Image)
+    {
+        RenderImage(content.MediaItem, width, selectedCrop, alternativeText, figCaption, colorStyle, rotateStyle);
+    }
+}
+
+@functions {
+    private void RenderImage(MediaWithSelectedCrop image, int width, string cropAlias, string alternativeText, string figCaption, IHtmlContent colorStyle, IHtmlContent rotateStyle)
+    {
+        int[] sourceSizes = [576, 768, 992];
+        int maxSize = width;
+        var src = image.GetSelectedCropUrl(width, cropAlias) ?? image.GetCropUrl(width: width, cropAlias: cropAlias);
+
+        <div class="wysiwg-croppedicture-view">
+            <figure @(rotateStyle)>
+                <div class="wysiwg-cropped-image">
+                    @*<img src="@src" alt="@alternativeText" />*@
+                    <picture class="noscript" onclick="showImageBox(event, '@src','@alternativeText','@alternativeText')">
+                        @foreach (var size in sourceSizes)
+                        {
+                            <source media="(max-width:@(size)px)" srcset="@src?rmode=min&amp;width=@size">
+                        }
+                        <img src="@src?rmode=min&amp;width=@maxSize" alt="@alternativeText">
+                    </picture>
+                </div>
+
+                @if (!string.IsNullOrEmpty(figCaption))
+                {
+                    <figcaption>
+                        <span class="caption" @(colorStyle)>@figCaption</span>
+                    </figcaption>
+                }
+            </figure>
+        </div>
+    }
+
+    private void RenderFolder(PublishedContentWrapped folder, int width, string cropAlias, string alternativeText, string figCaption, IHtmlContent colorStyle, IHtmlContent rotateStyle,
+        IPublishedMediaCache PublishedMediaCache,
+        IMediaNavigationQueryService MediaNavigationQueryService)
+    {
+        if (folder == null)
+        {
+            return;
+        }
+        MediaNavigationQueryService.TryGetChildrenKeys(folder.Key, out IEnumerable<Guid> imageKeys);
+        if (imageKeys.Count() == 0)
+        {
+            <text><span class="text-danger">Folder "@(folder.Name)" does not contain images!</span></text>
+        }
+        foreach (var key in imageKeys)
+        {
+            var mediaItem = PublishedMediaCache.GetById(key);
+            if (mediaItem != null && mediaItem.ContentType.Alias == Conventions.MediaTypes.Image)
+            {
+                IPublishedValueFallback noopFallback = new NoopPublishedValueFallback();
+                var localCropsPropery = mediaItem.GetProperty(Conventions.Media.File);
+                if (localCropsPropery == null || !localCropsPropery.HasValue())
+                {
+                    <text><span class="text-danger">Image "@(mediaItem.Name)" does not have a crop!</span></text>
+                    continue;
+                }
+                if (localCropsPropery.Value<ImageCropperValue>(noopFallback) is ImageCropperValue localCrops)
+                {
+                    MediaWithSelectedCrop image = new MediaWithSelectedCrop(mediaItem, noopFallback, localCrops);
+                    RenderImage(image, width, cropAlias, alternativeText, figCaption, colorStyle, rotateStyle);
+                }
+            }
+        }
+    }
+}

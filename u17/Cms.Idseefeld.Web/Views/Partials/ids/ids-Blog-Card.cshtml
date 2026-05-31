@@ -1,0 +1,48 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var noBlogs = Umbraco.GetDictionaryValueOrDefault("noBlogs", "Es gibt noch keine Blogbeiträge.");
+    var readMore = Umbraco.GetDictionaryValueOrDefault("readMoreLabel", "mehr lesen...");
+    var lastUpdated = Umbraco.GetDictionaryValueOrDefault("lastUpdated", "zuletzt aktualisiert am");
+
+    var title = Model.TeaserTitle;
+    var body = Model.TeaserBodytext;
+    var date = Model.DisplayDate > DateTime.MinValue ? Model.DisplayDate : Model.UpdateDate;
+
+    var imgSrc = Url.GetCropUrl(Model.TeaserImage, height: 200, width: 200);
+    string imgAlt = Model.TeaserImage?.Content.Name ?? "";
+    bool hasImage = Model.TeaserImage?.Content.Url() != null;
+    string colCssClass = hasImage ? "col-8" : "col-12";
+}
+<div class="col-lg-6 mb-4">
+
+    <div class="card teaser">
+        <h3 class="card-header">@title</h3>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="@colCssClass">
+
+                    @body
+
+                </div>
+
+                @if (hasImage)
+                {
+                    <div class="col-4">
+                        <img class="img-fluid img-thumbnail" src="@imgSrc" alt="@imgAlt" />
+                    </div>
+                }
+
+            </div>
+            <div class="row">
+                <small>@lastUpdated @date.ToShortDateString()</small>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="@Model.Url()">@readMore</a>
+        </div>
+    </div>
+
+</div>
+

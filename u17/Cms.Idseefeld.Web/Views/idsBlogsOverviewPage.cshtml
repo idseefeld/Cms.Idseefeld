@@ -1,0 +1,61 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogsOverviewPage>
+@{
+    Layout = "IdsMaster.cshtml";
+    var noBlogs = Umbraco.GetDictionaryValueOrDefault("noBlogs", "Es gibt noch keine Blogbeiträge.");
+    var readMore = Umbraco.GetDictionaryValueOrDefault("readMoreLabel", "mehr lesen...");
+    var lastUpdated = Umbraco.GetDictionaryValueOrDefault("lastUpdated", "zuletzt aktualisiert am");
+    var blogs = BlogService.GetBlogs(Umbraco, Model);
+    var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
+
+    var useCardStyle = Model.UseCardStyle;
+    var extraCssClass = useCardStyle ? "" : "col-lg-9";
+
+    var overviePageId = Model.Id;
+}
+
+@if (hasMainBlockGrid)
+{
+    <div class="container note">
+        <div class="standard">
+            @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
+        </div>
+    </div>
+}
+
+<div class="container blogs">
+    <div class="row">
+        @if (blogs.Any())
+        {
+            <div class="col-12 @extraCssClass p-0">
+                <div class="container">
+                    <div class="row">
+                        @foreach (var blog in blogs)
+                        {
+                            if (useCardStyle)
+                            {
+                                @await Html.PartialAsync("ids/ids-Blog-Card", blog)
+                            }
+                            else
+                            {
+                                @await Html.PartialAsync("ids/ids-Blog-ListItem", blog)
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            @if (!useCardStyle)
+            {
+                <div class="col-lg-3">
+
+                    @await Component.InvokeAsync("BlogListBlogsSidebar", new { umbracoHelper = Umbraco, page = Model })
+
+                </div>
+            }
+        }
+        else
+        {
+            <p>@noBlogs</p>
+        }
+    </div>
+</div>
+

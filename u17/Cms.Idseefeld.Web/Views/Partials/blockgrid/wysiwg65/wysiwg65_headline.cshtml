@@ -1,0 +1,20 @@
+@using Microsoft.AspNetCore.Html
+@using WysiwgUmbracoCommunityExtensions.Extensions
+@using WysiwgUmbracoCommunityExtensions.Services
+@model wysiwgVm.WysiwygBlockGridItem
+@{
+    var content = new wysiwgVm.Wysiwg65_headline(Model.Content);
+    if (content == null) return;
+
+    // var pageBackgroundColor = WysiwygPublishedContentService.GetColor(Model.BackgroundColor);
+
+    var settings = new wysiwgVm.Wysiwg65_headlineSettings(Model.Settings);
+    var color = WysiwygPublishedContentService.GetColor(settings?.Color);
+    var inlineStyles = string.IsNullOrEmpty(color) ? string.Empty : color.GetColorStyle();
+    inlineStyles += string.IsNullOrEmpty(settings?.Margin) ? string.Empty : $"margin: {settings?.Margin};";
+    var size = settings?.Size?.ToLower() ?? "h2";
+    var margin = settings?.Margin ?? string.Empty;
+
+    var html = new HtmlString($"<{size} class=\"headline\" style=\"{inlineStyles}\">{content.Text}</{size}>");
+}
+@html

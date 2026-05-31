@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<umbPackage>
+	<info>
+		<package>
+			<name>Grid Image Crop</name>
+		</package>
+	</info>
+	<DocumentTypes />
+	<MediaTypes />
+	<Templates />
+	<Stylesheets />
+	<Scripts />
+	<PartialViews>
+		<View path="grid\editors\ImageCrop.cshtml">
+			<![CDATA[@model dynamic
+@using Newtonsoft.Json;
+@using System.Dynamic
+@using Umbraco.Cms.Core.Media
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters
+@using Umbraco.Extensions
+@using Microsoft.Extensions.Logging;
+@using idseefeld.de.GridImageCropPackage.Models
+
+@inject IImageUrlGenerator ImageUrlGenerator
+
+@{
+    //version 2.0.0
+	
+    string? GetSourceByBreakPoint(string src, ImageCropperValue.ImageCropperCrop crop, double ratio, int breakPointWidth, ImageCropperValue dataSet)
+    {
+        return ImageCropperTemplateCoreExtensions.GetCropUrl(
+                            src,
+                            ImageUrlGenerator,
+                            width: breakPointWidth,
+                            height: (int)(breakPointWidth / ratio),
+                            cropAlias: crop?.Alias,
+                            cropDataSet: dataSet
+                    );
+    }
+}
+@if (Model?.value is not null)
+{
+    string? srcBreakPoint1 = null;
+    int breakPointWidth1 = 600;
+    string? srcBreakPoint2 = null;
+    int breakPointWidth2 = 768;
+    string? srcBreakPoint3 = null;
+    int breakPointWidth3 = 992;
+    string? srcBreakPoint4 = null;
+    int breakPointWidth4 = 1200;
+
+    var json = JsonConvert.SerializeObject(Model.value);
+    var gridImageCrop = JsonConvert.DeserializeObject<GridImageCropperValue>(json) as GridImageCropperValue;
+    if (gridImageCrop == null) { return; }
+
+    var caption = gridImageCrop.Caption;
+    var altText = string.IsNullOrEmpty(gridImageCrop.AltText) ? caption : gridImageCrop.AltText;
+    string src = gridImageCrop.Src ?? string.Empty;
+    var w = gridImageCrop.Width;
+    var h = gridImageCrop.Height;
+    var ratio = (double)w / h;
+
+    var crop = gridImageCrop.SelectedCrop;
+    if(crop != null){
+         w = crop.Width;
+         h = crop.Height;
+        ratio = (double)w / h;
+    }
+    var dataSet = new ImageCropperValue
+    {
+        FocalPoint = new ImageCropperValue.ImageCropperFocalPoint
+        {
+            Top = gridImageCrop.FocalPoint?.Top ?? 0.5m,
+            Left = gridImageCrop.FocalPoint?.Left ?? 0.5m
+        },
+
+        Crops = crop != null
+            ? new ImageCropperValue.ImageCropperCrop[] { crop }
+            : Array.Empty<ImageCropperValue.ImageCropperCrop>()
+    };
+
+    src = ImageCropperTemplateCoreExtensions.GetCropUrl(
+            src,
+            ImageUrlGenerator,
+            width: w,
+            height: h,
+            cropAlias: crop?.Alias,
+            cropDataSet: dataSet
+    ) ?? string.Empty;
+
+    if (!string.IsNullOrEmpty(src))
+    {
+        srcBreakPoint1 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth1, dataSet);
+
+        srcBreakPoint2 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth2, dataSet);
+
+        srcBreakPoint3 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth3, dataSet);
+
+        srcBreakPoint4 = GetSourceByBreakPoint(src, crop, ratio, breakPointWidth4, dataSet);
+    }
+
+
+    if (!string.IsNullOrEmpty(src))
+    {
+        <picture>
+            <source srcset="@srcBreakPoint1" media="(max-width: @(breakPointWidth1)px)" />
+            <source srcset="@srcBreakPoint4" media="(min-width: @(breakPointWidth4)px)" />
+            <source srcset="@srcBreakPoint3" media="(min-width: @(breakPointWidth3)px)" />
+            <source srcset="@srcBreakPoint2" media="(min-width: @(breakPointWidth2)px)" />
+            <source srcset="@srcBreakPoint1" media="(min-width: @(breakPointWidth1)px)" />
+            <img src="@src" alt="@altText">
+        </picture>
+        if (caption != null)
+        {
+            <p class="caption">@caption</p>
+        }
+    }
+}
+]]>
+		</View>
+	</PartialViews>
+	<Macros />
+	<MacroPartialViews />
+	<DictionaryItems />
+	<Languages />
+	<DataTypes />
+	<MediaItems />
+</umbPackage>

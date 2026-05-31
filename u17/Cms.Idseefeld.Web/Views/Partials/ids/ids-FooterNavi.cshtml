@@ -1,0 +1,96 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Cache
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Cms.Idseefeld.Core.Helpers
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+@inject IAppPolicyCache _cachePolicy;
+
+@{
+    var authority = UmbracoContext?.CleanedUmbracoUrl.Authority;
+    var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+    var isDE = lang == "de";
+    var liveAuthortiyStart = "www.idseefeld";
+    var isLivehost = authority?.InvariantStartsWith(liveAuthortiyStart) ?? false;
+    var isLocalhost = !isLivehost || (authority?.InvariantEquals("localhost") ?? false);
+    var authortiyStart = isLivehost ? liveAuthortiyStart : Context.Request.Host.ToString();
+
+    var root = Model?.AncestorOrSelf<IdsRootPage>() as IdsRootPage;
+    var hasLinks = root?.FooterLinks?.Any() ?? false;
+    var selection = root?.FooterLinks?.ToArray();
+
+    var toggleLabel = Umbraco.GetDictionaryValueOrDefault("toggleNavigation", "Toggle navigation");
+
+    var currentCuture = Umbraco.CultureDictionary.Culture.ToString();
+    var currentUrl = Model?.Url();
+
+    var isRoot = root?.Id == Model?.Id;
+    var otherUrls = PublishedUrlProvider
+        .GetOtherUrls(Model?.Id ?? 0)
+        .Where(u => u.Url != null && u.Url.DnsSafeHost.InvariantContains(authortiyStart) && (isRoot || !u.Culture.InvariantEquals(currentCuture)))
+        .DistinctBy(u => u.Culture)
+        .ToList();
+
+    if (!isRoot)
+    {
+        // var newUrlInfo = new UrlInfo(new Uri(Model?.Url() ?? string.Empty), PublishedUrlProvider., currentCuture, isExternal: true);
+        // if (!otherUrls.Contains(newUrlInfo))
+        // {
+        //     otherUrls.Add(newUrlInfo);
+        // }
+    }
+    // var languageUrls = otherUrls.OrderBy(u => u.Culture);
+    // var ui = languageUrls.FirstOrDefault();
+}
+
+@if (selection?.Length > 0)
+{
+    <nav class="container">
+        <div class="row">
+
+            <div class="col-12 col-sm-8">
+                <ul class="nav">
+                    @if (selection != null)
+                    {
+                        foreach (Umbraco.Cms.Core.Models.Link item in selection)
+                        {
+                            if (item != null)
+                            {
+                                var content = item.Udi == null ? null : Umbraco.Content(item.Udi);
+                                var name = content?.Name ?? item.Name;
+                                var url = item.Url;
+                                var isActive = url?.Equals(Model?.Url(PublishedUrlProvider)) ?? false;
+                                <li class="nav-item @(isActive ? "selected" : "")">
+                                    @if (isActive)
+                                    {
+                                        <a class="nav-link active" aria-current="page" href="@url">
+                                            @name
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="nav-link" href="@url">
+                                            @name
+                                        </a>
+                                    }
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+
+            <div class="col-12 col-sm-4">
+                <div class="copy-right">
+                    &copy; @DateTime.Today.Year, Dirk Seefeld
+                </div>
+            </div>
+
+        </div>
+    </nav>
+}

@@ -1,0 +1,38 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = null;
+	var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+	var message = lang == "de" 
+    	? "Gerade in Arbeit..." 
+    	: "Work in progress...";
+}
+<!doctype html>
+<html lang="@lang">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" type="image/png" href="/media/r1nhzdms/product-logo.png" />
+
+  <link href="/css/ids/work-in-progress.css" rel="stylesheet" />
+
+  <title>iDSeefeld</title>
+</head>
+
+<body class="-dark">
+  <div class="canvas scrollable">
+    <div id="main-content" class="content">
+
+      <div class="center">
+        <h1>
+			@message
+		</h1>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<!--uaas-->

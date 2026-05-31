@@ -1,0 +1,83 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+
+@using Umbraco.Cms.Web.Common.Models
+@using Umbraco.Cms.Web.Common.Security
+@using Umbraco.Cms.Web.Website.Controllers
+@using Umbraco.Cms.Core.Services
+@using Umbraco.Extensions
+@{
+    var isLoggedIn = Context.User.GetMemberIdentity()?.IsAuthenticated ?? false;
+    if (isLoggedIn)
+    {
+        // If the user is logged in, we don't need to proceed further
+        return;
+    }
+
+    var buttonLabel = isLoggedIn
+        ? Umbraco.GetDictionaryValueOrDefault("Logout", "Log out")
+        : Umbraco.GetDictionaryValueOrDefault("Login", "Anmelden");
+
+    var loginFailed = ViewData["LoginFailed"];
+    var loginFailedHtml = loginFailed as IHtmlContent;
+    var loginModel = new Cms.Idseefeld.Core.Models.LoginModel();
+    var description = Umbraco.GetDictionaryValue("Login Description");
+    var username = Umbraco.GetDictionaryValueOrDefault("Username", "Benutzername");
+    var password = Umbraco.GetDictionaryValueOrDefault("Password", "Kennwort");
+    var remember = Umbraco.GetDictionaryValueOrDefault("remember me", "Anmeldung speichern");
+
+    // You can modify this to redirect to a different URL instead of the current one
+    var pageId = Model?.MacroParameters["redirectPage"] as string;
+    loginModel.RedirectUrl = null;
+    // if (!string.IsNullOrEmpty(pageId))
+    // {
+    //     var page = Umbraco.Content(pageId);
+    //     if (page != null)
+    //     {
+    //         loginModel.RedirectUrl = page.Url();
+    //     }
+    // }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+    <div id="login-macro">
+        @if (!string.IsNullOrEmpty(description))
+        {
+            <p class="description">@description</p>
+        }
+
+        <div class="login-form">
+
+            @using (Html.BeginUmbracoForm<LoginController>(
+                    "HandleLogin", new { RedirectUrl = loginModel.RedirectUrl }))
+            {
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="@loginModel.Username" class="form-label">@username</label>
+                    <input asp-for="@loginModel.Username" class="form-control" />
+                    <span asp-validation-for="@loginModel.Username" class="form-text text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@loginModel.Password" class="form-label">@password</label>
+                    <input asp-for="@loginModel.Password" class="form-control" />
+                    <span asp-validation-for="@loginModel.Password" class="form-text text-danger"></span>
+                </div>
+                <div class="mb-3 form-check">
+                    <input asp-for="@loginModel.RememberMe" class="form-check-input">
+                    <label asp-for="@loginModel.RememberMe" class="form-check-label">
+                        @remember
+                    </label>
+                </div>
+                @if (loginFailedHtml != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @loginFailedHtml
+                    </div>
+                }
+                <button type="submit" class="btn btn-primary">@buttonLabel</button>
+            }
+
+        </div>
+    </div>
+}
