@@ -1,6 +1,6 @@
 ﻿* {
   /*colors*/
-  --wysiwg-highlight-color: #0359e2;
+  --wysiwg-highlight-color: #000;
   --wysiwg-text-color: #000;
   --wysiwg-error-color: #cc0000;
   /*all elements*/
@@ -34,7 +34,7 @@
   /*paragraph element*/
   --wysiwg-headline-paragraph-2-margin: 0 0 18px;
   --wysiwg-headline-paragraph-3-margin: 0 0 16px;
-  /*--wysiwg-paragraph-headline-color: var(--wysiwg-highlight-color, inherit);*/
+  --wysiwg-paragraph-headline-color: var(--wysiwg-highlight-color, inherit);
   --wysiwg-p-paragraph-margin: 0;
   --wysiwg-p-paragraph-padding: 0 0 20px;
   --wysiwg-link-text-decoration: underline;
@@ -69,8 +69,8 @@
   --wysiwg-call-to-action-font-size: 1em;
   --wysiwg-call-to-action-border-radius: 0.5em;
   --wysiwg-call-to-action-box-shadow: rgba(0,0,0,0.3) 2px 4px 4px;
-  --wysiwg-call-to-action-active-margin-left: 10px;
-  --wysiwg-call-to-action-active-margin-top: 10px;
+  --wysiwg-call-to-action-active-margin-left: 5px;
+  --wysiwg-call-to-action-active-margin-top: 5px;
   /*end element*/
   /*umbraco*/
   --umb-block-grid--areas-column-gap: 10px;
@@ -243,12 +243,28 @@ footer a strong {
   background-color: transparent;
 }
 
+.call-to-action button {
+  cursor: pointer;
+  background-color: var(--wysiwg-call-to-action-background-color, initial);
+  color: var(--wysiwg-call-to-action-color, initial);
+  border: var(--wysiwg-call-to-action-border, none);
+  padding: var(--wysiwg-call-to-action-padding, 0.5em 1em);
+  font-size: var(--wysiwg-call-to-action-font-size, 1em);
+  border-radius: var(--wysiwg-call-to-action-border-radius, 0.5em);
+  box-shadow: var(--wysiwg-call-to-action-box-shadow, rgba(0, 0, 0, 0.3) 5px 10px 10px);
+}
+.call-to-action button:active {
+  margin-left: var(--wysiwg-call-to-action-active-margin-left, 5px);
+  margin-top: var(--wysiwg-call-to-action-active-margin-top, 5px);
+  box-shadow: none;
+}
+
 * {
   --footer-color: #009;
-  --bg-primary: #006AB3;
-  --text-primary: #FDBB06;
+  --bg-primary: #0d54e3;
+  --text-primary: #000;
   --text-small: #CCC;
-  --link-hover: #0453AF;
+  --link-hover: #0d54e3;
   --link-hover-bg: #0453af0a;
   --form-error-color: #c00;
   --side-note-background: #f6f6ef;
@@ -273,10 +289,12 @@ header {
 
 pre {
   background-color: #eee;
-  padding: 0.5em;
   position: relative;
 }
-pre.code button.btn.btn-copy {
+pre code {
+  padding: 0.5em;
+}
+pre code button.btn.btn-copy {
   position: absolute;
   top: 0.1em;
   right: 0.1em;
@@ -428,8 +446,29 @@ picture.noscript.hidden {
 .btn-primary:hover {
   opacity: 1;
   background-color: var(--bg-primary);
-  color: var(--text-primary);
+  /*color: var(--text-primary);*/
   border-color: var(--bg-primary);
+}
+
+button.btn-primary {
+  cursor: pointer;
+  background-color: var(--bg-primary);
+  opacity: 0.8;
+  /*background-color: var(--wysiwg-call-to-action-background-color, initial);*/
+  color: #fff;
+  border: var(--wysiwg-call-to-action-border, none);
+  padding: var(--wysiwg-call-to-action-padding, 0.5em 1em);
+  font-size: var(--wysiwg-call-to-action-font-size, 1em);
+  border-radius: var(--wysiwg-call-to-action-border-radius, 0.5em);
+  box-shadow: var(--wysiwg-call-to-action-box-shadow, rgba(0, 0, 0, 0.3) 5px 10px 10px);
+}
+button.btn-primary:hover {
+  opacity: 1;
+}
+button.btn-primary:active {
+  margin-left: var(--wysiwg-call-to-action-active-margin-left, 5px);
+  margin-top: var(--wysiwg-call-to-action-active-margin-top, 5px);
+  box-shadow: none;
 }
 
 .teaser {
@@ -511,11 +550,16 @@ picture.noscript.hidden {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #0453af;
   height: calc(90% - 70px);
-  background-color: #0453AF;
 }
-.root .grid-section .container {
-  padding-left: 1em;
+.root .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+.root .container-fluid .umb-block-grid-areas-container {
+  background-size: cover !important;
+  background-position: center !important;
 }
 .root .umb-grig {
   height: 90%;
@@ -580,6 +624,11 @@ picture.noscript.hidden {
   color: var(--form-error-color);
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .root footer {
+    opacity: 1;
+  }
+}
 @media (orientation: landscape) and (min-height: 400px) {
   .root .root-head {
     height: 400px;
@@ -647,5 +696,8 @@ picture.noscript.hidden {
 @media (min-width: 992px) {
   main {
     padding-top: 20px;
+  }
+  .root main {
+    padding-top: 0;
   }
 }

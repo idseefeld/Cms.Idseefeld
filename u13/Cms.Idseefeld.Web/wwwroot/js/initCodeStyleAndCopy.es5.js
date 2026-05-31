@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 (function () {
-    document.querySelectorAll('pre.code').forEach(function (el, idx) {
+    document.querySelectorAll('pre code').forEach(function (el, idx) {
         hljs.highlightElement(el);
         if (el) {
             // Ensure each <pre> has a unique id

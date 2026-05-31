@@ -195,3 +195,22 @@ footer {
         background-color: transparent;
     }
 }
+
+.call-to-action {
+    button {
+        cursor: pointer;
+        background-color: var(--wysiwg-call-to-action-background-color, initial);
+        color: var(--wysiwg-call-to-action-color, initial);
+        border: var(--wysiwg-call-to-action-border, none);
+        padding: var(--wysiwg-call-to-action-padding, 0.5em 1em);
+        font-size: var(--wysiwg-call-to-action-font-size, 1em);
+        border-radius: var(--wysiwg-call-to-action-border-radius, 0.5em);
+        box-shadow: var(--wysiwg-call-to-action-box-shadow, rgba(0, 0, 0, 0.3) 5px 10px 10px);
+
+        &:active {
+            margin-left: var(--wysiwg-call-to-action-active-margin-left, 5px);
+            margin-top: var(--wysiwg-call-to-action-active-margin-top, 5px);
+            box-shadow: none;
+        }
+    }
+}

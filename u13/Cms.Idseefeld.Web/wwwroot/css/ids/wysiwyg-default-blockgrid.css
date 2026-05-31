@@ -1,6 +1,6 @@
 ﻿* {
   /*colors*/
-  --wysiwg-highlight-color: #0359e2;
+  --wysiwg-highlight-color: #000;
   --wysiwg-text-color: #000;
   --wysiwg-error-color: #cc0000;
   /*all elements*/
@@ -34,7 +34,7 @@
   /*paragraph element*/
   --wysiwg-headline-paragraph-2-margin: 0 0 18px;
   --wysiwg-headline-paragraph-3-margin: 0 0 16px;
-  /*--wysiwg-paragraph-headline-color: var(--wysiwg-highlight-color, inherit);*/
+  --wysiwg-paragraph-headline-color: var(--wysiwg-highlight-color, inherit);
   --wysiwg-p-paragraph-margin: 0;
   --wysiwg-p-paragraph-padding: 0 0 20px;
   --wysiwg-link-text-decoration: underline;
@@ -69,8 +69,8 @@
   --wysiwg-call-to-action-font-size: 1em;
   --wysiwg-call-to-action-border-radius: 0.5em;
   --wysiwg-call-to-action-box-shadow: rgba(0,0,0,0.3) 2px 4px 4px;
-  --wysiwg-call-to-action-active-margin-left: 10px;
-  --wysiwg-call-to-action-active-margin-top: 10px;
+  --wysiwg-call-to-action-active-margin-left: 5px;
+  --wysiwg-call-to-action-active-margin-top: 5px;
   /*end element*/
   /*umbraco*/
   --umb-block-grid--areas-column-gap: 10px;
@@ -241,6 +241,22 @@ footer a strong {
 }
 .umb-block-grid__layout-item[data-content-element-type-alias=wysiwg65_paragraph] {
   background-color: transparent;
+}
+
+.call-to-action button {
+  cursor: pointer;
+  background-color: var(--wysiwg-call-to-action-background-color, initial);
+  color: var(--wysiwg-call-to-action-color, initial);
+  border: var(--wysiwg-call-to-action-border, none);
+  padding: var(--wysiwg-call-to-action-padding, 0.5em 1em);
+  font-size: var(--wysiwg-call-to-action-font-size, 1em);
+  border-radius: var(--wysiwg-call-to-action-border-radius, 0.5em);
+  box-shadow: var(--wysiwg-call-to-action-box-shadow, rgba(0, 0, 0, 0.3) 5px 10px 10px);
+}
+.call-to-action button:active {
+  margin-left: var(--wysiwg-call-to-action-active-margin-left, 5px);
+  margin-top: var(--wysiwg-call-to-action-active-margin-top, 5px);
+  box-shadow: none;
 }
 
 * {
