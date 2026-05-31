@@ -58,6 +58,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
 		<PackageReference Include="Umbraco.Cms" Version="17.4.2" />
 	</ItemGroup>
 

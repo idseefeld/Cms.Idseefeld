@@ -26,6 +26,10 @@ builder.CreateUmbracoBuilder()
 
 WebApplication app = builder.Build();
 
+// fix security health checks with NWebsec.AspNetCore.Middleware
+app.UseXfo(options => options.SameOrigin());
+app.UseXContentTypeOptions();
+
 await app.BootUmbracoAsync();
 
 app.UseHttpsRedirection();
