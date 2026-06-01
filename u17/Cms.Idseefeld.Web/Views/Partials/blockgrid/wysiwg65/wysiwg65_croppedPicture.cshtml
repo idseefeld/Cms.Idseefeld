@@ -40,7 +40,6 @@
     private void RenderImage(MediaWithSelectedCrop image, int width, string cropAlias, string alternativeText, string figCaption, IHtmlContent colorStyle, IHtmlContent rotateStyle)
     {
         int[] sourceSizes = [576, 768, 992];
-        int maxSize = width;
         var src = image.GetSelectedCropUrl(width, cropAlias) ?? image.GetCropUrl(width: width, cropAlias: cropAlias);
 
         <div class="wysiwg-croppedicture-view">
@@ -50,9 +49,10 @@
                     <picture class="noscript" onclick="showImageBox(event, '@src','@alternativeText','@alternativeText')">
                         @foreach (var size in sourceSizes)
                         {
-                            <source media="(max-width:@(size)px)" srcset="@src?rmode=min&amp;width=@size">
+                            var srcset = image.GetSelectedCropUrl(size, cropAlias) ?? image.GetCropUrl(width: size, cropAlias: cropAlias);
+                            <source media="(max-width:@(size)px)" srcset="@srcset">
                         }
-                        <img src="@src?rmode=min&amp;width=@maxSize" alt="@alternativeText">
+                        <img src="@src" alt="@alternativeText">
                     </picture>
                 </div>
 

@@ -1,29 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<ItemGroup>
+		<AdditionalFiles Remove="obj\**" />
 		<AdditionalFiles Remove="Views\MacroPartials\**" />
 		<AdditionalFiles Remove="Views\Partials\blocklist\**" />
 		<AdditionalFiles Remove="Views\Partials\grid\**" />
 		<Compile Remove="bin\**" />
-		<Compile Remove="publish\**" />
+		<Compile Remove="obj\**" />
 		<Compile Remove="umbraco\**" />
 		<Compile Remove="Views\MacroPartials\**" />
 		<Compile Remove="Views\Partials\blocklist\**" />
 		<Compile Remove="Views\Partials\grid\**" />
 		<Content Remove="bin\**" />
-		<Content Remove="publish\**" />
+		<Content Remove="obj\**" />
 		<Content Remove="umbraco\**" />
 		<Content Remove="Views\MacroPartials\**" />
 		<Content Remove="Views\Partials\blocklist\**" />
 		<Content Remove="Views\Partials\grid\**" />
 		<EmbeddedResource Remove="bin\**" />
-		<EmbeddedResource Remove="publish\**" />
+		<EmbeddedResource Remove="obj\**" />
 		<EmbeddedResource Remove="umbraco\**" />
 		<EmbeddedResource Remove="Views\MacroPartials\**" />
 		<EmbeddedResource Remove="Views\Partials\blocklist\**" />
 		<EmbeddedResource Remove="Views\Partials\grid\**" />
 		<None Remove="bin\**" />
-		<None Remove="publish\**" />
+		<None Remove="obj\**" />
 		<None Remove="umbraco\**" />
 		<None Remove="Views\MacroPartials\**" />
 		<None Remove="Views\Partials\blocklist\**" />
