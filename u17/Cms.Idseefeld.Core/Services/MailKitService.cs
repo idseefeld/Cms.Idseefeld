@@ -1,5 +1,6 @@
 ﻿using Cms.Idseefeld.Core.Models;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using Umbraco.Cms.Core.Configuration.Models;
@@ -10,11 +11,13 @@ namespace Cms.Idseefeld.Core.Services
     {
         private readonly IOptionsMonitor<GlobalSettings> _globalSettings;
         private readonly ContactMailOptions _mailOptions;
+        private readonly ILogger<MailKitService> _logger;
 
-        public MailKitService(IOptionsMonitor<GlobalSettings> globalSettings, IOptions<ContactMailOptions> mailOptions)
+        public MailKitService(IOptionsMonitor<GlobalSettings> globalSettings, IOptions<ContactMailOptions> mailOptions, ILogger<MailKitService> logger)
         {
             _globalSettings = globalSettings;
             _mailOptions = mailOptions.Value;
+            _logger = logger;
         }
 
         public async Task HandleContactDataAsync(ContactFormModel formData)
@@ -46,12 +49,20 @@ namespace Cms.Idseefeld.Core.Services
             SendMessage(smtpSettings, message, client);
         }
 
-        private static void SendMessage(SmtpSettings smtpSettings, MimeMessage message, SmtpClient client)
+        private void SendMessage(SmtpSettings smtpSettings, MimeMessage message, SmtpClient client)
         {
             if (smtpSettings.Port > 0)
             {
                 var useSsl = smtpSettings.SecureSocketOptions.ToString() == SecureSocketOptions.SslOnConnect.ToString();
-                client.Connect(smtpSettings.Host ?? "localhost", smtpSettings.Port, useSsl);
+                try
+                {
+                    client.Connect(smtpSettings.Host ?? "localhost", smtpSettings.Port, useSsl);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to connect to SMTP server at {Host}:{Port} with SSL: {UseSsl}", smtpSettings.Host, smtpSettings.Port, useSsl);
+                    return;
+                }
             }
             else
             {
