@@ -116,7 +116,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.4.2+53e8de3")]
 		[ImplementPropertyType("displayDate")]
-		public virtual global::System.DateTime DisplayDate => global::Umbraco.Cms.Web.Common.PublishedModels.Teaser.GetDisplayDate(this, _publishedValueFallback);
+		public virtual global::System.Nullable<global::System.DateOnly> DisplayDate => global::Umbraco.Cms.Web.Common.PublishedModels.Teaser.GetDisplayDate(this, _publishedValueFallback);
 
 		///<summary>
 		/// Teaser Bodytext

@@ -7,7 +7,7 @@
 
     var title = Model.TeaserTitle;
     var body = Model.TeaserBodytext;
-    var date = Model.DisplayDate > DateTime.MinValue ? Model.DisplayDate : Model.UpdateDate;
+    var date = Model.DisplayDate ?? DateOnly.FromDateTime(Model.UpdateDate);
 
     var imgSrc200 = Url.GetCropUrl(Model.TeaserImage, height: 200, width: 200);
     var imgSrc506 = Url.GetCropUrl(Model.TeaserImage, height: 506, width: 506);

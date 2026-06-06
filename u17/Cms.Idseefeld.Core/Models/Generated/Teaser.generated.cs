@@ -24,7 +24,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 	{
 		/// <summary>Display Date</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.4.2+53e8de3")]
-		global::System.DateTime DisplayDate { get; }
+		global::System.Nullable<global::System.DateOnly> DisplayDate { get; }
 
 		/// <summary>Teaser Bodytext</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.4.2+53e8de3")]
@@ -78,11 +78,11 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.4.2+53e8de3")]
 		[ImplementPropertyType("displayDate")]
-		public virtual global::System.DateTime DisplayDate => GetDisplayDate(this, _publishedValueFallback);
+		public virtual global::System.Nullable<global::System.DateOnly> DisplayDate => GetDisplayDate(this, _publishedValueFallback);
 
 		/// <summary>Static getter for Display Date</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.4.2+53e8de3")]
-		public static global::System.DateTime GetDisplayDate(ITeaser that, IPublishedValueFallback publishedValueFallback) => that.Value<global::System.DateTime>(publishedValueFallback, "displayDate");
+		public static global::System.Nullable<global::System.DateOnly> GetDisplayDate(ITeaser that, IPublishedValueFallback publishedValueFallback) => that.Value<global::System.Nullable<global::System.DateOnly>>(publishedValueFallback, "displayDate");
 
 		///<summary>
 		/// Teaser Bodytext
