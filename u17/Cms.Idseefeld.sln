@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cms.Idseefeld.Core", "Cms.I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED444941-309F-4977-A86C-C69A750EBFE4}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
 		Directory.Build.props = Directory.Build.props
 		migration-readme.md = migration-readme.md
 	EndProjectSection
