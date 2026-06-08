@@ -21,7 +21,7 @@
     --wysiwg-link-hover-color: var(--wysiwg-highlight-color, inherit);
     /*headline element*/
     --wysiwg-headline-text-shadow: var(--wysiwg-text-shadow, none);
-    --wysiwg-headline-color: var(--wysiwg-highlight-color, inherit);
+    --wysiwg-headline-color: inherit;
     --wysiwg-headline-1-font-size: 32px;
     --wysiwg-headline-2-font-size: 28px;
     --wysiwg-headline-3-font-size: 24px;
@@ -34,7 +34,7 @@
     /*paragraph element*/
     --wysiwg-headline-paragraph-2-margin: 0 0 18px;
     --wysiwg-headline-paragraph-3-margin: 0 0 16px;
-    --wysiwg-paragraph-headline-color: var(--wysiwg-highlight-color, inherit);
+    --wysiwg-paragraph-headline-color: inherit;
     --wysiwg-p-paragraph-margin: 0;
     --wysiwg-p-paragraph-padding: 0 0 20px;
     --wysiwg-link-text-decoration: underline;

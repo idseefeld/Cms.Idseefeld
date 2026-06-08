@@ -1,0 +1,20 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IdsBlogPage>
+@{
+    Layout = "IdsMaster.cshtml";
+
+    var hasMainBlockGrid = Model.BlockGrid?.Count() > 0;
+    var goToOverview = Umbraco.GetDictionaryValueOrDefault("goToOverview", "zur Übersicht");
+    var cssClass = "container blogs";
+    var overviewUrl = Model.Parent()?.Url();
+}
+<div class="@cssClass">
+
+    @if (hasMainBlockGrid)
+    {
+        <div class="standard">
+
+            @await Html.GetBlockGridHtmlAsync(Model.BlockGrid)
+
+        </div>
+    }
+</div>
