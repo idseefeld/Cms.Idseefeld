@@ -422,16 +422,22 @@ button {
     }
 }
 
-.contact-form {
-    .umbraco-forms-form input.text,
-    .umbraco-forms-form textarea {
-        max-width: 100% !important;
-        width: 100%;
+.form-block {
+    &.contact {
+        margin-bottom: 2em;
     }
 
-    .umbraco-forms-form {
-        fieldset {
-            padding: 0;
+    .contact-form {
+        .umbraco-forms-form input.text,
+        .umbraco-forms-form textarea {
+            max-width: 100% !important;
+            width: 100%;
+        }
+
+        .umbraco-forms-form {
+            fieldset {
+                padding: 0;
+            }
         }
     }
 }

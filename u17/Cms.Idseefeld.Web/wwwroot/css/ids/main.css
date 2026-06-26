@@ -419,12 +419,15 @@ button.btn-primary:active {
   width: 100%;
 }
 
-.contact-form .umbraco-forms-form input.text,
-.contact-form .umbraco-forms-form textarea {
+.form-block.contact {
+  margin-bottom: 2em;
+}
+.form-block .contact-form .umbraco-forms-form input.text,
+.form-block .contact-form .umbraco-forms-form textarea {
   max-width: 100% !important;
   width: 100%;
 }
-.contact-form .umbraco-forms-form fieldset {
+.form-block .contact-form .umbraco-forms-form fieldset {
   padding: 0;
 }
 

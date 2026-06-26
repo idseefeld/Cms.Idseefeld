@@ -1,0 +1,20 @@
+@model wysiwgVm.WysiwygBlockGridItem
+@{
+    if (Model.Content is not MastodonBadgeBlock content) return;
+
+    var profileName = content.ProfileName;
+    var mastodonServer = content.MastodonServer;
+    var useWordmark = content.UseWatermark;
+    var typeClass = useWordmark ? "wordmark" : "logo";
+    var link = $"https://{mastodonServer}/@{profileName}";
+    var title = $"{profileName}@{mastodonServer}";
+
+    if (!string.IsNullOrWhiteSpace(profileName) && !string.IsNullOrWhiteSpace(mastodonServer))
+    {
+        <div class="mastodon">
+            <a href="@link" target="_blank" title="@title">
+                <div class="@typeClass"></div>
+            </a>
+        </div>
+    }
+}

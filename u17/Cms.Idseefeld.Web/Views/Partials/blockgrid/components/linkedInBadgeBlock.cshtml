@@ -1,0 +1,11 @@
+@model wysiwgVm.WysiwygBlockGridItem
+@{
+    if (Model.Content is not LinkedInBadgeBlock content) return;
+
+    var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+    var dataLocale = lang == "de" ? "de_DE" : "en_US";
+    var prefix = lang == "de" ? "de." : "en.";
+
+    var profileName = content.ProfileName;
+}
+<div class="badge-base LI-profile-badge" data-locale="@dataLocale" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="@profileName" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://@(prefix)linkedin.com/in/@profileName?trk=profile-badge"></a></div>
