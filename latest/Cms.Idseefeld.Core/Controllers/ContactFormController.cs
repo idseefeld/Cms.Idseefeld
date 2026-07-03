@@ -23,17 +23,17 @@ namespace Cms.Idseefeld.Core.Controllers
         private readonly ILogger _logger;
         private readonly ContactMailOptions _mailOptions;
         private readonly IMailService _mailService;
-        private readonly int _minEditingSconds = 9;
+        private readonly int _minEditingSeconds = 9;
         public ContactFormController(
-            ILogger<SurfaceController> logger, 
-            IUmbracoContextAccessor umbracoContextAccessor, 
-            IUmbracoDatabaseFactory databaseFactory, 
-            ServiceContext services, 
-            AppCaches appCaches, 
-            IProfilingLogger profilingLogger, 
+            ILogger<SurfaceController> logger,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IUmbracoDatabaseFactory databaseFactory,
+            ServiceContext services,
+            AppCaches appCaches,
+            IProfilingLogger profilingLogger,
             IPublishedUrlProvider publishedUrlProvider,
-            IMailService mailService, 
-            IOptions<ContactMailOptions> mailOptions) 
+            IMailService mailService,
+            IOptions<ContactMailOptions> mailOptions)
             : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
         {
             _mailOptions = mailOptions.Value;
@@ -59,7 +59,9 @@ namespace Cms.Idseefeld.Core.Controllers
             if (formData.DataConsent && formData.DataConsentText == null)
             {
                 ModelState.Remove("DataConsentText");
-            }else if(formData.DataConsentText != "true")
+            }
+            
+            if (formData.DataConsentText != "true")
             {
                 notAllowedChanges = true;
                 ModelState.AddModelError("DataConsentText", "Value not allowed");
@@ -83,13 +85,13 @@ namespace Cms.Idseefeld.Core.Controllers
                 HttpContext.Session.Remove(Constances.Common.EditStart);
                 HttpContext.Session.Remove(Constances.Common.FormPosted);
 
-                var minEditing = _mailOptions.MinFormEditingInSeconds ?? _minEditingSconds;
+                var minEditing = _mailOptions.MinFormEditingInSeconds ?? _minEditingSeconds;
                 if (startTicks > 0 && duration > minEditing)
                 {
                     // only send email when post request comes 5 seconds after inital page load
                     formData.HostInfo = $"Send from {Request.Host}";
                     formData.EditingTime = (int)Math.Floor(duration);
-                    _mailService.HandleContactDataAsync(formData);                    
+                    _mailService.HandleContactDataAsync(formData);
                 }
                 else
                 {
