@@ -1,7 +1,10 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactFormModel>
-@using System.ComponentModel.DataAnnotations;
+@using System.Globalization
 @using Microsoft.AspNetCore.Http;
 @{
+
+    //System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-DE");
+
     var submitLabel = Umbraco.GetDictionaryValueOrDefault("submitLabel", "Senden");
     var nameLabel = Umbraco.GetDictionaryValueOrDefault("nameLabel", "Name");
     var emailLabel = Umbraco.GetDictionaryValueOrDefault("emailLabel", "E-Mail");
@@ -14,14 +17,20 @@
     //var displayName = Model.GetPropertyDisplayName("name");
     //displayName = Model.GetPropertyDisplayName("email");
 
-    //var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-
     var session = this.Context.Session;
     if (session.GetString(Constances.Common.FormPosted) == null)
     {
         session.SetString(Constances.Common.EditStart, DateTime.Now.Ticks.ToString());
     }
+
+    var includeStyles = Context.Request.Path.Value?.InvariantStartsWith("/api/") ?? false;
 }
+
+@if (includeStyles)
+{
+    @Html.Partial("bootstrap-inline")
+}
+
 @using (Html.BeginUmbracoForm<ContactFormController>(nameof(ContactFormController.HandleSubmit)))
 {
     <div class="form-floating mb-3">

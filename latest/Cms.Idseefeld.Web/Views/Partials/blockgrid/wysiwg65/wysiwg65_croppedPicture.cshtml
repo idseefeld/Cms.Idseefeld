@@ -23,7 +23,12 @@
     var color = WysiwygPublishedContentService.GetColor(content.CaptionColor) ?? string.Empty;
     var selectedCrop = content.MediaItem.SelectedCropAlias ?? "";
     var alternativeText = content.AlternativeText ?? content.MediaItem.Name ?? selectedCrop;
-    var rotateStyle = new HtmlFormattableString(content.Rotation == null ? "" : $"style=\"margin: var(--wysiwg-figure-margin, 0);transform: var(--wysiwg-figure-transform, rotate({content.Rotation}deg));\"");
+    var layerLevelStyle = content.LayerLevel > 0
+        ? $"z-index: {content.LayerLevel};position:absolute;"
+        : "";
+    var rotateStyle = new HtmlFormattableString(content.Rotation == 0
+       ? ""
+       : $"style=\"margin: var(--wysiwg-figure-margin, 0);transform: var(--wysiwg-figure-transform, rotate({content.Rotation}deg));{layerLevelStyle}\"");
     var rotateClass = content.Rotation == null ? "" : "class=\"rotate\"";
     var colorStyle = new HtmlFormattableString(string.IsNullOrEmpty(color) ? "" : $"{rotateClass} style=\"color: var(--wysiwg-figcaption-color,{color});\"");
     if (content.MediaItem.ContentType.Alias == Conventions.MediaTypes.Folder)

@@ -2,11 +2,9 @@
 @{
     var content = new ContactFormBlock(Model.Content, null);
     if (content == null) return;
-
-    var contactFormModel = new ContactFormModel();
 }
 <div class="form-block contact">
 
-    @await Component.InvokeAsync("ContactFormBlock", contactFormModel)
+    @await Component.InvokeAsync("ContactFormBlock")
 
 </div>
