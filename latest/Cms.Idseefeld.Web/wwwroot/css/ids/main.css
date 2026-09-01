@@ -242,6 +242,9 @@ picture img {
   border-radius: 5px;
 }
 
+picture {
+  cursor: zoom-in;
+}
 picture.noscript.hidden {
   display: none;
 }
@@ -295,10 +298,6 @@ button.btn-primary:active {
   }*/
 }
 
-.blogs .umb-block-grid img,
-.blogs .grid-section img {
-  cursor: zoom-in;
-}
 .blogs .umb-block-grid img:hover,
 .blogs .grid-section img:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

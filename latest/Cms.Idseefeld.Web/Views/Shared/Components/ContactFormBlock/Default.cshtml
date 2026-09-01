@@ -28,7 +28,7 @@
 
 @if (includeStyles)
 {
-    @Html.Partial("bootstrap-inline")
+    @await Html.PartialAsync("bootstrap-inline")
 }
 
 @using (Html.BeginUmbracoForm<ContactFormController>(nameof(ContactFormController.HandleSubmit)))

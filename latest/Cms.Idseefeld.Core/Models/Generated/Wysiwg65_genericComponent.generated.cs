@@ -50,7 +50,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Component Picker: Selected component name
+		/// Component Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "18.1.2+c2cb759")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
