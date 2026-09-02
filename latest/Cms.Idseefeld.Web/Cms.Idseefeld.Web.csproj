@@ -80,6 +80,12 @@
 	  <ProjectReference Include="..\Cms.Idseefeld.Core\Cms.Idseefeld.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="app_offline~.htm">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 	<PropertyGroup>
 		<!-- Razor files are needed for the backoffice to work correctly -->
 		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
