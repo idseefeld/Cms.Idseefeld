@@ -20,7 +20,6 @@ builder.Services.AddTransient<IMailService, MailKitService>();
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
-    .AddDeliveryApi()
     .AddComposers()
     .Build();
 
