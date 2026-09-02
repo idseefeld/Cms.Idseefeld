@@ -369,6 +369,9 @@ button.btn-primary:active {
   background-color: #0453af;
   height: calc(90% - 70px);
 }
+.root main {
+  padding-top: 0;
+}
 .root .container-fluid {
   padding-left: 0;
   padding-right: 0;
@@ -515,8 +518,5 @@ button.btn-primary:active {
 @media (min-width: 992px) {
   main {
     padding-top: 20px;
-  }
-  .root main {
-    padding-top: 0;
   }
 }

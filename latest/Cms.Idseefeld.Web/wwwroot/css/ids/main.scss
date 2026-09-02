@@ -356,6 +356,10 @@ button {
     background-color: #0453af;
     height: calc(90% - 70px);
 
+    main {
+        padding-top: 0;
+    }
+
     .container-fluid {
         padding-left: 0;
         padding-right: 0;
@@ -566,11 +570,5 @@ button {
 
     main {
         padding-top: 20px;
-    }
-
-    .root {
-        main {
-            padding-top: 0;
-        }
     }
 }
