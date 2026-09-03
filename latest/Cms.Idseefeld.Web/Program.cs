@@ -25,9 +25,54 @@ builder.CreateUmbracoBuilder()
 
 WebApplication app = builder.Build();
 
+if (builder.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseHsts();
+}
+
 // fix security health checks with NWebsec.AspNetCore.Middleware
 app.UseXfo(options => options.SameOrigin());
 app.UseXContentTypeOptions();
+
+app.UseCsp(
+    options => options
+    .ConnectSources(s => s
+        .Self()
+        .CustomSources(
+            "http://localhost:55802",
+            "http://localhost:63274"
+            )
+    )
+    .DefaultSources(s => s
+        .Self()
+        .CustomSources(
+            "cdn.jsdelivr.net",
+            "static.licdn.com"
+        )
+    )
+    .ScriptSources(s => s
+        .Self()
+        .UnsafeInline()
+        .CustomSources(
+            "cdn.jsdelivr.net",
+            "cdnjs.cloudflare.com",
+            "*.linkedin.com"
+        )
+    )
+    .FormActions(s => s.Self())
+    .StyleSources(s => s
+        .Self()
+        .UnsafeInline()
+        .CustomSources(
+            "cdn.jsdelivr.net",
+            "static.licdn.com"
+        )
+    )
+);
 
 await app.BootUmbracoAsync();
 
