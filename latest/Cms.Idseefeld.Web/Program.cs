@@ -38,41 +38,41 @@ else
 app.UseXfo(options => options.SameOrigin());
 app.UseXContentTypeOptions();
 
-app.UseCsp(
-    options => options
-    .ConnectSources(s => s
-        .Self()
-        .CustomSources(
-            "http://localhost:55802",
-            "http://localhost:63274"
-            )
-    )
-    .DefaultSources(s => s
-        .Self()
-        .CustomSources(
-            "cdn.jsdelivr.net",
-            "static.licdn.com"
-        )
-    )
-    .ScriptSources(s => s
-        .Self()
-        .UnsafeInline()
-        .CustomSources(
-            "cdn.jsdelivr.net",
-            "cdnjs.cloudflare.com",
-            "*.linkedin.com"
-        )
-    )
-    .FormActions(s => s.Self())
-    .StyleSources(s => s
-        .Self()
-        .UnsafeInline()
-        .CustomSources(
-            "cdn.jsdelivr.net",
-            "static.licdn.com"
-        )
-    )
-);
+//app.UseCsp(
+//    options => options
+//    .DefaultSources(s => s
+//        .Self()
+//        .CustomSources(
+//            "*.umbraco.com",
+//            "cdn.jsdelivr.net",
+//            "static.licdn.com"
+//        )
+//    )
+//    .ConnectSources(s => s
+//        .Self()
+//        .CustomSources(
+//            "cdn.jsdelivr.net"
+//            )
+//    )
+//    .FormActions(s => s.Self())
+//    .ScriptSources(s => s
+//        .Self()
+//        .UnsafeInline()
+//        .CustomSources(
+//            "cdn.jsdelivr.net",
+//            "cdnjs.cloudflare.com",
+//            "*.linkedin.com"
+//        )
+//    )
+//    //.StyleSources(s => s
+//    //    .Self()
+//    //    .UnsafeInline()
+//    //    .CustomSources(
+//    //        "cdn.jsdelivr.net",
+//    //        "static.licdn.com"
+//    //    )
+//    //)
+//);
 
 await app.BootUmbracoAsync();
 
