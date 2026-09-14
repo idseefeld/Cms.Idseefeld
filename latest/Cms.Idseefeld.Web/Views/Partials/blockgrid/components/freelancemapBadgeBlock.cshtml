@@ -1,0 +1,15 @@
+@model wysiwgVm.WysiwygBlockGridItem
+@{
+    if (Model.Content is not FreelancemapBadgeBlock content) return;
+}
+@* <a href="https://www.freelancermap.de/profil/full-stack-web-entwickler-umbraco-cms-asp-net-mvc-c-sql-server-javascript-typescript" target="_blank" title="Profil von Dirk Seefeld auf www.freelancermap.de" rel="noopener"
+   class="profile-link call-to-action light">
+    <img loading="lazy" style="width: 118px; height: 24px;" src="https://www.freelancermap.de/assets/logo/logo-black.svg" alt="Freelancermap Badge" />
+</a> *@
+
+    
+<div class="call-to-action" onclick="window.open('https://www.freelancermap.de/profil/full-stack-web-entwickler-umbraco-cms-asp-net-mvc-c-sql-server-javascript-typescript', '_blank')">
+    <button style="background-color: #fff; color: #000;" title="Profil von Dirk Seefeld auf www.freelancermap.de" rel="noopener">
+        <img loading="lazy" style="width: 118px; height: 24px;" src="https://www.freelancermap.de/assets/logo/logo-black.svg" alt="Freelancermap Badge" />
+    </button>
+</div>

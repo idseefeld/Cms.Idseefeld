@@ -22,7 +22,8 @@ namespace Cms.Idseefeld.Core.Extensions
                 .DefaultSources(s => s
                     .Self()
                     .CustomSources(
-                        "*.umbraco.com"
+                        "*.umbraco.com",
+                        "www.freelancermap.de"
                     )
                 )
                 .ImageSources(s => s
@@ -31,7 +32,8 @@ namespace Cms.Idseefeld.Core.Extensions
                         "cdn.jsdelivr.net",
                         "*.licdn.com",
                         "data:",
-                        "*.umbraco.com"
+                        "*.umbraco.com",
+                        "www.freelancermap.de"
                     )
                 )
                 .ScriptSources(s => s

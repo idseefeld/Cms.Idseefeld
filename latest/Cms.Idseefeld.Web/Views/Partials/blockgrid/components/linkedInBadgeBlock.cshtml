@@ -2,10 +2,22 @@
 @{
     if (Model.Content is not LinkedInBadgeBlock content) return;
 
-    var lang = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-    var dataLocale = lang == "de" ? "de_DE" : "en_US";
-    var prefix = lang == "de" ? "de." : "en.";
-
     var profileName = content.ProfileName;
 }
-<div class="badge-base LI-profile-badge" data-locale="@dataLocale" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="@profileName" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://@(prefix)linkedin.com/in/@profileName?trk=profile-badge"></a></div>
+
+@* <a href="https://www.linkedin.com/in/@(profileName)/"
+   target="_blank"
+   rel="noopener"
+   class="profile-link call-to-action">
+    <img src="~/css/linkedin-icon.svg" alt="" class="linkedin-icon">
+    <span>Profil auf LinkedIn ansehen</span>
+</a>
+ *@
+
+    
+<div class="call-to-action linkedin-link" onclick="window.open('https://www.freelancermap.de/profil/full-stack-web-entwickler-umbraco-cms-asp-net-mvc-c-sql-server-javascript-typescript', '_blank')">
+    <a title="Profil von Dirk Seefeld auf www.linkedin.com" rel="noopener">
+        <img src="~/css/linkedin-icon.svg" alt="" class="linkedin-icon">
+        <span>Profil auf LinkedIn ansehen</span>
+    </a>
+</div>
