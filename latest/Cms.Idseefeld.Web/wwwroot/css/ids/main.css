@@ -493,17 +493,14 @@ button.btn-primary:active {
   box-shadow: none;
 }
 
-.linkedin-link a {
+.linkedin-link button {
   background: #0A66C2;
   color: white;
 }
-.linkedin-link a:hover {
-  background: #004182;
-  color: white;
-}
-.linkedin-link a .linkedin-icon {
+.linkedin-link button .linkedin-icon {
   width: 20px;
   height: 20px;
+  margin-right: 10px;
 }
 
 .profile-link {

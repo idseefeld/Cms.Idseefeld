@@ -7,8 +7,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-		<PackageReference Include="Umbraco.Cms" Version="18.1.2" />
+		<PackageReference Include="Umbraco.Cms" Version="18.2.0" />
 		<PackageReference Include="Umbraco.Community.WysiwgUmbracoCommunityExtensions" Version="18.1.0" />
+		<PackageReference Include="uSync" Version="18.1.4" />
 	</ItemGroup>
 
 </Project>

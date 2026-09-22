@@ -1,12 +1,7 @@
 using Cms.Idseefeld.Core.Extensions;
 using Cms.Idseefeld.Core.Models;
 using Cms.Idseefeld.Core.Services;
-using Examine;
 using Microsoft.AspNetCore.DataProtection;
-using NWebsec.Core.Common.Middleware.Options;
-using Org.BouncyCastle.Security;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
