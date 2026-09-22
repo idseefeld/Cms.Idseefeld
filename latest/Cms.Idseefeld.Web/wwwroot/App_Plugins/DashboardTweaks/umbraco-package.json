@@ -1,0 +1,12 @@
+﻿{
+  "name": "DashboardTweaks",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "backofficeEntryPoint",
+      "alias": "DashboardTweaks.EntryPoint",
+      "name": "Dashboard Tweaks Entry Point",
+      "js": "/App_Plugins/DashboardTweaks/dashboards-setup.js"
+    }
+  ]
+}
