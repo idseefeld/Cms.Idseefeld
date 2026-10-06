@@ -25,47 +25,47 @@ builder.CreateUmbracoBuilder()
 
 WebApplication app = builder.Build();
 
-if (builder.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseHsts();
-}
+//if (builder.Environment.IsDevelopment())
+//{
+//    app.UseDeveloperExceptionPage();
+//}
+//else
+//{
+//    app.UseHsts();
+//}
 
-// fix security health checks with NWebsec.AspNetCore.Middleware
-app.UseXfo(options => options.SameOrigin());
-app.UseXContentTypeOptions();
+//// fix security health checks with NWebsec.AspNetCore.Middleware
+//app.UseXfo(options => options.SameOrigin());
+//app.UseXContentTypeOptions();
 
 await app.BootUmbracoAsync();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
-string reportUri = config.GetValue<string?>("CspProtection:ReportUri") ?? "/csp-report";
-string? cspReportDirectory = config.GetValue<string?>("CspProtection:ReportDirectory");
-if(string.IsNullOrEmpty(cspReportDirectory))
-{
-    cspReportDirectory = "\\umbraco\\data\\TEMP\\csp-reports";
-}
-bool enableCspProtection = config.GetValue<bool?>("CspProtection:EnableCspProtection") ?? false;
-bool cspReportOnly = config.GetValue<bool?>("CspProtection:CspReportOnly") ?? false;
-bool enableReport= config.GetValue<bool?>("CspProtection:EnableReport") ?? false;
-string reservedPaths = config.GetValue<string?>("Umbraco:CMS:Global:ReservedPaths") ?? string.Empty;
-if (enableCspProtection)
-{
-    app.AddCsp(cspReportOnly, reportUri);
+//string reportUri = config.GetValue<string?>("CspProtection:ReportUri") ?? "/csp-report";
+//string? cspReportDirectory = config.GetValue<string?>("CspProtection:ReportDirectory");
+//if(string.IsNullOrEmpty(cspReportDirectory))
+//{
+//    cspReportDirectory = "\\umbraco\\data\\TEMP\\csp-reports";
+//}
+//bool enableCspProtection = config.GetValue<bool?>("CspProtection:EnableCspProtection") ?? false;
+//bool cspReportOnly = config.GetValue<bool?>("CspProtection:CspReportOnly") ?? false;
+//bool enableReport= config.GetValue<bool?>("CspProtection:EnableReport") ?? false;
+//string reservedPaths = config.GetValue<string?>("Umbraco:CMS:Global:ReservedPaths") ?? string.Empty;
+//if (enableCspProtection)
+//{
+//    app.AddCsp(cspReportOnly, reportUri);
 
-    if (enableReport && !string.IsNullOrEmpty(reportUri))
-    {
-        if(!reservedPaths.Contains(reportUri))
-        {
-            reservedPaths += $",{reportUri}";
-            config["Umbraco:CMS:Global:ReservedPaths"] = reservedPaths;
-        }
-        app.MapPost(reportUri, async (HttpContext context, ILogger<Program> logger) => await context.MapCspReport(logger, contentRoot, cspReportDirectory));
-    }
-}
+//    if (enableReport && !string.IsNullOrEmpty(reportUri))
+//    {
+//        if(!reservedPaths.Contains(reportUri))
+//        {
+//            reservedPaths += $",{reportUri}";
+//            config["Umbraco:CMS:Global:ReservedPaths"] = reservedPaths;
+//        }
+//        app.MapPost(reportUri, async (HttpContext context, ILogger<Program> logger) => await context.MapCspReport(logger, contentRoot, cspReportDirectory));
+//    }
+//}
 
 app.UseUmbraco()
     .WithMiddleware(u =>
@@ -75,7 +75,6 @@ app.UseUmbraco()
     })
     .WithEndpoints(u =>
     {
-        //u.UseInstallerEndpoints();
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
     });
