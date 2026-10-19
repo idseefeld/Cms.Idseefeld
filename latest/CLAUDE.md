@@ -24,3 +24,6 @@ Referenz: [../idseefeld-ai-workspace/CLAUDE.md](../idseefeld-ai-workspace/CLAUDE
 - SMTP-Passwort wird lokal über User Secrets verwaltet.
 - Änderungen im Ordner `latest/` sollen diese Datei aktuell halten, wenn sich Struktur oder Arbeitsregeln ändern.
 
+## Regeln
+
+- Beziehe die Basisregeln aus `../idseefeld-ai-workspace/CLAUDE.md` immer mit ein.
