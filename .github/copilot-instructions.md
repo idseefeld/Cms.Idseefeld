@@ -10,4 +10,4 @@ Nutze `latest/CLAUDE.md` als zusätzlichen Repository-Kontext für dieses Worksp
 
 ## Projektbasis
 
-- Behandle `claude-ai-workspace` als die Basis für alle neuen Kundenprojekte, nicht nur für `cms.idseefeld`.
+- Behandle `idseefeld-ai-workspace` als die Basis für alle neuen Kundenprojekte, nicht nur für `cms.idseefeld`.

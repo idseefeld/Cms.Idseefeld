@@ -2,7 +2,7 @@
 
 Referenz: [../idseefeld-ai-workspace/CLAUDE.md](../idseefeld-ai-workspace/CLAUDE.md)
 
-`claude-starter-workspace` ist die Basis für alle neuen Kundenprojekte. Diese Datei ergänzt diese Basis nur um den lokalen Kontext für `cms.idseefeld` im Ordner `latest/`.
+`idseefeld-ai-workspace` ist die Basis für alle neuen Kundenprojekte. Diese Datei ergänzt diese Basis nur um den lokalen Kontext für `cms.idseefeld` im Ordner `latest/`.
 
 ## Projektkontext
 
@@ -10,11 +10,11 @@ Referenz: [../idseefeld-ai-workspace/CLAUDE.md](../idseefeld-ai-workspace/CLAUDE
 - Zielplattform: `.NET 10`
 - Web-Stack: ASP.NET Core mit Razor Pages
 - CMS: Umbraco
-- Zweck: persönliche Website
+- Zweck: Website für neu zu gründendes Unternehmen *ContorDigital*
 
 ## Arbeitskontext
 
-- Beziehe die Basisregeln aus `../claude-starter-workspace/CLAUDE.md` immer mit ein.
+- Beziehe die Basisregeln aus `../idseefeld-ai-workspace/CLAUDE.md` immer mit ein.
 - Priorisiere bei Web-Änderungen Razor Pages und die bestehende Umbraco-Struktur dieses Projekts.
 - Nimm möglichst kleine, gezielte Änderungen vor und orientiere dich an bestehenden Mustern im Repository.
 
