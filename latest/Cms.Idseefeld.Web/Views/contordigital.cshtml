@@ -1,0 +1,235 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = null;
+}
+
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="ContorDigital unterstützt Unternehmen mit Webdesign, SEO und KI-Automatisierung für messbares Wachstum.">
+	<title>ContorDigital | Webdesign, SEO und KI-Automatisierung</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+	<header class="border-bottom">
+		<div class="container py-3">
+			<div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+				<a href="#top" class="d-inline-flex align-items-center text-decoration-none text-dark fw-bold fs-4" aria-label="ContorDigital Startseite">
+					<img src="https://placehold.co/120x40" width="120" height="40" alt="Platzhalter-Logo von ContorDigital mit Wortmarke">
+				</a>
+				<nav aria-label="Hauptnavigation">
+					<ul class="nav gap-2">
+						<li class="nav-item"><a class="nav-link" href="#leistungen">Leistungen</a></li>
+						<li class="nav-item"><a class="nav-link" href="#prozess">Prozess</a></li>
+						<li class="nav-item"><a class="nav-link" href="#referenzen">Referenzen</a></li>
+						<li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<main id="top">
+		<section class="py-5 bg-body-tertiary" aria-labelledby="hero-title">
+			<div class="container">
+				<div class="row align-items-center g-4">
+					<div class="col-lg-6">
+						<p class="text-uppercase text-secondary fw-semibold mb-2">Digitales Wachstum für Unternehmen</p>
+						<h1 id="hero-title" class="display-5 fw-bold mb-3">ContorDigital macht Ihre Sichtbarkeit, Ihr Angebot und Ihre Abläufe zukunftssicher.</h1>
+						<p class="lead mb-4">Wir verbinden strategisches Webdesign, wirksame SEO und praxistaugliche KI-Automatisierung zu einem klaren System für mehr qualifizierte Anfragen.</p>
+						<div class="d-flex flex-wrap gap-2">
+							<a href="#kontakt" class="btn btn-primary btn-lg">Kostenloses Erstgespräch anfragen</a>
+							<a href="#leistungen" class="btn btn-outline-primary btn-lg">Leistungsübersicht ansehen</a>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<figure class="mb-0">
+							<img src="https://placehold.co/720x480" class="img-fluid rounded shadow-sm" width="720" height="480" alt="Platzhalter-Grafik: Team analysiert Website, Suchmaschinen-Ranking und KI-Workflows">
+							<figcaption class="small text-secondary mt-2">Platzhalterbild für die visuelle Darstellung der Kernleistungen von ContorDigital.</figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="leistungen" class="py-5" aria-labelledby="leistungen-title">
+			<div class="container">
+				<header class="mb-4">
+					<h2 id="leistungen-title" class="h1">Leistungen von ContorDigital</h2>
+					<p class="mb-0">Drei Angebotsbereiche, die zusammen Ihren digitalen Vertrieb stärken.</p>
+				</header>
+				<div class="row g-4">
+					<article class="col-md-6 col-xl-4" aria-labelledby="leistung-web-title">
+						<div class="card h-100">
+							<img src="https://placehold.co/640x360" class="card-img-top" width="640" height="360" alt="Platzhalter-Illustration: responsives Webdesign auf Desktop, Tablet und Smartphone">
+							<div class="card-body d-flex flex-column">
+								<h3 id="leistung-web-title" class="h4 card-title">Webdesign &amp; Entwicklung</h3>
+								<p class="card-text">Moderne, schnelle und klar strukturierte Websites mit Fokus auf Nutzerführung, Vertrauen und Conversion.</p>
+								<ul>
+									<li>Informationsarchitektur mit klaren Nutzerwegen</li>
+									<li>Responsive Umsetzung für alle Endgeräte</li>
+									<li>Conversion-orientierte Seitenstruktur</li>
+								</ul>
+								<p class="mt-auto mb-0"><a href="#kontakt" class="link-primary">Projektgespräch für Webdesign starten</a></p>
+							</div>
+						</div>
+					</article>
+					<article class="col-md-6 col-xl-4" aria-labelledby="leistung-seo-title">
+						<div class="card h-100">
+							<img src="https://placehold.co/640x360" class="card-img-top" width="640" height="360" alt="Platzhalter-Grafik: Suchergebnisse mit steigenden Rankings und organischem Traffic">
+							<div class="card-body d-flex flex-column">
+								<h3 id="leistung-seo-title" class="h4 card-title">SEO &amp; Content</h3>
+								<p class="card-text">Nachhaltige Sichtbarkeit durch suchintentenorientierte Inhalte und eine saubere technische Basis.</p>
+								<ul>
+									<li>Keyword- und Themenstrategie entlang der Customer Journey</li>
+									<li>Onpage-Optimierung und Content-Struktur</li>
+									<li>Redaktionsplanung mit messbaren Zielen</li>
+								</ul>
+								<p class="mt-auto mb-0"><a href="#kontakt" class="link-primary">SEO-Analyse anfragen</a></p>
+							</div>
+						</div>
+					</article>
+					<article class="col-md-6 col-xl-4" aria-labelledby="leistung-ki-title">
+						<div class="card h-100">
+							<img src="https://placehold.co/640x360" class="card-img-top" width="640" height="360" alt="Platzhalter-Visualisierung: KI-gestützte Automatisierung von Marketing- und Vertriebsprozessen">
+							<div class="card-body d-flex flex-column">
+								<h3 id="leistung-ki-title" class="h4 card-title">KI-Beratung &amp; Automatisierung</h3>
+								<p class="card-text">Wir identifizieren Prozesse mit hoher Hebelwirkung und setzen KI-Workflows um, die Zeit sparen und Qualität sichern.</p>
+								<ul>
+									<li>Prozessanalyse für Marketing, Vertrieb und Service</li>
+									<li>Automatisierte Vorqualifizierung von Anfragen</li>
+									<li>Praxisnahe Einführung mit Team-Befähigung</li>
+								</ul>
+								<p class="mt-auto mb-0"><a href="#kontakt" class="link-primary">KI-Potenzialgespräch buchen</a></p>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section id="prozess" class="py-5 bg-body-tertiary" aria-labelledby="prozess-title">
+			<div class="container">
+				<header class="mb-4">
+					<h2 id="prozess-title" class="h1">Unser Prozess: klar, transparent, umsetzbar</h2>
+				</header>
+				<ol class="row g-3 list-unstyled">
+					<li class="col-md-6 col-xl-3">
+						<article class="p-3 border rounded h-100 bg-white">
+							<h3 class="h5">1. Analyse</h3>
+							<p class="mb-0">Wir bewerten Ausgangslage, Ziele, Zielgruppen und Wettbewerbsumfeld.</p>
+						</article>
+					</li>
+					<li class="col-md-6 col-xl-3">
+						<article class="p-3 border rounded h-100 bg-white">
+							<h3 class="h5">2. Strategie</h3>
+							<p class="mb-0">Wir priorisieren Maßnahmen mit dem stärksten Beitrag zu Umsatz und Effizienz.</p>
+						</article>
+					</li>
+					<li class="col-md-6 col-xl-3">
+						<article class="p-3 border rounded h-100 bg-white">
+							<h3 class="h5">3. Umsetzung</h3>
+							<p class="mb-0">Wir realisieren Website, SEO-Maßnahmen und Automatisierungen iterativ.</p>
+						</article>
+					</li>
+					<li class="col-md-6 col-xl-3">
+						<article class="p-3 border rounded h-100 bg-white">
+							<h3 class="h5">4. Optimierung</h3>
+							<p class="mb-0">Wir messen Ergebnisse und entwickeln alle Maßnahmen datenbasiert weiter.</p>
+						</article>
+					</li>
+				</ol>
+			</div>
+		</section>
+
+		<section class="py-5" aria-labelledby="nutzen-title">
+			<div class="container">
+				<div class="row g-4 align-items-start">
+					<div class="col-lg-7">
+						<h2 id="nutzen-title" class="h1">Warum Unternehmen mit ContorDigital arbeiten</h2>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item px-0"><strong>Messbare Ergebnisse:</strong> Fokus auf qualifizierte Leads, Sichtbarkeit und Prozessqualität.</li>
+							<li class="list-group-item px-0"><strong>Verständliche Zusammenarbeit:</strong> klare Kommunikation, klare Prioritäten, klare To-dos.</li>
+							<li class="list-group-item px-0"><strong>Praxisnähe:</strong> Lösungen, die im Tagesgeschäft funktionieren und vom Team getragen werden.</li>
+						</ul>
+					</div>
+					<aside class="col-lg-5" id="referenzen" aria-labelledby="trust-title">
+						<div class="p-4 border rounded bg-body-tertiary">
+							<h2 id="trust-title" class="h3">Vertrauen und Referenzen</h2>
+							<p>Platzhalter für Kundenlogos, Kurzstimmen und Projektergebnisse.</p>
+							<div class="d-flex flex-wrap gap-2 mb-3" aria-label="Platzhalter-Kundenlogos">
+								<img src="https://placehold.co/120x60" width="120" height="60" alt="Platzhalter-Kundenlogo 1 aus dem B2B-Umfeld">
+								<img src="https://placehold.co/120x60" width="120" height="60" alt="Platzhalter-Kundenlogo 2 aus dem Dienstleistungsumfeld">
+								<img src="https://placehold.co/120x60" width="120" height="60" alt="Platzhalter-Kundenlogo 3 aus dem Technologiesektor">
+							</div>
+							<p class="small mb-0">Beispiel-Case (Platzhalter): +42 % qualifizierte Anfragen in 6 Monaten durch Website-Relaunch und SEO-Fokus.</p>
+						</div>
+					</aside>
+				</div>
+			</div>
+		</section>
+
+		<section id="faq" class="py-5 bg-body-tertiary" aria-labelledby="faq-title">
+			<div class="container">
+				<h2 id="faq-title" class="h1 mb-4">Häufige Fragen</h2>
+				<div class="row g-3">
+					<article class="col-md-6">
+						<div class="p-3 bg-white border rounded h-100">
+							<h3 class="h5">Für welche Unternehmensgröße ist das Angebot geeignet?</h3>
+							<p class="mb-0">Für kleine und mittlere Unternehmen, die digital planbar wachsen und interne Abläufe effizienter gestalten wollen.</p>
+						</div>
+					</article>
+					<article class="col-md-6">
+						<div class="p-3 bg-white border rounded h-100">
+							<h3 class="h5">Wie schnell sind erste Ergebnisse sichtbar?</h3>
+							<p class="mb-0">Kurzfristig bei UX- und Funnel-Optimierungen, mittelfristig bei SEO und nachhaltig bei KI-gestützter Prozessautomatisierung.</p>
+						</div>
+					</article>
+					<article class="col-md-6">
+						<div class="p-3 bg-white border rounded h-100">
+							<h3 class="h5">Können einzelne Leistungen separat gebucht werden?</h3>
+							<p class="mb-0">Ja. Sie können mit einem einzelnen Modul starten und später weitere Leistungen ergänzen.</p>
+						</div>
+					</article>
+					<article class="col-md-6">
+						<div class="p-3 bg-white border rounded h-100">
+							<h3 class="h5">Gibt es Unterstützung für interne Teams?</h3>
+							<p class="mb-0">Ja. Neben Umsetzung begleiten wir Ihr Team mit klaren Prozessen, Schulungen und Dokumentation.</p>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section id="kontakt" class="py-5" aria-labelledby="kontakt-title">
+			<div class="container">
+				<div class="p-4 p-lg-5 bg-primary text-white rounded-3">
+					<h2 id="kontakt-title" class="h1">Nächster Schritt: unverbindliches Erstgespräch</h2>
+					<p class="mb-4">Sie erhalten eine erste Einschätzung zu Potenzialen, Prioritäten und konkreten nächsten Maßnahmen für Ihr Unternehmen.</p>
+					<div class="d-flex flex-wrap gap-2">
+						<a class="btn btn-light btn-lg" href="mailto:kontakt@contordigital.de">Jetzt Termin per E-Mail anfragen</a>
+						<a class="btn btn-outline-light btn-lg" href="tel:+490000000000">Direkt anrufen</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="border-top py-4">
+		<div class="container d-flex flex-column flex-md-row justify-content-between gap-2 small">
+			<p class="mb-0">&copy; ContorDigital. Alle Rechte vorbehalten.</p>
+			<nav aria-label="Footer Navigation">
+				<ul class="nav">
+					<li class="nav-item"><a class="nav-link px-2" href="#">Impressum</a></li>
+					<li class="nav-item"><a class="nav-link px-2" href="#">Datenschutz</a></li>
+				</ul>
+			</nav>
+		</div>
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+@model string
+@if (string.IsNullOrWhiteSpace(Model))
+{
+    <div class="alert alert-info">Die Terminbuchung ist in Kürze verfügbar.</div>
+}
+else
+{
+    <iframe src="@Model" title="Terminbuchung" loading="lazy" style="width:100%;min-height:700px;border:0"></iframe>
+}
