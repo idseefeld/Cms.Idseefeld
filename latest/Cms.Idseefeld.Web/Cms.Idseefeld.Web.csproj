@@ -65,14 +65,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-		<PackageReference Include="Umbraco.Cms" Version="18.2.1" />
+		<PackageReference Include="Umbraco.Cms" Version="18.3.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
 		<PackageReference Include="Umbraco.Community.WysiwgUmbracoCommunityExtensions" Version="18.1.0" />
-		<PackageReference Include="uSync" Version="18.1.5" />
+		<PackageReference Include="uSync" Version="18.3.1" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
 	</ItemGroup>
 
@@ -102,10 +102,7 @@
 	<PropertyGroup>
 		<!-- Razor files are needed for the backoffice to work correctly -->
 		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<UserSecretsId>1a6bbbe1-58ee-4c4e-b00c-07503f4d0189</UserSecretsId>
+		<UserSecretsId>a0013c05-5572-4328-a331-e8672fd480b2</UserSecretsId>
 	</PropertyGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
