@@ -24,6 +24,12 @@ Referenz: [../idseefeld-ai-workspace/CLAUDE.md](../idseefeld-ai-workspace/CLAUDE
 - SMTP-Passwort wird lokal über User Secrets verwaltet.
 - Änderungen im Ordner `latest/` sollen diese Datei aktuell halten, wenn sich Struktur oder Arbeitsregeln ändern.
 
+## Umbarco Management API
+- URL: [Swagger UI](https://localhost:44317/umbraco/openapi/index.html?urls.primaryName=Umbraco+Management+API)
+
+
+- MCP Server: [Umbraco MCP](https://umb-mcp.dev.local)
+
 ## Regeln
 
 - Beziehe die Basisregeln aus `../idseefeld-ai-workspace/CLAUDE.md` immer mit ein.
