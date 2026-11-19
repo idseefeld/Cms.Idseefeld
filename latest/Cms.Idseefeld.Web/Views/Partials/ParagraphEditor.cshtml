@@ -1,0 +1,31 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<aside id="paragraph-editor" class="paragraph-editor" data-document-key="@Model.Key" hidden>
+    <button type="button" class="btn btn-primary" data-action="start">Seite bearbeiten</button>
+    <div data-editor-controls hidden>
+        <div class="paragraph-editor__toolbar" role="toolbar" aria-label="Textformatierung">
+            <button type="button" data-action="source" aria-pressed="false">Quelltext</button>
+            <button type="button" data-command="bold" aria-label="Fett"><strong>F</strong></button>
+            <button type="button" data-command="italic" aria-label="Kursiv"><em>K</em></button>
+            <button type="button" data-command="underline" aria-label="Unterstrichen"><u>U</u></button>
+            <button type="button" data-command="justifyLeft">Linksbündig</button>
+            <button type="button" data-command="justifyCenter">Zentriert</button>
+            <button type="button" data-command="justifyRight">Rechtsbündig</button>
+            <button type="button" data-command="insertUnorderedList">Aufzählung</button>
+            <button type="button" data-command="insertOrderedList">Nummerierung</button>
+            <button type="button" data-command="formatBlock" data-value="blockquote">Zitat</button>
+            <button type="button" data-command="insertHorizontalRule">Trennlinie</button>
+            <button type="button" data-action="link">Link</button>
+            <button type="button" data-command="unlink">Link entfernen</button>
+            <button type="button" data-command="formatBlock" data-value="h2">Überschrift 2</button>
+            <button type="button" data-command="formatBlock" data-value="h3">Überschrift 3</button>
+            <button type="button" data-command="formatBlock" data-value="p">Absatz</button>
+        </div>
+        <div class="paragraph-editor__actions">
+            <button type="button" class="btn btn-primary" data-action="save">Entwurf speichern</button>
+            <button type="button" class="btn btn-primary" data-action="publish">Speichern und veröffentlichen</button>
+            <button type="button" class="btn btn-outline-secondary" data-action="cancel">Abbrechen</button>
+        </div>
+    </div>
+    <p data-editor-message role="status" aria-live="polite"></p>
+</aside>

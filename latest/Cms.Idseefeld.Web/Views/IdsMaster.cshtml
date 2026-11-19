@@ -111,6 +111,7 @@
     <link href="~/css/ids/main.min.css?v=@version" rel="stylesheet" />
     <link href="~/css/ids/mastodon-logo.min.css?v=@version" rel="stylesheet" />
     <link href="~/highlightjs/styles/vs2015.min.css?v=@version" rel="stylesheet" />
+    <link href="~/css/ids/paragraph-editor.css" rel="stylesheet" />
 
     <style>
             @@media(min - width: 576px) and(orientation: portrait) {
@@ -129,6 +130,8 @@
 </head>
 <body class="@pageCssClass">
     <div id="canvas">
+
+        @await Html.PartialAsync("ParagraphEditor")
 
         @*@await Html.PartialAsync("CookieHint")*@
 
@@ -186,6 +189,7 @@
     <script src="~/js/initCodeStyleAndCopy.js?v=@version"></script>
 
     <script src="~/js/images.js?v=@version"></script>
+    <script src="~/js/paragraph-editor.js" defer></script>
 
 </body>
 </html>

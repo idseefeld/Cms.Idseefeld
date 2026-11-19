@@ -11,6 +11,7 @@ Referenz: [../idseefeld-ai-workspace/CLAUDE.md](../idseefeld-ai-workspace/CLAUDE
 - Web-Stack: ASP.NET Core mit Razor Pages
 - CMS: Umbraco
 - Zweck: Website für neu zu gründendes Unternehmen *ContorDigital*
+- Tests: `Cms.Idseefeld.Web.Tests` (NUnit)
 
 ## Arbeitskontext
 
@@ -23,6 +24,7 @@ Referenz: [../idseefeld-ai-workspace/CLAUDE.md](../idseefeld-ai-workspace/CLAUDE
 - Entwicklungsgeheimnisse nicht im Repository ablegen.
 - SMTP-Passwort wird lokal über User Secrets verwaltet.
 - Änderungen im Ordner `latest/` sollen diese Datei aktuell halten, wenn sich Struktur oder Arbeitsregeln ändern.
+- Die Frontend-Bearbeitung unterstützt veröffentlichte, kulturinvariante Seiten mit Paragraph-Blöcken im `blockGrid`. Bestehende Entwürfe müssen im Backoffice bearbeitet werden.
 
 ## Umbarco Management API
 - URL: [Swagger UI](https://localhost:44317/umbraco/openapi/index.html?urls.primaryName=Umbraco+Management+API)

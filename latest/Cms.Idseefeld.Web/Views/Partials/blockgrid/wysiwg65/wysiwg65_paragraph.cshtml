@@ -3,8 +3,6 @@
 @model wysiwgVm.WysiwygBlockGridItem
 @{
     var content = new wysiwgVm.Wysiwg65_paragraph(Model.Content);
-    if (content?.Text == null) return;
-
     // var pageBackgroundColor = wysiwgVm.WysiwygPublishedContentService.GetColor(Model.BackgroundColor);
 
     var settings = new wysiwgVm.Wysiwg65_paragraphSettings(Model.Settings);
@@ -14,6 +12,9 @@
 
     var inlineStyles = $"{colorStyle}{minHeightStyle}";
 }
-<div class="paragraph" style="@inlineStyles">
-    @content.Text.GetHtml()
+<div class="paragraph" style="@inlineStyles" data-paragraph-key="@Model.ContentKey" hidden="@(content?.Text == null)">
+    @if (content?.Text != null)
+    {
+        @content.Text.GetHtml()
+    }
 </div>
